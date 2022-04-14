@@ -1,7 +1,7 @@
-package view;
+package viewPackage;
 
 public class Main {
     public static void main(String[] args) {
-        MainWindow mainWindoww = new MainWindow();
+        WelcomeWindow mainWindoww = new WelcomeWindow();
     }
 }
