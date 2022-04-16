@@ -2,6 +2,6 @@ package viewPackage;
 
 public class Main {
     public static void main(String[] args) {
-        WelcomeWindow mainWindoww = new WelcomeWindow();
+        WelcomeWindow mainWindow = new WelcomeWindow();
     }
 }

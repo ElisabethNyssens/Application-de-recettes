@@ -10,10 +10,18 @@ import java.awt.event.WindowEvent;
 import java.util.Locale;
 
 public class WelcomeWindow extends JFrame {
-    private Container mainContainer;
-    private JPanel welcomePanel, buttonsPanel;
-    private JLabel welcomeLabel;
-    private JButton registrationButton, connectionButton;
+    private final Container mainContainer;
+    private final JPanel welcomePanel;
+    private final JPanel buttonsPanel;
+    private final JLabel welcomeLabel;
+    private final JButton registrationButton;
+    private final JButton connectionButton;
+
+    private String welcomeMessage = "<html><div style='border:1px solid black; padding:5px 70px; text-align:center;'>" +
+            "<p style='font-size:20px; font-weight:normal; margin-bottom:0px'>Bienvenue dans</p>" +
+            "<h2 style='font-size:22px; font-weight:bold; margin-top:0px'>TaCuisine</h2>" +
+            "</div></html>";
+
 
     public WelcomeWindow() {
         // Création de la fenêtre
@@ -30,10 +38,9 @@ public class WelcomeWindow extends JFrame {
         welcomePanel = new JPanel();
         welcomePanel.setLayout(new BorderLayout());
         mainContainer.add(welcomePanel, BorderLayout.CENTER);
-        welcomePanel.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2,true));
 
         // Message d'accueil
-        welcomeLabel = new JLabel("<html><p>Bienvenue dans<br>TaCuisine</p></html>", SwingConstants.CENTER);
+        welcomeLabel = new JLabel(welcomeMessage, SwingConstants.CENTER);
         welcomePanel.add(welcomeLabel, BorderLayout.CENTER);
 
         // Panel des boutons
@@ -57,18 +64,20 @@ public class WelcomeWindow extends JFrame {
     private class RegistrationListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            mainContainer.removeAll();
-            mainContainer.add(new NewUserPanel());
-            setVisible(true);
+            changePanel(new NewUserPanel());
         }
     }
 
     private class ConnectionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            mainContainer.removeAll();
-            mainContainer.add(new ConnectionPanel());
-            setVisible(true);
+            changePanel(new ConnectionPanel());
         }
+    }
+
+    public void changePanel(JPanel panel) {
+        mainContainer.removeAll();
+        mainContainer.add(panel);
+        setVisible(true);
     }
 }
