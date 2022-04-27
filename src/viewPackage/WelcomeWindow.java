@@ -11,11 +11,9 @@ import java.util.Locale;
 
 public class WelcomeWindow extends JFrame {
     private final Container mainContainer;
-    private final JPanel welcomePanel;
-    private final JPanel buttonsPanel;
+    private final JPanel welcomePanel, buttonsPanel;
     private final JLabel welcomeLabel;
-    private final JButton registrationButton;
-    private final JButton connectionButton;
+    private final JButton registrationButton, connectionButton;
 
     private String welcomeMessage = "<html><div style='border:1px solid black; padding:5px 70px; text-align:center;'>" +
             "<p style='font-size:20px; font-weight:normal; margin-bottom:0px'>Bienvenue dans</p>" +
