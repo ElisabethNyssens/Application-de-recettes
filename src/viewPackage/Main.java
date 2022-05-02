@@ -1,4 +1,4 @@
-package view;
+package viewPackage;
 
 public class Main {
 
@@ -13,6 +13,6 @@ public class Main {
     //docker stop projetrecettes
 
     public static void main(String[] args){
-        MainWindow mainWindow = new MainWindow();
+        //WelcomeWindow welcomeWindow = new WelcomeWindow();
     }
 }
