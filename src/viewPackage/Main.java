@@ -1,10 +1,7 @@
 package view;
 
 public class Main {
-<<<<<<< Updated upstream
-    public static void main(String[] args) {
-        MainWindow mainWindoww = new MainWindow();
-=======
+
     //commandes docker si Modif
     //docker container rm projetrecettes
     //docker image rm projetrecettes
@@ -17,6 +14,5 @@ public class Main {
 
     public static void main(String[] args){
         MainWindow mainWindow = new MainWindow();
->>>>>>> Stashed changes
     }
 }
