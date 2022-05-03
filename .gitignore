@@ -1,24 +1,4 @@
+out/production
 
-out/production/Application-de-recettes/viewPackage/.DS_Store~HEAD
-src/viewPackage/.DS_Store~WelcomeWindow
-src/viewPackage/.DS_Store~HEAD
-out/production/Application-de-recettes/viewPackage/WelcomeWindow.class
-out/production/Application-de-recettes/viewPackage/RecipeForm.class
-out/production/Application-de-recettes/viewPackage/.DS_Store~WelcomeWindow
-out/production/Application-de-recettes/viewPackage/ConnectionPanel.class
-out/production/Application-de-recettes/viewPackage/Main.class
-out/production/Application-de-recettes/viewPackage/NewUserPanel.class
-out/production/Application-de-recettes/viewPackage/ConnectionPanel.class
-out/production/Application-de-recettes/viewPackage/WelcomeWindow.class
-out/production/Application-de-recettes/viewPackage/RecipeForm$PrevStepListener.class
-out/production/Application-de-recettes/viewPackage/RecipeForm$NextStepListener.class
-out/production/Application-de-recettes/viewPackage/NewUserPanel.class
-out/production/Application-de-recettes/viewPackage/Main.class
-out/production/Application-de-recettes/viewPackage/ConnectionPanel.class
-out/production/Application-de-recettes/viewPackage/ConnectionPanel.class
-out/production/Application-de-recettes/viewPackage/Main.class
-out/production/Application-de-recettes/viewPackage/NewUserPanel.class
-out/production/Application-de-recettes/viewPackage/RecipeForm$NextStepListener.class
-out/production/Application-de-recettes/viewPackage/RecipeForm$PrevStepListener.class
-out/production/Application-de-recettes/viewPackage/RecipeForm.class
-out/production/Application-de-recettes/viewPackage/WelcomeWindow.class
+
+.idea/misc.xml
