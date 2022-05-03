@@ -2,6 +2,7 @@ package businessPackage;
 
 import dataAccessPackage.RecipeDBAccess;
 import dataAccessPackage.RecipeDataAccess;
+import exceptionPackage.AllRecipesException;
 import modelPackage.Recipe;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class RecipeManager {
     }
 
     // Methodes
-    public ArrayList<Recipe> getAllRecipes() {
+    public ArrayList<Recipe> getAllRecipes() throws AllRecipesException {
         return dao.getAllRecipes();
     }
     public void addRecipe(Recipe recipe) {

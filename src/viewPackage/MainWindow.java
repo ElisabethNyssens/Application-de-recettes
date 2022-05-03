@@ -106,6 +106,9 @@ public class MainWindow extends JFrame {
         // Menu Créer recette
         createRecipe.addActionListener(new NewRecipeListener());
 
+        // Afficher recettes
+        displayRecipes.addActionListener(new DisplayRecipesListener());
+
 
         setVisible(true);
     }
@@ -122,6 +125,14 @@ public class MainWindow extends JFrame {
         public void actionPerformed(ActionEvent event) {
             mainContainer.removeAll();
             mainContainer.add(new HomePanel());
+            setVisible(true);
+        }
+    }
+
+    private class DisplayRecipesListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            mainContainer.removeAll();
+            mainContainer.add(new AllRecipesPanel());
             setVisible(true);
         }
     }
