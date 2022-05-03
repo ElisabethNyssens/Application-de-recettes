@@ -3,9 +3,9 @@ package businessPackage;
 import dataAccessPackage.RecipeDBAccess;
 import dataAccessPackage.RecipeDataAccess;
 import exceptionPackage.AllRecipesException;
-import modelPackage.Recipe;
-
 import java.util.ArrayList;
+
+import modelPackage.Recipe;
 
 public class RecipeManager {
     private RecipeDataAccess dao;
