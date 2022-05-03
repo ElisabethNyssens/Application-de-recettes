@@ -8,8 +8,8 @@ import java.awt.event.ActionListener;
 
 public class RecipeForm extends JPanel {
     private JLabel recipeTitleLabel, dateLabel, recipeCategoryLabel, costLabel, difficultyLabel, preparationTimeLabel, nbPersonsLabel;
-    private JComboBox recipeCategory, cost, difficulty, preparationTime;
-    private JTextField recipeTitle, date, nbPersons;
+    private JComboBox recipeCategory, cost, difficulty, preparationTime, ingredients;
+    private JTextField recipeTitle, date, nbPersons, quantity;
     private JCheckBox tested, hot, sweet, salty;
 
     private int activeFormStep;
@@ -18,11 +18,12 @@ public class RecipeForm extends JPanel {
 
     private JPanel step1Panel, step2Panel, bottomPanel, progressBar;
 
-    private final String[] recipCategories = {"Apéritif", "Entrée", "Plat principal", "Dessert", "Accompagnement", "Snack", "Sauce", "Boisson"};
+    private final String[] recipeCategories = {"Apéritif", "Entrée", "Plat principal", "Dessert", "Accompagnement", "Snack", "Sauce", "Boisson"};
     private final String[] costs = {"Bon marché", "Coût moyen", "Assez cher"};
     private final String[] difficulties = {"Très facile", "Facile", "Moyen", "Difficile"};
     private final String[] preparationTimes = {"Rapide", "Moyen", "Long"};
     // private final String[] costs = {"€", "€€", "€€€"}; ?
+
 
     private JPanel refToRecipePanel;
 
@@ -48,8 +49,8 @@ public class RecipeForm extends JPanel {
         step1Panel.add(date);
 
         recipeCategoryLabel = new JLabel("Catégorie :");
-        recipeCategory = new JComboBox(recipCategories);
-        recipeCategory.setSelectedItem(recipCategories[2]);
+        recipeCategory = new JComboBox(recipeCategories);
+        recipeCategory.setSelectedItem(recipeCategories[2]);
         step1Panel.add(recipeCategoryLabel);
         step1Panel.add(recipeCategory);
 
@@ -81,6 +82,9 @@ public class RecipeForm extends JPanel {
         nbPersons = new JTextField();
         step1Panel.add(nbPersonsLabel);
         step1Panel.add(nbPersons);
+
+
+        // Form step 2
 
 
 
