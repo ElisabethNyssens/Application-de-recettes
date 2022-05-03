@@ -48,7 +48,11 @@ public class ConnectionPanel extends JPanel {
     private class ValidationListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("C'est parti !");
+            WelcomeWindow frame = (WelcomeWindow) SwingUtilities.getAncestorOfClass(WelcomeWindow.class, validation);
+
+            MainWindow mainWindow = new MainWindow();
+
+            frame.dispose();
         }
     }
 }

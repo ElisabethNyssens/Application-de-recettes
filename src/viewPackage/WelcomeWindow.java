@@ -26,7 +26,8 @@ public class WelcomeWindow extends JFrame {
         super("TaCuisine");
         setSize(1100, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setIconImage(new ImageIcon("Application-de-recettes/img/chef.png").getImage());
+        setIconImage(new ImageIcon("img/chef.png").getImage());
+        setLocationRelativeTo(null);
 
         // Conteneur principal
         mainContainer = this.getContentPane();

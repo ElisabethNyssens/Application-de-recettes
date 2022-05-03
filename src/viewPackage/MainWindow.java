@@ -21,6 +21,7 @@ public class MainWindow extends JFrame {
 
         setSize(1100,800);
         setLocationRelativeTo(null);
+        setIconImage(new ImageIcon("img/chef.png").getImage());
 
         // fermeture de la fenêtre si clic sur icône X :
         addWindowListener (new WindowAdapter() {
