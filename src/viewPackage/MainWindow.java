@@ -102,6 +102,8 @@ public class MainWindow extends JFrame {
 
         // ----------- Menu Listeners ------------
 
+        // Quitter
+        exit.addActionListener(event -> System.exit(0));
         // Menu accueil
         home.addActionListener(new HomeListener());
         // Menu Créer recette

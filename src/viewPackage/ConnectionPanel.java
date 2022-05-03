@@ -37,7 +37,7 @@ public class ConnectionPanel extends JPanel {
         buttonPanel.setLayout(new FlowLayout());
         buttonPanel.setBorder(new EmptyBorder(150, 0, 50, 0));
 
-        validation = new JButton("Validation");
+        validation = new JButton("C'est parti !");
         ValidationListener validationListener = new ValidationListener();
         validation.addActionListener(validationListener);
         buttonPanel.add(validation);

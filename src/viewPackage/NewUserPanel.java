@@ -46,7 +46,7 @@ public class NewUserPanel extends JPanel {
         buttonPanel.setLayout(new FlowLayout());
         buttonPanel.setBorder(new EmptyBorder(150, 0, 50, 0));
 
-        validation = new JButton("Validation");
+        validation = new JButton("Valider");
         ValidationListener validationListener = new ValidationListener();
         validation.addActionListener(validationListener);
         buttonPanel.add(validation);
