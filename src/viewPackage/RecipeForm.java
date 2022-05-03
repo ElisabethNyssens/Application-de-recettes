@@ -99,8 +99,6 @@ public class RecipeForm extends JPanel {
         // Buttons & progress bar
         prevStepBtn = new JButton("Retour");
         nextStepBtn = new JButton("Suivant");
-        // progressBar = new JPanel(); // TEMPORAIRE
-        progressBar = new ProgressBar();
 
         bottomPanel = new JPanel();
         bottomPanel.setLayout(new GridLayout(1,2));
