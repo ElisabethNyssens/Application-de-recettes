@@ -136,4 +136,6 @@ public class MainWindow extends JFrame {
             setVisible(true);
         }
     }
+
+    // TO DO:  fonction affichage panel
 }

@@ -78,13 +78,19 @@ public class RecipeForm extends JPanel {
         step1Panel.add(preparationTimeLabel);
         step1Panel.add(preparationTime);
 
-        nbPersonsLabel = new JLabel("Nombre de personnes");
+        nbPersonsLabel = new JLabel("Nombre de personnes :");
         nbPersons = new JTextField();
         step1Panel.add(nbPersonsLabel);
         step1Panel.add(nbPersons);
 
 
         // Form step 2
+
+
+
+
+        // Form step 3
+
 
 
 
@@ -130,6 +136,7 @@ public class RecipeForm extends JPanel {
 
     private class NextStepListener implements ActionListener {
         public void actionPerformed(ActionEvent event){
+            // validation des input
 
             // à changer en state pattern ?
             if (activeFormStep == 1) {
