@@ -103,9 +103,8 @@ public class RecipeForm extends JPanel {
         progressBar = new ProgressBar();
 
         bottomPanel = new JPanel();
-        bottomPanel.setLayout(new GridLayout(1,3));
+        bottomPanel.setLayout(new GridLayout(1,2));
         bottomPanel.add(prevStepBtn);
-        bottomPanel.add(progressBar);
         bottomPanel.add(nextStepBtn);
         prevStepBtn.setVisible(false);
 
