@@ -142,7 +142,7 @@ public class RecipeForm extends JPanel {
                 prevStepBtn.revalidate();
                 prevStepBtn.repaint();
             } else if (activeFormStep == 2) {
-
+                ProgressBarWindow progressBarWindow = new ProgressBarWindow();
             } else if (activeFormStep == 3) {
 
             } else if (activeFormStep == 4) {
