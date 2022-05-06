@@ -5,12 +5,16 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Calendar;
+import java.util.Date;
 
 public class RecipeForm extends JPanel {
     private JLabel recipeTitleLabel, dateLabel, recipeCategoryLabel, costLabel, difficultyLabel, preparationTimeLabel, nbPersonsLabel;
     private JComboBox recipeCategory, cost, difficulty, preparationTime, ingredients;
-    private JTextField recipeTitle, date, nbPersons, quantity;
+    private JTextField recipeTitle ;
+    private JSpinner date, nbPersons, quantity;
     private JCheckBox tested, hot, sweet, salty;
+    private Date today;
 
     private int activeFormStep;
     private JButton prevStepBtn, nextStepBtn;
@@ -44,7 +48,10 @@ public class RecipeForm extends JPanel {
         step1Panel.add(recipeTitle);
 
         dateLabel = new JLabel("Date de création :");
-        date = new JTextField();
+        today = new Date();
+        date = new JSpinner(new SpinnerDateModel(today, null, null, Calendar.MONTH));
+        JSpinner.DateEditor editor = new JSpinner.DateEditor(date, "dd-MM-yyyy");
+        date.setEditor(editor);
         step1Panel.add(dateLabel);
         step1Panel.add(date);
 
@@ -79,7 +86,7 @@ public class RecipeForm extends JPanel {
         step1Panel.add(preparationTime);
 
         nbPersonsLabel = new JLabel("Nombre de personnes :");
-        nbPersons = new JTextField();
+        nbPersons = new JSpinner(new SpinnerNumberModel(0, 0, 50, 1));
         step1Panel.add(nbPersonsLabel);
         step1Panel.add(nbPersons);
 
