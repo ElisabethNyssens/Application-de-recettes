@@ -7,20 +7,21 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class SingletonConnexion {
-    private static Connection connexionUnique;
+    private static Connection uniqueConnection;
 
     public static Connection getInstance() throws SQLException {
-        if (connexionUnique == null) {
+        if (uniqueConnection == null) {
             try{
-                connexionUnique = DriverManager.getConnection(
+                uniqueConnection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/App_de_recettes",
                     "root",
                     "root");
             }
             catch (SQLException sqlException) {
-                throw new SQLException(sqlException);
+                System.out.println(sqlException.getMessage());
+                // throw new ConnectionException;
             }
         }
-        return connexionUnique;
+        return uniqueConnection;
     }
 }

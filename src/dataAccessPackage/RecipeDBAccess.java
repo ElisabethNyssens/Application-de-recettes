@@ -4,31 +4,54 @@ import exceptionPackage.AllRecipesException;
 import modelPackage.Recipe;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 public class RecipeDBAccess implements RecipeDataAccess {
+    private Connection singletonConnection;
 
+    public RecipeDBAccess() throws SQLException {
+        singletonConnection = SingletonConnexion.getInstance();
+    }
+
+    // Create
+    @Override
+    public void addRecipe(Recipe recipe) {
+
+    }
+
+    // Read
     @Override
     public ArrayList <Recipe> getAllRecipes() throws AllRecipesException {
-        Connection singletonConnexion;
         ArrayList <Recipe> allRecipes = new ArrayList <>();
+        String SQLInstruction = "select * from recipes";
+
         try {
-            String instructionSQL = "select * from recipes";
-            // Essayer d’accéder à la base de données via SingletonConnexion.getInstance()
-            singletonConnexion = SingletonConnexion.getInstance();
-            // Essayer de lire les recettes dans la table recipes
-            // Créer et retourner une ArrayList de recettes
+            PreparedStatement preparedStatement = singletonConnection.prepareStatement(SQLInstruction);
+            ResultSet data = preparedStatement.executeQuery();
+            Recipe recipe;
+            String recipeName;
+
+            while(data.next()) {
+                recipe = new Recipe(
+                        data.getString("title")
+                );
+
+                allRecipes.add(recipe);
+            }
+            return allRecipes;
         }
         catch (SQLException exception) {
             throw new AllRecipesException (exception.getMessage());
         }
 
-        return allRecipes;
     }
 
-    @Override
-    public void addRecipe(Recipe recipe) {
+    // Update
 
-    }
+    // Delete
+
 }

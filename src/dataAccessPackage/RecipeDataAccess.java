@@ -6,6 +6,12 @@ import modelPackage.Recipe;
 import java.util.ArrayList;
 
 public interface RecipeDataAccess {
-     public ArrayList<Recipe> getAllRecipes() throws AllRecipesException;
-     public void addRecipe(Recipe recipe);
+     // Create
+     void addRecipe(Recipe recipe);
+     // Read
+     ArrayList<Recipe> getAllRecipes() throws AllRecipesException;
+     // Update
+
+     // Delete
+
 }
