@@ -7,13 +7,14 @@ import exceptionPackage.AllRecipesException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import exceptionPackage.ConnectionException;
 import modelPackage.Recipe;
 
 public class RecipeManager {
     private RecipeDataAccess dao;
 
     // Constructeur
-    public RecipeManager() throws SQLException { // ConnectionException
+    public RecipeManager() throws ConnectionException {
         setDao(new RecipeDBAccess());
     }
 

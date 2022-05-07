@@ -1,6 +1,7 @@
 package dataAccessPackage;
 
 import exceptionPackage.AllRecipesException;
+import exceptionPackage.ConnectionException;
 import modelPackage.Recipe;
 
 import java.sql.Connection;
@@ -13,7 +14,7 @@ import java.util.GregorianCalendar;
 public class RecipeDBAccess implements RecipeDataAccess {
     private Connection singletonConnection;
 
-    public RecipeDBAccess() throws SQLException {
+    public RecipeDBAccess() throws ConnectionException {
         singletonConnection = SingletonConnexion.getInstance();
     }
 
@@ -33,11 +34,24 @@ public class RecipeDBAccess implements RecipeDataAccess {
             PreparedStatement preparedStatement = singletonConnection.prepareStatement(SQLInstruction);
             ResultSet data = preparedStatement.executeQuery();
             Recipe recipe;
-            String recipeName;
+            GregorianCalendar creationDate;
 
             while(data.next()) {
+                creationDate = new GregorianCalendar();
+                creationDate.setTime(data.getDate("creation_date"));
                 recipe = new Recipe(
-                        data.getString("title")
+                        data.getString("title"),
+                        creationDate,
+                        data.getBoolean("is_hot"),
+                        data.getBoolean("is_sweet"),
+                        data.getBoolean("is_salty"),
+                        data.getString("budget"),
+                        data.getString("difficulty"),
+                        data.getString("preparation_time"),
+                        data.getInt("nb_persons")
+                        // Gérer attributs facultatifs
+                   /*     data.getString("season"),
+                        data.getString("comment")*/
                 );
 
                 allRecipes.add(recipe);
@@ -45,7 +59,7 @@ public class RecipeDBAccess implements RecipeDataAccess {
             return allRecipes;
         }
         catch (SQLException exception) {
-            throw new AllRecipesException (exception.getMessage());
+            throw new AllRecipesException();
         }
 
     }

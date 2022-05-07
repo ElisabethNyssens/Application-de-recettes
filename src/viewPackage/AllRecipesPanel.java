@@ -2,6 +2,7 @@ package viewPackage;
 
 import controllerPackage.ApplicationController;
 import exceptionPackage.AllRecipesException;
+import exceptionPackage.ConnectionException;
 import modelPackage.AllRecipesModel;
 import modelPackage.Recipe;
 
@@ -18,7 +19,7 @@ public class AllRecipesPanel extends JPanel {
     private ListSelectionModel listSelect;
     private JLabel title;
 
-    public AllRecipesPanel() throws SQLException {
+    public AllRecipesPanel() throws ConnectionException {
         this.setLayout(new BorderLayout());
         this.setBorder(new EmptyBorder(0, 50, 50, 50));
         title = new JLabel("<html><h1 style='margin: 30px 0 15px 0'>Recettes</h1></html>");

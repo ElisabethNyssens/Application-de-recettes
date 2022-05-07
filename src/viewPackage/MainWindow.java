@@ -1,5 +1,7 @@
 package viewPackage;
 
+import exceptionPackage.ConnectionException;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -138,7 +140,8 @@ public class MainWindow extends JFrame {
             mainContainer.removeAll();
             try {
                 mainContainer.add(new AllRecipesPanel());
-            } catch (SQLException throwables) { // ConnectionException
+            } catch (ConnectionException exception) {
+                System.out.println(exception.getMessage());
             }
             setVisible(true);
         }
