@@ -22,7 +22,7 @@ public class MainWindow extends JFrame {
     public MainWindow() {
         super("TaCuisine");
 
-        setSize(1100,800);
+        setSize(1200,800);
         setLocationRelativeTo(null);
         setIconImage(new ImageIcon("img/chef.png").getImage());
 
