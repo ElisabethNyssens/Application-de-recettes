@@ -23,7 +23,6 @@ public class WelcomeThread extends Thread {
             try {
                 sleep(35);
                 for (FoodIcon foodIcon : foodIcons) {
-                    System.out.println(foodIcon.getY());
                     foodIcon.move();
                     foodAnimPanel.repaint();
                 }
