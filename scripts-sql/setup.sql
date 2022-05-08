@@ -50,6 +50,12 @@ create table ingredient_categories
     name varchar(20) not null
 );
 
+create table ingredients
+(
+    name varchar(30) not null
+        primary key,
+    unit varchar(10) not null
+);
 
 insert into recipes
 values (1, 'Curry au tofu','2021-04-25',true,false,true,'Bon marché','Facile','Moyen',4,'hiver',null);
@@ -86,3 +92,36 @@ insert into ingredient_categories values ('IC_AUTR', 'Autre');
 insert into authors values ('bichon','Elisabeth','Nyssens',true);
 insert into authors values ('marvin','Julien','Hanquet',true);
 insert into authors values ('anonyme','Ano','Nyme',false);
+
+insert into ingredients values ('Carotte','');
+insert into ingredients values ('Oignon','');
+insert into ingredients values ('Tomate','');
+insert into ingredients values ('Concombre','');
+insert into ingredients values ('Courgette','');
+insert into ingredients values ('Aubergine','');
+insert into ingredients values ('Pois chiches','g');
+insert into ingredients values ('Lentilles','g');
+insert into ingredients values ('Citron jaune','');
+insert into ingredients values ('Citron vert','');
+insert into ingredients values ('Fraise','g');
+insert into ingredients values ('Epinards frais','g');
+insert into ingredients values ('Noix','g');
+insert into ingredients values ('Curry','c.à.c');
+insert into ingredients values ('Curcuma','c.à.c');
+insert into ingredients values ('Menthe','feuilles');
+insert into ingredients values ('Coriandre','feuilles');
+insert into ingredients values ('Vinaigre balsamique','c.à.s');
+insert into ingredients values ('Graines de pavot','c.à.s');
+insert into ingredients values ('Ail','gousse');
+insert into ingredients values ('Gingembre','g');
+insert into ingredients values ('Lait','cl');
+insert into ingredients values ('Crème','cl');
+insert into ingredients values ('Féta','g');
+insert into ingredients values ('Parmesan','g');
+insert into ingredients values ('Lait de coco','cl');
+insert into ingredients values ('Beurre','g');
+insert into ingredients values ('Farine','g');
+insert into ingredients values ('Riz','g');
+insert into ingredients values ('Pâtes','g');
+insert into ingredients values ('Tofu','g');
+insert into ingredients values ('Concentré de tomates','g');
