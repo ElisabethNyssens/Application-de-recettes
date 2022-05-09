@@ -1,27 +1,21 @@
 package viewPackage;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
 
 public class WelcomeWindow extends JFrame {
     private Container mainContainer;
     private FoodAnimPanel foodAnimPanel;
-    private JPanel welcomePanel, buttonsPanel;
+    private JPanel buttonsPanel;
+    private JLayeredPane welcomeLayPane;
     private JLabel welcomeLabel;
     private JButton registrationButton, connectionButton;
 
-    private String welcomeMessage = "<html><div style='border:1px solid black; padding:5px 70px; text-align:center; background-color:#f7f7f7'>" +
+    private String welcomeMessage = "<html><div style='border:1px solid black; padding:15px 70px; text-align:center; background-color:#f7f7f7; display:block;'>" +
             "<p style='font-size:20px; font-weight:normal; margin-bottom:0px'>Bienvenue dans</p>" +
-            "<h2 style='font-size:22px; font-weight:bold; margin-top:0px'>TaCuisine</h2>" +
+            "<h2 style='font-size:22px; font-weight:bold; margin:0px; color:#97002d'>TaCuisine</h2>" +
             "</div></html>";
 
 
@@ -53,19 +47,19 @@ public class WelcomeWindow extends JFrame {
         buttonsPanel.add(connectionButton);
 
         // Création du panel message
-        welcomePanel = new JPanel();
-        welcomePanel.setLayout(new BorderLayout());
-        welcomePanel.setSize(1200, 770);
-        welcomePanel.setOpaque(false);
+        welcomeLayPane = new JLayeredPane();
+        welcomeLayPane.setLayout(new BorderLayout());
+        mainContainer.add(welcomeLayPane, BorderLayout.CENTER);
 
         // Message d'accueil
         welcomeLabel = new JLabel(welcomeMessage, SwingConstants.CENTER);
-        welcomePanel.add(welcomeLabel, BorderLayout.CENTER);
-        mainContainer.add(welcomePanel, BorderLayout.CENTER);
+        welcomeLabel.setSize(this.getWidth(), this.getHeight()-30);
 
         // Food animation
         foodAnimPanel = new FoodAnimPanel(this);
-        mainContainer.add(foodAnimPanel, BorderLayout.CENTER);
+        welcomeLayPane.add(foodAnimPanel);
+        welcomeLayPane.add(welcomeLabel);
+        welcomeLayPane.moveToFront(welcomeLabel);
         WelcomeThread movFood = new WelcomeThread(this);
         movFood.start();
 

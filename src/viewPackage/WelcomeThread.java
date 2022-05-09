@@ -21,7 +21,7 @@ public class WelcomeThread extends Thread {
     public void run() {
         for (int i = 0; i < 300; i++) {
             try {
-                sleep(35);
+                sleep(30);
                 for (FoodIcon foodIcon : foodIcons) {
                     foodIcon.move();
                     foodAnimPanel.repaint();
