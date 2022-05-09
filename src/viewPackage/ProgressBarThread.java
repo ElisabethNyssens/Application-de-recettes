@@ -19,7 +19,7 @@ public class ProgressBarThread extends Thread {
             try {
                 progressBar.progression();
                 progressBar.repaint();
-                sleep(20 * progressBar.getProgressionSpeed());
+                sleep(15 * progressBar.getProgressionSpeed());
             }
             catch (InterruptedException interruptedException) {
                 interruptedException.printStackTrace();

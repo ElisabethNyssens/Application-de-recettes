@@ -10,7 +10,7 @@ public class ProgressBarPanel extends JPanel {
     private int x = 150;
     private int y = 20;
     private int width = 400;
-    private int height = 20;
+    private int height = 15;
 
     public ProgressBarPanel(JFrame frame) {
         this.frame = frame;
@@ -27,8 +27,6 @@ public class ProgressBarPanel extends JPanel {
 
     public void progression() {
         filledBar.getRectangle().width += progressionSpeed;
-        emptyBar.getRectangle().width -= progressionSpeed;
-        emptyBar.getRectangle().x += progressionSpeed;
     }
 
     public int getProgressionSpeed() {

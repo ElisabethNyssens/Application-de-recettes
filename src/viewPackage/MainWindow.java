@@ -21,12 +21,9 @@ public class MainWindow extends JFrame {
 
     public MainWindow() {
         super("TaCuisine");
-
         setSize(1200,800);
         setLocationRelativeTo(null);
         setIconImage(new ImageIcon("img/chef.png").getImage());
-
-        // fermeture de la fenêtre si clic sur icône X :
         addWindowListener (new WindowAdapter() {
             public void windowClosing (WindowEvent e) {
                 System.exit(0);
@@ -35,7 +32,6 @@ public class MainWindow extends JFrame {
 
         // Récupération de la référence du conteneur de la fenêtre :
         mainContainer = this.getContentPane();
-
         mainContainer.setLayout(new BorderLayout());
 
         // Home panel
