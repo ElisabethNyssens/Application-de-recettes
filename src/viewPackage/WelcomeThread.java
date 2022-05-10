@@ -19,7 +19,7 @@ public class WelcomeThread extends Thread {
     }
 
     public void run() {
-        for (int i = 0; i < 300; i++) {
+        for (int i = 0; i < 500; i++) {
             try {
                 sleep(30);
                 for (FoodIcon foodIcon : foodIcons) {
@@ -31,8 +31,5 @@ public class WelcomeThread extends Thread {
                 interruptedException.printStackTrace();
             }
         }
-        mainContainer.remove(foodAnimPanel);
-        welcomeWindow.repaint();
-
     }
 }

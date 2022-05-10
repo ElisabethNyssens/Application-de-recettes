@@ -12,7 +12,6 @@ public class FoodIcon {
     private int width = 30;
     private int height = 30;
     private int deltaY;
-    //private Rectangle frame;
     private String path;
     private BufferedImage photo;
 
@@ -20,7 +19,6 @@ public class FoodIcon {
         this.x = x;
         this.y = y;
         this.deltaY = deltaY;
-        //frame = new Rectangle(x,y,width,height);
         this.path = path;
         photo = null;
 
@@ -32,20 +30,22 @@ public class FoodIcon {
     }
 
     public void draw(Graphics g) {
-        //Graphics2D g2 = (Graphics2D) g;
-        //g2.rotate(Math.PI / 4, photo.getWidth() / 2, photo.getHeight() / 2);
         g.drawImage(photo,x,y,width,height,null);
     }
-    /*public void draw(Graphics g){
-        g.drawImage(photo, 0, 0,width,height,null);
-
-    }*/
 
     public void move(){
         this.y += deltaY;
     }
 
-    public int getY() {
+   /* public int getY() {
         return y;
     }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public int getDeltaY() {
+        return deltaY;
+    }*/
 }
