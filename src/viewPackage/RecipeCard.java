@@ -15,7 +15,7 @@ public class RecipeCard extends JPanel {
     public RecipeCard(String title, String path) {
         this.setLayout(new BorderLayout(100,100));
 
-        JLabel titleLabel = new JLabel("<html><h2 style='margin:210px 0 0 20px;'>"+title+"</h3></html>");
+        JLabel titleLabel = new JLabel("<html><h2 style='margin:210px 0 0 20px;'>"+title+"</h2></html>");
         this.path = path;
         photo = null;
 
