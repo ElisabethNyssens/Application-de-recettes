@@ -24,8 +24,7 @@ create table authors
     pseudo           varchar(15) not null
         primary key,
     first_name       varchar(30) not null,
-    last_name        varchar(30) null,
-    is_cooking_lover bit         not null
+    last_name        varchar(30) not null
 );
 
 
@@ -89,9 +88,11 @@ insert into ingredient_categories values ('IC_RUCH', 'Produit de la ruche');
 insert into ingredient_categories values ('IC_OEUF', 'Oeuf');
 insert into ingredient_categories values ('IC_AUTR', 'Autre');
 
-insert into authors values ('bichon','Elisabeth','Nyssens',true);
-insert into authors values ('marvin','Julien','Hanquet',true);
-insert into authors values ('anonyme','Ano','Nyme',false);
+insert into authors values ('bichon','Elisabeth','Nyssens');
+insert into authors values ('marvin','Julien','Hanquet');
+insert into authors values ('anonyme','Ano','Nyme');
+insert into authors values ('frandubi','Françoise','Dubisy');
+insert into authors values ('abdobeir','Abdo','Beirekdar');
 
 insert into ingredients values ('Carotte','unité');
 insert into ingredients values ('Oignon','unité');
