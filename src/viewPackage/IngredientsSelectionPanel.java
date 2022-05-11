@@ -10,7 +10,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class IngredientsSelectionPanel extends JPanel {
     private ApplicationController controller;
@@ -22,12 +21,12 @@ public class IngredientsSelectionPanel extends JPanel {
     private JLabel ingredientLabel, quantityLabel;
     private JComboBox ingredient;
     private JSpinner quantity;
-    private JButton addIngredientBtn;
+    private JButton addIngredientBtn, resetBtn;
     private JList selectedIngredList;
 
     public IngredientsSelectionPanel() throws ConnectionException {
         controller = new ApplicationController();
-        //this.setLayout(new GridLayout(1, 3));
+
         selectedIngredients = new Object[NB_INGREDIENTS];
         nbSelectedIngred = 0;
 
@@ -36,7 +35,7 @@ public class IngredientsSelectionPanel extends JPanel {
 
             int iIngred = 0;
             for(Ingredient ingredient : ingredList) {
-                ingredientsValues[iIngred] = ingredient.getName() + (ingredient.getUnit().equals("unité")?"":(" (" + ingredient.getUnit() + ")"));
+                ingredientsValues[iIngred] = ingredient.getName() + (ingredient.getUnit().equals("unite")?"":(" (" + ingredient.getUnit() + ")"));
                 iIngred++;
             }
 
@@ -52,7 +51,7 @@ public class IngredientsSelectionPanel extends JPanel {
         ingredient.setMaximumRowCount(6);
         JPanel quant = new JPanel();
         quantityLabel = new JLabel("Quantité :");
-        quantity = new JSpinner(new SpinnerNumberModel(0, 0.0, 10000, 0.5));
+        quantity = new JSpinner(new SpinnerNumberModel(1, 1, 10000, 1));
         ingred.add(ingredientLabel);
         ingred.add(ingredient);
         quant.add(quantityLabel);
@@ -61,12 +60,12 @@ public class IngredientsSelectionPanel extends JPanel {
         ingredPanel.add(quant);
 
         addIngredientBtn = new JButton("Ajouter l'ingrédient >>");
-        addIngredientBtn.addActionListener(new ButtonListener());
+        addIngredientBtn.addActionListener(new AddButtonListener());
 
         selectedIngredList = new JList();
-        selectedIngredList.setFixedCellWidth(170);
+        selectedIngredList.setFixedCellWidth(250);
         selectedIngredList.setFixedCellHeight(20);
-        selectedIngredList.setVisibleRowCount(6);
+        selectedIngredList.setVisibleRowCount(8);
         selectedIngredList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         this.add(ingredPanel);
@@ -74,22 +73,15 @@ public class IngredientsSelectionPanel extends JPanel {
         this.add(new JScrollPane(selectedIngredList));
     }
 
-    private class ButtonListener implements ActionListener {
+    private class AddButtonListener implements ActionListener {
         public void actionPerformed( ActionEvent event) {
-            //private ArrayList <String> SelectedIngredients = new ArrayList<>();
+            int convertedQuantity = Integer.parseInt(quantity.getValue().toString());
 
-            double newQuantity = Double.parseDouble(quantity.getValue().toString());
+            selectedIngredients[nbSelectedIngred] = convertedQuantity + " " + ingredient.getSelectedItem().toString();
+            nbSelectedIngred++;
 
-            if(newQuantity > 0) {
-                //SelectedIngredients[nbSelectedIngred] = newQuantity + " " + ingredient.getSelectedItem().toString();
-                selectedIngredients[nbSelectedIngred] = newQuantity + " " + ingredient.getSelectedItem().toString();
-                nbSelectedIngred++;
-
-                selectedIngredList.setListData(selectedIngredients);
-                IngredientsSelectionPanel.this.repaint();
-            } else {
-                JOptionPane.showMessageDialog(null, "La quantité doit être supérieure à 0");
-            }
+            selectedIngredList.setListData(selectedIngredients);
+            IngredientsSelectionPanel.this.repaint();
         }
     }
 }

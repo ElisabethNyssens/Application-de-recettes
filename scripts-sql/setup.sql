@@ -4,9 +4,7 @@ use App_de_recettes;
 
 create table recipes
 (
-    id    int          not null
-        primary key,
-    title varchar(100) not null,
+    title varchar(100) not null primary key,
     creation_date date not null,
     is_hot bit not null,
     is_sweet bit not null,
@@ -49,11 +47,27 @@ create table ingredients
     unit varchar(10) not null
 );
 
+create table ingredient_quantities
+(
+    ingredient_id varchar(30)  not null,
+    recipe_id     varchar(100) not null,
+    quantity      int          not null,
+    primary key (ingredient_id, recipe_id)
+);
+
+create table steps
+(
+    number      int          not null,
+    recipe_id   varchar(100) not null,
+    description varchar(200) not null,
+    primary key (number, recipe_id)
+);
+
 insert into recipes
 values (1, 'Curry au tofu','2021-04-25',true,false,true,'Bon marche','Facile','Moyen',4,'hiver',null);
 
 insert into recipes
-values (2, 'Salade fraise menthe','2021-07-18',false,true,true,'Coût moyen','Tres facile','Rapide',4,'ete',null);
+values (2, 'Salade fraise menthe','2021-07-18',false,true,true,'Cout moyen','Tres facile','Rapide',4,'ete',null);
 
 insert into recipes
 values (3, 'Soupe carotte gingembre','2022-01-13',true,false,true,'Bon marche','Tres Facile','Moyen',4,'automne',null);
@@ -111,3 +125,12 @@ insert into ingredients values ('Riz','g');
 insert into ingredients values ('Pates','g');
 insert into ingredients values ('Tofu','g');
 insert into ingredients values ('Concentre de tomates','g');
+
+insert into ingredient_quantities
+values ('Lait de coco', 'Curry au tofu',20);
+insert into ingredient_quantities
+values ('Riz', 'Curry au tofu',500);
+insert into ingredient_quantities
+values ('Tofu', 'Curry au tofu',250);
+insert into ingredient_quantities
+values ('Oignon', 'Curry au tofu',1);

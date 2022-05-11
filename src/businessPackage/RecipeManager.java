@@ -2,15 +2,13 @@ package businessPackage;
 
 import dataAccessPackage.RecipeDBAccess;
 import dataAccessPackage.RecipeDataAccess;
-import exceptionPackage.AllCategoriesException;
-import exceptionPackage.AllIngredientsException;
-import exceptionPackage.AllRecipesException;
+import exceptionPackage.*;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import exceptionPackage.ConnectionException;
 import modelPackage.Category;
+import modelPackage.DieteryRegime;
 import modelPackage.Ingredient;
 import modelPackage.Recipe;
 
@@ -36,6 +34,9 @@ public class RecipeManager {
     }
     public ArrayList<Category> getAllCategories() throws AllCategoriesException {
         return dao.getAllCategories();
+    }
+    public ArrayList<DieteryRegime> getAllRegimes() throws AllRegimesException {
+        return dao.getAllRegimes();
     }
 
     // Setter

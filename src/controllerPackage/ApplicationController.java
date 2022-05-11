@@ -1,11 +1,9 @@
 package controllerPackage;
 
 import businessPackage.RecipeManager;
-import exceptionPackage.AllCategoriesException;
-import exceptionPackage.AllIngredientsException;
-import exceptionPackage.AllRecipesException;
-import exceptionPackage.ConnectionException;
+import exceptionPackage.*;
 import modelPackage.Category;
+import modelPackage.DieteryRegime;
 import modelPackage.Ingredient;
 import modelPackage.Recipe;
 
@@ -29,6 +27,9 @@ public class ApplicationController {
     }
     public ArrayList<Category> getAllCategories() throws AllCategoriesException {
         return recipeManager.getAllCategories();
+    }
+    public ArrayList<DieteryRegime> getAllRegimes() throws AllRegimesException {
+        return recipeManager.getAllRegimes();
     }
 
     // Update

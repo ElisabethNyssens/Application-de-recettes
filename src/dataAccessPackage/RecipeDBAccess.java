@@ -1,10 +1,8 @@
 package dataAccessPackage;
 
-import exceptionPackage.AllCategoriesException;
-import exceptionPackage.AllIngredientsException;
-import exceptionPackage.AllRecipesException;
-import exceptionPackage.ConnectionException;
+import exceptionPackage.*;
 import modelPackage.Category;
+import modelPackage.DieteryRegime;
 import modelPackage.Ingredient;
 import modelPackage.Recipe;
 
@@ -112,6 +110,30 @@ public class RecipeDBAccess implements RecipeDataAccess {
         }
         catch (SQLException exception) {
             throw new AllIngredientsException();
+        }
+    }
+
+    @Override
+    public ArrayList<DieteryRegime> getAllRegimes() throws AllRegimesException {
+        ArrayList <DieteryRegime> allRegimes = new ArrayList <>();
+        String SQLInstruction = "select * from dietery_regimes";
+
+        try {
+            PreparedStatement preparedStatement = singletonConnection.prepareStatement(SQLInstruction);
+            ResultSet data = preparedStatement.executeQuery();
+            DieteryRegime regime;
+
+            while(data.next()) {
+                regime = new DieteryRegime(
+                        data.getString("id"),
+                        data.getString("name")
+                );
+                allRegimes.add(regime);
+            }
+            return allRegimes;
+        }
+        catch (SQLException exception) {
+            throw new AllRegimesException();
         }
     }
 

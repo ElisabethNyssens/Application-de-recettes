@@ -1,14 +1,8 @@
 package viewPackage;
 
 import controllerPackage.ApplicationController;
-import exceptionPackage.AllCategoriesException;
-import exceptionPackage.AllIngredientsException;
-import exceptionPackage.AllRecipesException;
-import exceptionPackage.ConnectionException;
-import modelPackage.AllRecipesModel;
-import modelPackage.Category;
-import modelPackage.Ingredient;
-import modelPackage.Recipe;
+import exceptionPackage.*;
+import modelPackage.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -23,11 +17,10 @@ public class RecipeForm extends JPanel {
     private ApplicationController controller;
     private JLabel recipeTitleLabel, dateLabel, recipeCategoryLabel, costLabel, difficultyLabel, preparationTimeLabel,
             nbPersonsLabel, regimeLabel;
-    private JComboBox recipeCategory, cost, difficulty, preparationTime;
+    private JComboBox recipeCategory, cost, difficulty, preparationTime, regime;
     private JTextField recipeTitle ;
     private JSpinner date, nbPersons;
     private JCheckBox hot, sweet, salty;
-    private JList regimes;
     private Date today;
 
     private int activeFormStep;
@@ -37,8 +30,10 @@ public class RecipeForm extends JPanel {
     private JButton prevStepBtn, nextStepBtn;
     private JPanel step1Panel, step2Panel, bottomPanel, progressBar;
     private IngredientsSelectionPanel ingredientsSelectionPanel;
+    private StepsPanel stepsPanel;
 
     private String[] recipeCategories = new String[NB_CATEGORIES];
+    private String[] regimes = new String[NB_REGIMES];
     private final String[] costs = {"Bon marché", "Coût moyen", "Assez cher"};
     private final String[] difficulties = {"Très facile", "Facile", "Moyen", "Difficile"};
     private final String[] preparationTimes = {"Rapide", "Moyen", "Long"};
@@ -71,7 +66,7 @@ public class RecipeForm extends JPanel {
         step1Panel.add(date);
 
         nbPersonsLabel = new JLabel("Nombre de personnes :");
-        nbPersons = new JSpinner(new SpinnerNumberModel(0, 0, 50, 1));
+        nbPersons = new JSpinner(new SpinnerNumberModel(4, 1, 50, 1));
         step1Panel.add(nbPersonsLabel);
         step1Panel.add(nbPersons);
 
@@ -87,7 +82,7 @@ public class RecipeForm extends JPanel {
             JOptionPane.showMessageDialog(null, exception.getMessage());
         }
         recipeCategory = new JComboBox(recipeCategories);
-        recipeCategory.setSelectedItem(recipeCategories[2]);
+        recipeCategory.setSelectedItem(recipeCategories[5]);
         step1Panel.add(recipeCategoryLabel);
         step1Panel.add(recipeCategory);
 
@@ -106,6 +101,23 @@ public class RecipeForm extends JPanel {
         step1Panel.add(preparationTimeLabel);
         step1Panel.add(preparationTime);
 
+        // regimes selection
+        regimeLabel = new JLabel("Régime alimentaire :");
+        int iReg = 0;
+        try {
+            ArrayList<DieteryRegime> regimesList = controller.getAllRegimes();
+            for(DieteryRegime regime : regimesList) {
+                regimes[iReg] = regime.getName();
+                iReg++;
+            }
+        } catch (AllRegimesException exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage());
+        }
+        regime = new JComboBox(regimes);
+        regime.setSelectedItem(null);
+        step1Panel.add(regimeLabel);
+        step1Panel.add(regime);
+
         JPanel checkboxPanel = new JPanel();
         hot = new JCheckBox("Chaude");
         sweet = new JCheckBox("Sucrée");
@@ -116,27 +128,19 @@ public class RecipeForm extends JPanel {
         step1Panel.add(new JPanel());
         step1Panel.add(checkboxPanel);
 
-        // regimes selection
-        regimeLabel = new JLabel("Régime alimentaire :");
-        regimes = new JList();
-
-
 
         // ------- Form step 2 -------
         step2Panel = new JPanel();
         step2Panel.setBorder(new EmptyBorder(0, 150, 0, 150));
-        step2Panel.setLayout(new BorderLayout());
+        //step2Panel.setLayout(new GridLayout(2,1));
 
         //step2Panel.add(new JLabel("<html><h2>Les ingrédients</h2></html>"),BorderLayout.NORTH);
 
         ingredientsSelectionPanel = new IngredientsSelectionPanel();
-        step2Panel.add(ingredientsSelectionPanel,BorderLayout.NORTH);
+        step2Panel.add(ingredientsSelectionPanel);
 
-        //addStep = new JButton("Ajouter l'étape");
-
-
-        // ------- Form step 3 -------
-
+        stepsPanel = new StepsPanel();
+        step2Panel.add(stepsPanel);
 
 
 
@@ -151,7 +155,6 @@ public class RecipeForm extends JPanel {
         bottomPanel.add(prevStepBtn);
         bottomPanel.add(nextStepBtn);
         prevStepBtn.setVisible(false);
-
 
         this.add(bottomPanel, BorderLayout.SOUTH);
 
@@ -181,7 +184,6 @@ public class RecipeForm extends JPanel {
         public void actionPerformed(ActionEvent event){
             // validation des input
 
-            // à changer en state pattern ?
             if (activeFormStep == 1) {
                 refToRecipePanel.remove(step1Panel);
                 refToRecipePanel.add(step2Panel);
@@ -189,11 +191,9 @@ public class RecipeForm extends JPanel {
                 prevStepBtn.revalidate();
                 prevStepBtn.repaint();
             } else if (activeFormStep == 2) {
+
+
                 ProgressBarWindow progressBarWindow = new ProgressBarWindow();
-            } else if (activeFormStep == 3) {
-
-            } else if (activeFormStep == 4) {
-
             }
             activeFormStep++;
             refToRecipePanel.revalidate();

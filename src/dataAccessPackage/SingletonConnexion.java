@@ -20,7 +20,7 @@ public class SingletonConnexion {
             }
             catch (SQLException sqlException) {
                 System.out.println(sqlException.getMessage());
-                // throw new ConnectionException;
+                throw new ConnectionException();
             }
         }
         return uniqueConnection;
