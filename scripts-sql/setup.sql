@@ -17,7 +17,7 @@ create table recipes
     nb_persons int not null,
     season varchar(10) null,
     comment varchar(200) null
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;;
 
 create table authors
 (
@@ -25,7 +25,7 @@ create table authors
         primary key,
     first_name       varchar(30) not null,
     last_name        varchar(30) not null
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;;
 
 
 create table categories
@@ -33,28 +33,28 @@ create table categories
     id varchar(10) not null
         primary key,
     name varchar(20) not null
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;;
 
 create table dietery_regimes
 (
     id   varchar(10) not null
         primary key,
     name varchar(20) not null
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;;
 
 create table ingredient_categories
 (
     id   varchar(10) not null
         primary key,
     name varchar(20) not null
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;;
 
 create table ingredients
 (
     name varchar(30) not null
         primary key,
     unit varchar(10) not null
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;;
 
 insert into recipes
 values (1, 'Curry au tofu','2021-04-25',true,false,true,'Bon marché','Facile','Moyen',4,'hiver',null);
