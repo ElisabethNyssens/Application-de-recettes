@@ -14,9 +14,9 @@ public class MainWindow extends JFrame {
     private Container mainContainer;
     private JMenuBar menuBar;
     private JMenu app, create, edit, delete, display, reseach;
-    private JMenuItem home, exit, createRecipe, createMenu, editRecipe, editMenu, editIngredient,
-            deleteRecipes, deleteMenus, deleteIngredients,
-            displayRecipes, displayMenus, displayIngredients,
+    private JMenuItem home, exit, createRecipe, createMenu, editRecipe, editMenu,
+            deleteRecipes, deleteMenus,
+            displayRecipes, displayMenus,
             ingredientResearch, menuResearch, seasonResearch, shoppingList;
 
     public MainWindow() {
@@ -71,24 +71,18 @@ public class MainWindow extends JFrame {
 
         editRecipe = new JMenuItem("Recette");
         editMenu = new JMenuItem("Menu");
-        editIngredient = new JMenuItem("Ingrédient");
         edit.add(editRecipe);
         edit.add(editMenu);
-        edit.add(editIngredient);
 
         deleteRecipes = new JMenuItem("Recettes");
         deleteMenus = new JMenuItem("Menus");
-        deleteIngredients = new JMenuItem("Ingrédients");
         delete.add(deleteRecipes);
         delete.add(deleteMenus);
-        delete.add(deleteIngredients);
 
         displayRecipes = new JMenuItem("Recettes");
         displayMenus = new JMenuItem("Menus");
-        displayIngredients = new JMenuItem("Ingrédients");
         display.add(displayRecipes);
         display.add(displayMenus);
-        display.add(displayIngredients);
 
         ingredientResearch = new JMenuItem("Recettes selon ingrédients");
         menuResearch = new JMenuItem("Menus de régime alimentaire");

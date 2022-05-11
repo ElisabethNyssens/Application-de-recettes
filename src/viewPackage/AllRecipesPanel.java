@@ -25,8 +25,6 @@ public class AllRecipesPanel extends JPanel {
         title = new JLabel("<html><h1 style='margin: 30px 0 15px 0'>Recettes</h1></html>");
         title.setHorizontalAlignment(SwingConstants.CENTER);
 
-        // getAllRecipes()
-
         controller = new ApplicationController();
 
         try {
@@ -43,9 +41,7 @@ public class AllRecipesPanel extends JPanel {
             JOptionPane.showMessageDialog(null, exception.getMessage());
         }
 
-
         this.add(title, BorderLayout.NORTH);
-        // ajout JTable
     }
 
 

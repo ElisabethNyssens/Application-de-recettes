@@ -1,46 +1,61 @@
 package viewPackage;
 
+import controllerPackage.ApplicationController;
+import exceptionPackage.AllCategoriesException;
+import exceptionPackage.AllIngredientsException;
+import exceptionPackage.AllRecipesException;
+import exceptionPackage.ConnectionException;
+import modelPackage.AllRecipesModel;
+import modelPackage.Category;
+import modelPackage.Ingredient;
+import modelPackage.Recipe;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 public class RecipeForm extends JPanel {
-    private JLabel recipeTitleLabel, dateLabel, recipeCategoryLabel, costLabel, difficultyLabel, preparationTimeLabel, nbPersonsLabel;
-    private JComboBox recipeCategory, cost, difficulty, preparationTime, ingredients;
+    private ApplicationController controller;
+    private JLabel recipeTitleLabel, dateLabel, recipeCategoryLabel, costLabel, difficultyLabel, preparationTimeLabel,
+            nbPersonsLabel, regimeLabel;
+    private JComboBox recipeCategory, cost, difficulty, preparationTime;
     private JTextField recipeTitle ;
-    private JSpinner date, nbPersons, quantity;
-    private JCheckBox tested, hot, sweet, salty;
+    private JSpinner date, nbPersons;
+    private JCheckBox hot, sweet, salty;
+    private JList regimes;
     private Date today;
 
     private int activeFormStep;
+    private static int NB_CATEGORIES = 8;
+    public static int NB_REGIMES = 4;
+
     private JButton prevStepBtn, nextStepBtn;
-
-
     private JPanel step1Panel, step2Panel, bottomPanel, progressBar;
+    private IngredientsSelectionPanel ingredientsSelectionPanel;
 
-    private final String[] recipeCategories = {"Apéritif", "Entrée", "Plat principal", "Dessert", "Accompagnement", "Snack", "Sauce", "Boisson"};
+    private String[] recipeCategories = new String[NB_CATEGORIES];
     private final String[] costs = {"Bon marché", "Coût moyen", "Assez cher"};
     private final String[] difficulties = {"Très facile", "Facile", "Moyen", "Difficile"};
     private final String[] preparationTimes = {"Rapide", "Moyen", "Long"};
-    // private final String[] costs = {"€", "€€", "€€€"}; ?
-
 
     private JPanel refToRecipePanel;
 
 
-    public RecipeForm() {
+    public RecipeForm() throws ConnectionException {
+        controller = new ApplicationController();
         refToRecipePanel = this;
         this.setLayout(new BorderLayout());
         activeFormStep = 1;
 
-        // Form step 1
+        // --------- Form step 1 ---------
         step1Panel = new JPanel();
         step1Panel.setBorder(new EmptyBorder(0, 150, 0, 150));
-        step1Panel.setLayout(new GridLayout(10, 2));
+        step1Panel.setLayout(new GridLayout(9, 2));
 
         recipeTitleLabel = new JLabel("Titre :");
         recipeTitle = new JTextField();
@@ -55,20 +70,26 @@ public class RecipeForm extends JPanel {
         step1Panel.add(dateLabel);
         step1Panel.add(date);
 
+        nbPersonsLabel = new JLabel("Nombre de personnes :");
+        nbPersons = new JSpinner(new SpinnerNumberModel(0, 0, 50, 1));
+        step1Panel.add(nbPersonsLabel);
+        step1Panel.add(nbPersons);
+
         recipeCategoryLabel = new JLabel("Catégorie :");
+        int iCateg = 0;
+        try {
+            ArrayList<Category> categList = controller.getAllCategories();
+            for(Category category : categList) {
+                recipeCategories[iCateg] = category.getName();
+                iCateg++;
+            }
+        } catch (AllCategoriesException exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage());
+        }
         recipeCategory = new JComboBox(recipeCategories);
         recipeCategory.setSelectedItem(recipeCategories[2]);
         step1Panel.add(recipeCategoryLabel);
         step1Panel.add(recipeCategory);
-
-        tested = new JCheckBox("Je l'ai déjà testée");
-        hot = new JCheckBox("Chaude");
-        sweet = new JCheckBox("Sucrée");
-        salty = new JCheckBox("Salée");
-        step1Panel.add(tested);
-        step1Panel.add(hot);
-        step1Panel.add(sweet);
-        step1Panel.add(salty);
 
         costLabel = new JLabel("Prix :");
         cost = new JComboBox(costs);
@@ -85,18 +106,36 @@ public class RecipeForm extends JPanel {
         step1Panel.add(preparationTimeLabel);
         step1Panel.add(preparationTime);
 
-        nbPersonsLabel = new JLabel("Nombre de personnes :");
-        nbPersons = new JSpinner(new SpinnerNumberModel(0, 0, 50, 1));
-        step1Panel.add(nbPersonsLabel);
-        step1Panel.add(nbPersons);
+        JPanel checkboxPanel = new JPanel();
+        hot = new JCheckBox("Chaude");
+        sweet = new JCheckBox("Sucrée");
+        salty = new JCheckBox("Salée");
+        checkboxPanel.add(sweet);
+        checkboxPanel.add(salty);
+        checkboxPanel.add(hot);
+        step1Panel.add(new JPanel());
+        step1Panel.add(checkboxPanel);
+
+        // regimes selection
+        regimeLabel = new JLabel("Régime alimentaire :");
+        regimes = new JList();
 
 
-        // Form step 2
+
+        // ------- Form step 2 -------
+        step2Panel = new JPanel();
+        step2Panel.setBorder(new EmptyBorder(0, 150, 0, 150));
+        step2Panel.setLayout(new BorderLayout());
+
+        //step2Panel.add(new JLabel("<html><h2>Les ingrédients</h2></html>"),BorderLayout.NORTH);
+
+        ingredientsSelectionPanel = new IngredientsSelectionPanel();
+        step2Panel.add(ingredientsSelectionPanel,BorderLayout.NORTH);
+
+        //addStep = new JButton("Ajouter l'étape");
 
 
-
-
-        // Form step 3
+        // ------- Form step 3 -------
 
 
 
@@ -124,7 +163,7 @@ public class RecipeForm extends JPanel {
     private class PrevStepListener implements ActionListener {
         public void actionPerformed(ActionEvent event){
             if (activeFormStep == 2) {
-                //refToRecipePanel.remove(step2Panel);
+                refToRecipePanel.remove(step2Panel);
                 prevStepBtn.setVisible(false);
                 refToRecipePanel.add(step1Panel, BorderLayout.CENTER);
             } else if (activeFormStep == 3) {
@@ -145,6 +184,7 @@ public class RecipeForm extends JPanel {
             // à changer en state pattern ?
             if (activeFormStep == 1) {
                 refToRecipePanel.remove(step1Panel);
+                refToRecipePanel.add(step2Panel);
                 prevStepBtn.setVisible(true);
                 prevStepBtn.revalidate();
                 prevStepBtn.repaint();

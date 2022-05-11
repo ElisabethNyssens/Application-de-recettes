@@ -1,7 +1,11 @@
 package dataAccessPackage;
 
+import exceptionPackage.AllCategoriesException;
+import exceptionPackage.AllIngredientsException;
 import exceptionPackage.AllRecipesException;
 import exceptionPackage.ConnectionException;
+import modelPackage.Category;
+import modelPackage.Ingredient;
 import modelPackage.Recipe;
 
 import java.sql.Connection;
@@ -61,7 +65,54 @@ public class RecipeDBAccess implements RecipeDataAccess {
         catch (SQLException exception) {
             throw new AllRecipesException();
         }
+    }
 
+    @Override
+    public ArrayList<Category> getAllCategories() throws AllCategoriesException {
+        ArrayList <Category> allCategories = new ArrayList <>();
+        String SQLInstruction = "select * from categories";
+
+        try {
+            PreparedStatement preparedStatement = singletonConnection.prepareStatement(SQLInstruction);
+            ResultSet data = preparedStatement.executeQuery();
+            Category category;
+
+            while(data.next()) {
+                category = new Category(
+                        data.getString("id"),
+                        data.getString("name")
+                );
+                allCategories.add(category);
+            }
+            return allCategories;
+        }
+        catch (SQLException exception) {
+            throw new AllCategoriesException();
+        }
+    }
+
+    @Override
+    public ArrayList<Ingredient> getAllIngredients() throws AllIngredientsException {
+        ArrayList <Ingredient> allIngredients = new ArrayList <>();
+        String SQLInstruction = "select * from ingredients";
+
+        try {
+            PreparedStatement preparedStatement = singletonConnection.prepareStatement(SQLInstruction);
+            ResultSet data = preparedStatement.executeQuery();
+            Ingredient ingredient;
+
+            while(data.next()) {
+                ingredient = new Ingredient(
+                        data.getString("name"),
+                        data.getString("unit")
+                );
+                allIngredients.add(ingredient);
+            }
+            return allIngredients;
+        }
+        catch (SQLException exception) {
+            throw new AllIngredientsException();
+        }
     }
 
     // Update
