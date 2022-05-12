@@ -13,7 +13,7 @@ public class RecipeCreationPanel extends JPanel {
     public RecipeCreationPanel() {
         this.setLayout(new BorderLayout());
         this.setBorder(new EmptyBorder(0, 40, 40, 40));
-        title = new JLabel("<html><h1 style='margin: 30px 0 15px 0'>Créer une recette</h1></html>");
+        title = new JLabel("<html><h1 style='margin: 30px 0 30px 0; font-size:24px'>Créer une recette</h1></html>");
         title.setHorizontalAlignment(SwingConstants.CENTER);
 
         try {

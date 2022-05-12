@@ -59,12 +59,15 @@ public class AddStepsPanel extends JPanel {
 
     private class AddButtonListener implements ActionListener {
         public void actionPerformed( ActionEvent event) {
-            steps[nbSteps] = (nbSteps+1) + ". " + step.getText();
-            nbSteps++;
-            stepNumber.setValue(nbSteps + 1);
-            stepsList.setListData(steps);
-            step.setText(null);
-            AddStepsPanel.this.repaint();
+            if (!step.getText().isBlank()) {
+                steps[nbSteps] = (nbSteps+1) + ". " + step.getText();
+                nbSteps++;
+                stepNumber.setValue(nbSteps + 1);
+                stepsList.setListData(steps);
+                step.setText(null);
+                AddStepsPanel.this.repaint();
+            }
+
         }
     }
 }

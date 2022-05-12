@@ -8,10 +8,20 @@ public class IngredientQuantity {
     public IngredientQuantity(String ingredient, String recipe, int quantity) {
         this.ingredient = ingredient;
         this.recipe = recipe;
-        this.quantity = quantity;
+        setQuantity(quantity);
     }
 
     public String toString() {
         return quantity + " " + ingredient;
+    }
+
+    public String getIngredient() {
+        return ingredient;
+    }
+
+    public void setQuantity(int quantity) {
+        if (quantity > 0) {
+            this.quantity = quantity;
+        }
     }
 }

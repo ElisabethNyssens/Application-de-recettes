@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class RecipeForm extends JPanel {
     private ApplicationController controller;
@@ -29,7 +30,7 @@ public class RecipeForm extends JPanel {
 
     private JButton prevStepBtn, nextStepBtn;
     private JPanel step1Panel, step2Panel, bottomPanel;
-    private AddIngredientsPanel addIngredientsPanel;
+    protected AddIngredientsPanel addIngredientsPanel;
     private AddStepsPanel addStepsPanel;
 
     private String[] recipeCategories = new String[NB_CATEGORIES];
@@ -54,7 +55,7 @@ public class RecipeForm extends JPanel {
         step1Panel.setLayout(new GridLayout(9, 2));
 
         // ------ Title -------
-        recipeTitleLabel = new JLabel("Titre* :");
+        recipeTitleLabel = new JLabel("Nom de la recette* :");
         recipeTitleLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         recipeTitle = new JTextField();
         step1Panel.add(recipeTitleLabel);
@@ -135,7 +136,7 @@ public class RecipeForm extends JPanel {
         step2Panel.setBorder(new EmptyBorder(0, 150, 0, 150));
 
         // ------ Ingredients -------
-        addIngredientsPanel = new AddIngredientsPanel();
+        addIngredientsPanel = new AddIngredientsPanel("");
         step2Panel.add(addIngredientsPanel);
 
         // ------ Steps -------
@@ -212,8 +213,11 @@ public class RecipeForm extends JPanel {
             if (activeFormStep == 1) {
                 // validation step 1
                 if(recipeTitle.getText().isBlank()) {
-                    JOptionPane.showMessageDialog(null, "Vous avez oublié le titre de la recette!");
-                } else {
+                    JOptionPane.showMessageDialog(null, "Ta recette n'a pas de nom ?\nPas de chance, nous ne pouvons pas l'enregistrer...");
+                } else if (recipeTitle.getText().length() < 3) {
+                    JOptionPane.showMessageDialog(null, "C'est un peu court comme nom, tu ne trouves pas ?");
+                }
+                else {
                     refToRecipePanel.remove(step1Panel);
                     refToRecipePanel.add(step2Panel);
                     prevStepBtn.setVisible(true);
@@ -223,6 +227,36 @@ public class RecipeForm extends JPanel {
                 }
             } else if (activeFormStep == 2) {
                 // Validation step 2
+                ArrayList<IngredientQuantity> ingredientQuantites = addIngredientsPanel.getIngredientQuantities();
+                ingredientQuantites.forEach((n) -> System.out.println(n.getIngredient()));
+
+                if (!ingredientQuantites.isEmpty()) {
+                    Date creationDate = (Date) date.getValue();
+                    GregorianCalendar creationDateGC = new GregorianCalendar();
+                    creationDateGC.setTime(creationDate);
+
+                    Recipe recipe = new Recipe(
+                            recipeTitle.getText(),
+                            creationDateGC,hot.isSelected(),
+                            sweet.isSelected(),salty.isSelected(),
+                            cost.getSelectedItem().toString(),
+                            difficulty.getSelectedItem().toString(),
+                            preparationTime.getSelectedItem().toString(),
+                            Integer.parseInt(nbPersons.getValue().toString()));
+                }
+              /*
+
+                try {
+                    controller.addRecipe(recipe);
+                    JOptionPane.showMessageDialog(null, "Ajout effectué avec succès");
+                    refToRecipePanel.removeAll();
+                    refToRecipePanel.revalidate();
+                    refToRecipePanel.repaint();
+                    refToRecipePanel.add(new AddFormPanel(frameContainer));
+                }
+                catch (AddRecipeException | ConnectionException exception) {
+                    JOptionPane.showMessageDialog(null, exception.getMessage());
+                }*/
 
                 ProgressBarWindow progressBarWindow = new ProgressBarWindow();
             }

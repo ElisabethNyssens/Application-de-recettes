@@ -4,12 +4,21 @@ import controllerPackage.ApplicationController;
 import exceptionPackage.AllIngredientsException;
 import exceptionPackage.ConnectionException;
 import modelPackage.Ingredient;
+import modelPackage.IngredientQuantity;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.toList;
 
 public class AddIngredientsPanel extends JPanel {
     private ApplicationController controller;
@@ -23,8 +32,12 @@ public class AddIngredientsPanel extends JPanel {
     private JSpinner quantity;
     private JButton addIngredientBtn, resetBtn;
     private JList selectedIngredList;
+    private ArrayList<IngredientQuantity> ingredientQuantities;
+    protected String recipeName;
 
-    public AddIngredientsPanel() throws ConnectionException {
+    public AddIngredientsPanel(String recipeName) throws ConnectionException {
+        this.recipeName = recipeName;
+        ingredientQuantities = new ArrayList<>();
         controller = new ApplicationController();
 
         selectedIngredients = new Object[NB_INGREDIENTS];
@@ -74,15 +87,36 @@ public class AddIngredientsPanel extends JPanel {
         this.add(new JScrollPane(selectedIngredList));
     }
 
+    public ArrayList<IngredientQuantity> getIngredientQuantities() {
+            return ingredientQuantities;
+    }
+
     private class AddButtonListener implements ActionListener {
         public void actionPerformed( ActionEvent event) {
             int convertedQuantity = Integer.parseInt(quantity.getValue().toString());
+            String[] ingredAndUnit = ingredient.getSelectedItem().toString().split("[()]", 2);
+            String selectedIngredient = ingredAndUnit[0];
+            /*String unit = ingredAndUnit[1];
+            if (selectedIngredient.contains("(")) {
 
-            selectedIngredients[nbSelectedIngred] = convertedQuantity + " " + ingredient.getSelectedItem().toString();
-            nbSelectedIngred++;
+            }
+            System.out.println(unit.equals("")?"":unit);*/
 
-            selectedIngredList.setListData(selectedIngredients);
-            AddIngredientsPanel.this.repaint();
+            List<IngredientQuantity> duplicate = ingredientQuantities.stream().filter(x ->
+                    x.getIngredient().equals(selectedIngredient)).collect(toList());
+
+            if (duplicate.isEmpty()) {
+                ingredientQuantities.add(new IngredientQuantity(selectedIngredient,recipeName,convertedQuantity));
+                selectedIngredients[nbSelectedIngred] = convertedQuantity + " " + ingredient.getSelectedItem().toString();
+                nbSelectedIngred++;
+
+                selectedIngredList.setListData(selectedIngredients);
+                AddIngredientsPanel.this.repaint();
+            } else {
+                JOptionPane.showMessageDialog(null, "Cet ingrédient est déjà dans la liste !");
+            }
+
+
         }
     }
 }
