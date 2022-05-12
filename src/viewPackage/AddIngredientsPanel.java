@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class IngredientsSelectionPanel extends JPanel {
+public class AddIngredientsPanel extends JPanel {
     private ApplicationController controller;
     private static int NB_INGREDIENTS = 32;
     private String[] ingredientsValues = new String[NB_INGREDIENTS];
@@ -24,7 +24,7 @@ public class IngredientsSelectionPanel extends JPanel {
     private JButton addIngredientBtn, resetBtn;
     private JList selectedIngredList;
 
-    public IngredientsSelectionPanel() throws ConnectionException {
+    public AddIngredientsPanel() throws ConnectionException {
         controller = new ApplicationController();
 
         selectedIngredients = new Object[NB_INGREDIENTS];
@@ -46,11 +46,12 @@ public class IngredientsSelectionPanel extends JPanel {
         JPanel ingredPanel = new JPanel();
         ingredPanel.setLayout(new GridLayout(2, 1));
         JPanel ingred = new JPanel();
-        ingredientLabel = new JLabel("Ingrédient :");
+        ingredientLabel = new JLabel("Ingrédient* :");
         ingredient = new JComboBox(ingredientsValues);
         ingredient.setMaximumRowCount(6);
         JPanel quant = new JPanel();
-        quantityLabel = new JLabel("Quantité :");
+        quant.setLayout(new FlowLayout(FlowLayout.LEFT,3,3));
+        quantityLabel = new JLabel("Quantité* :");
         quantity = new JSpinner(new SpinnerNumberModel(1, 1, 10000, 1));
         ingred.add(ingredientLabel);
         ingred.add(ingredient);
@@ -81,7 +82,7 @@ public class IngredientsSelectionPanel extends JPanel {
             nbSelectedIngred++;
 
             selectedIngredList.setListData(selectedIngredients);
-            IngredientsSelectionPanel.this.repaint();
+            AddIngredientsPanel.this.repaint();
         }
     }
 }

@@ -22,7 +22,7 @@ public class AllRecipesPanel extends JPanel {
     public AllRecipesPanel() throws ConnectionException {
         this.setLayout(new BorderLayout());
         this.setBorder(new EmptyBorder(0, 50, 50, 50));
-        title = new JLabel("<html><h1 style='margin: 30px 0 15px 0'>Recettes</h1></html>");
+        title = new JLabel("<html><h1 style='margin: 30px 0 15px 0; font-size: 24px;'>Recettes</h1></html>");
         title.setHorizontalAlignment(SwingConstants.CENTER);
 
         controller = new ApplicationController();

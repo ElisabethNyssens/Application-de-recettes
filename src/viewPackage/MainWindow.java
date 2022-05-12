@@ -50,9 +50,9 @@ public class MainWindow extends JFrame {
 
         menuBar.add(app);
         menuBar.add(create);
+        menuBar.add(display);
         menuBar.add(edit);
         menuBar.add(delete);
-        menuBar.add(display);
         menuBar.add(reseach);
 
         home = new JMenuItem("Accueil");
@@ -69,6 +69,11 @@ public class MainWindow extends JFrame {
         create.addSeparator();
         create.add(shoppingList);
 
+        displayRecipes = new JMenuItem("Recettes");
+        displayMenus = new JMenuItem("Menus");
+        display.add(displayRecipes);
+        display.add(displayMenus);
+
         editRecipe = new JMenuItem("Recette");
         editMenu = new JMenuItem("Menu");
         edit.add(editRecipe);
@@ -78,11 +83,6 @@ public class MainWindow extends JFrame {
         deleteMenus = new JMenuItem("Menus");
         delete.add(deleteRecipes);
         delete.add(deleteMenus);
-
-        displayRecipes = new JMenuItem("Recettes");
-        displayMenus = new JMenuItem("Menus");
-        display.add(displayRecipes);
-        display.add(displayMenus);
 
         ingredientResearch = new JMenuItem("Recettes selon ingrédients");
         menuResearch = new JMenuItem("Menus de régime alimentaire");
