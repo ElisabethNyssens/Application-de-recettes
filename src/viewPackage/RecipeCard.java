@@ -2,6 +2,7 @@ package viewPackage;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -9,18 +10,31 @@ import java.io.IOException;
 
 public class RecipeCard extends JPanel {
     private String title;
+    private String author;
+    private String category;
+    private String regime;
     private String path;
     private BufferedImage photo;
 
-    public RecipeCard(String title, String path) {
-        this.setLayout(new BorderLayout(100,100));
-
-        JLabel titleLabel = new JLabel("<html><h2 style='margin:210px 0 0 20px;'>"+title+"</h2></html>");
+    public RecipeCard(String title, String author, String category, String regime ,String path) {
+        this.title = title;
+        this.author = author;
+        this.category = category;
+        this.regime = regime;
         this.path = path;
         photo = null;
 
-        setBorder(BorderFactory.createLineBorder(Color.GRAY, 2,true));
+        this.setLayout(new BorderLayout(100,100));
+        this.setBorder(new EmptyBorder(200, 50, 50, 50));
+        JLabel titleLabel = new JLabel("" +
+                "<html><div style='margin:210px 20px 0 20px; font-size:13px'>" +
+                "<h2 style='font-size:20px; color:#97002d; font-weight: normal'>"+title+"</h2>" +
+                "<h3 style='margin:0 0 20px 0; font-weight: normal'>Par "+author+"</h4><br>" +
+                "<p>"+category+"</p><br>"+
+                "<p>"+regime+"</p>"+
+                "</div></html>");
 
+        setBorder(BorderFactory.createLineBorder(Color.GRAY, 2,true));
 
         try {
             photo = ImageIO.read(new File(path));

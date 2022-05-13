@@ -12,13 +12,14 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class RecipeForm extends JPanel {
     private ApplicationController controller;
     private JLabel recipeTitleLabel, dateLabel, recipeCategoryLabel, costLabel, difficultyLabel, preparationTimeLabel,
-            nbPersonsLabel, regimeLabel;
-    private JComboBox recipeCategory, cost, difficulty, preparationTime, regime;
-    private JTextField recipeTitle ;
+            nbPersonsLabel, regimeLabel, seasonLabel;
+    private JComboBox recipeCategory, cost, difficulty, preparationTime, regime, season;
+    private JTextField recipeTitle;
     private JSpinner date, nbPersons;
     private JCheckBox hot, sweet, salty;
     private Date today;
@@ -28,15 +29,16 @@ public class RecipeForm extends JPanel {
     public static int NB_REGIMES = 4;
 
     private JButton prevStepBtn, nextStepBtn;
-    private JPanel step1Panel, step2Panel, bottomPanel, progressBar;
-    private IngredientsSelectionPanel ingredientsSelectionPanel;
-    private StepsPanel stepsPanel;
+    private JPanel step1Panel, step2Panel, bottomPanel;
+    protected AddIngredientsPanel addIngredientsPanel;
+    private AddStepsPanel addStepsPanel;
 
     private String[] recipeCategories = new String[NB_CATEGORIES];
     private String[] regimes = new String[NB_REGIMES];
     private final String[] costs = {"Bon marché", "Coût moyen", "Assez cher"};
     private final String[] difficulties = {"Très facile", "Facile", "Moyen", "Difficile"};
     private final String[] preparationTimes = {"Rapide", "Moyen", "Long"};
+    private final String[] seasons = {"Printemps", "Ete", "Automne", "Hiver"};
 
     private JPanel refToRecipePanel;
 
@@ -47,30 +49,39 @@ public class RecipeForm extends JPanel {
         this.setLayout(new BorderLayout());
         activeFormStep = 1;
 
-        // --------- Form step 1 ---------
+        // --------------- Form step 1 ----------------
         step1Panel = new JPanel();
         step1Panel.setBorder(new EmptyBorder(0, 150, 0, 150));
         step1Panel.setLayout(new GridLayout(9, 2));
 
-        recipeTitleLabel = new JLabel("Titre :");
+        // ------ Title -------
+        recipeTitleLabel = new JLabel("Nom de la recette* :");
+        recipeTitleLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         recipeTitle = new JTextField();
         step1Panel.add(recipeTitleLabel);
         step1Panel.add(recipeTitle);
 
-        dateLabel = new JLabel("Date de création :");
+        // ------ Creation date -------
+        dateLabel = new JLabel("Date de création* :");
+        dateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         today = new Date();
         date = new JSpinner(new SpinnerDateModel(today, null, null, Calendar.MONTH));
         JSpinner.DateEditor editor = new JSpinner.DateEditor(date, "dd-MM-yyyy");
         date.setEditor(editor);
+        date.setEnabled(false);
         step1Panel.add(dateLabel);
         step1Panel.add(date);
 
-        nbPersonsLabel = new JLabel("Nombre de personnes :");
+        // ------ Number of persons -------
+        nbPersonsLabel = new JLabel("Nombre de personnes* :");
+        nbPersonsLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         nbPersons = new JSpinner(new SpinnerNumberModel(4, 1, 50, 1));
         step1Panel.add(nbPersonsLabel);
         step1Panel.add(nbPersons);
 
-        recipeCategoryLabel = new JLabel("Catégorie :");
+        // ------ Recipe category -------
+        recipeCategoryLabel = new JLabel("Catégorie* :");
+        recipeCategoryLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         int iCateg = 0;
         try {
             ArrayList<Category> categList = controller.getAllCategories();
@@ -86,23 +97,59 @@ public class RecipeForm extends JPanel {
         step1Panel.add(recipeCategoryLabel);
         step1Panel.add(recipeCategory);
 
-        costLabel = new JLabel("Prix :");
+        // ------ Cost -------
+        costLabel = new JLabel("Prix* :");
+        costLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         cost = new JComboBox(costs);
         step1Panel.add(costLabel);
         step1Panel.add(cost);
 
-        difficultyLabel = new JLabel("Difficulté :");
+        // ------ Difficulty level -------
+        difficultyLabel = new JLabel("Difficulté* :");
+        difficultyLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         difficulty = new JComboBox(difficulties);
         step1Panel.add(difficultyLabel);
         step1Panel.add(difficulty);
 
-        preparationTimeLabel = new JLabel("Temps de préparation :");
+        // ------ preparation time -------
+        preparationTimeLabel = new JLabel("Temps de préparation* :");
+        preparationTimeLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         preparationTime = new JComboBox(preparationTimes);
         step1Panel.add(preparationTimeLabel);
         step1Panel.add(preparationTime);
 
-        // regimes selection
+        // ------ Checkboxes -------
+        JPanel checkboxPanel = new JPanel();
+        hot = new JCheckBox("Chaude");
+        sweet = new JCheckBox("Sucrée");
+        salty = new JCheckBox("Salée");
+        checkboxPanel.add(sweet);
+        checkboxPanel.add(salty);
+        checkboxPanel.add(hot);
+        step1Panel.add(new JPanel());
+        step1Panel.add(checkboxPanel);
+
+
+        // ---------------- Form step 2 -----------------
+        step2Panel = new JPanel();
+        step2Panel.setLayout(new GridLayout(3,1));
+        step2Panel.setBorder(new EmptyBorder(0, 150, 0, 150));
+
+        // ------ Ingredients -------
+        addIngredientsPanel = new AddIngredientsPanel("");
+        step2Panel.add(addIngredientsPanel);
+
+        // ------ Steps -------
+        addStepsPanel = new AddStepsPanel();
+        step2Panel.add(addStepsPanel);
+
+        JPanel gridPanel = new JPanel();
+        gridPanel.setLayout(new GridLayout(3,2));
+        //gridPanel.setLayout(new FlowLayout(FlowLayout.CENTER,3,3));
+
+        // ------ Dietery regime -------
         regimeLabel = new JLabel("Régime alimentaire :");
+        regimeLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         int iReg = 0;
         try {
             ArrayList<DieteryRegime> regimesList = controller.getAllRegimes();
@@ -115,35 +162,20 @@ public class RecipeForm extends JPanel {
         }
         regime = new JComboBox(regimes);
         regime.setSelectedItem(null);
-        step1Panel.add(regimeLabel);
-        step1Panel.add(regime);
+        gridPanel.add(regimeLabel);
+        gridPanel.add(regime);
 
-        JPanel checkboxPanel = new JPanel();
-        hot = new JCheckBox("Chaude");
-        sweet = new JCheckBox("Sucrée");
-        salty = new JCheckBox("Salée");
-        checkboxPanel.add(sweet);
-        checkboxPanel.add(salty);
-        checkboxPanel.add(hot);
-        step1Panel.add(new JPanel());
-        step1Panel.add(checkboxPanel);
+        // ------ Season -------
+        seasonLabel = new JLabel("Saison :");
+        seasonLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        season = new JComboBox(seasons);
+        season.setSelectedItem(null);
+        gridPanel.add(seasonLabel);
+        gridPanel.add(season);
 
+        step2Panel.add(gridPanel);
 
-        // ------- Form step 2 -------
-        step2Panel = new JPanel();
-        step2Panel.setBorder(new EmptyBorder(0, 150, 0, 150));
-        //step2Panel.setLayout(new GridLayout(2,1));
-
-        //step2Panel.add(new JLabel("<html><h2>Les ingrédients</h2></html>"),BorderLayout.NORTH);
-
-        ingredientsSelectionPanel = new IngredientsSelectionPanel();
-        step2Panel.add(ingredientsSelectionPanel);
-
-        stepsPanel = new StepsPanel();
-        step2Panel.add(stepsPanel);
-
-
-
+        // ------------------------------------------------
         this.add(step1Panel, BorderLayout.CENTER);
 
         // Buttons & progress bar
@@ -165,16 +197,11 @@ public class RecipeForm extends JPanel {
 
     private class PrevStepListener implements ActionListener {
         public void actionPerformed(ActionEvent event){
-            if (activeFormStep == 2) {
-                refToRecipePanel.remove(step2Panel);
-                prevStepBtn.setVisible(false);
-                refToRecipePanel.add(step1Panel, BorderLayout.CENTER);
-            } else if (activeFormStep == 3) {
-
-            } else if (activeFormStep == 4) {
-
-            }
+            refToRecipePanel.remove(step2Panel);
+            prevStepBtn.setVisible(false);
+            refToRecipePanel.add(step1Panel, BorderLayout.CENTER);
             activeFormStep--;
+
             refToRecipePanel.revalidate();
             refToRecipePanel.repaint();
         }
@@ -182,20 +209,57 @@ public class RecipeForm extends JPanel {
 
     private class NextStepListener implements ActionListener {
         public void actionPerformed(ActionEvent event){
-            // validation des input
 
             if (activeFormStep == 1) {
-                refToRecipePanel.remove(step1Panel);
-                refToRecipePanel.add(step2Panel);
-                prevStepBtn.setVisible(true);
-                prevStepBtn.revalidate();
-                prevStepBtn.repaint();
+                // validation step 1
+                if(recipeTitle.getText().isBlank()) {
+                    JOptionPane.showMessageDialog(null, "Ta recette n'a pas de nom ?\nPas de chance, nous ne pouvons pas l'enregistrer...");
+                } else if (recipeTitle.getText().length() < 3) {
+                    JOptionPane.showMessageDialog(null, "C'est un peu court comme nom, tu ne trouves pas ?");
+                }
+                else {
+                    refToRecipePanel.remove(step1Panel);
+                    refToRecipePanel.add(step2Panel);
+                    prevStepBtn.setVisible(true);
+                    prevStepBtn.revalidate();
+                    prevStepBtn.repaint();
+                    activeFormStep++;
+                }
             } else if (activeFormStep == 2) {
+                // Validation step 2
+                ArrayList<IngredientQuantity> ingredientQuantites = addIngredientsPanel.getIngredientQuantities();
+                ingredientQuantites.forEach((n) -> System.out.println(n.getIngredient()));
 
+                if (!ingredientQuantites.isEmpty()) {
+                    Date creationDate = (Date) date.getValue();
+                    GregorianCalendar creationDateGC = new GregorianCalendar();
+                    creationDateGC.setTime(creationDate);
+
+                    Recipe recipe = new Recipe(
+                            recipeTitle.getText(),
+                            creationDateGC,hot.isSelected(),
+                            sweet.isSelected(),salty.isSelected(),
+                            cost.getSelectedItem().toString(),
+                            difficulty.getSelectedItem().toString(),
+                            preparationTime.getSelectedItem().toString(),
+                            Integer.parseInt(nbPersons.getValue().toString()));
+                }
+              /*
+
+                try {
+                    controller.addRecipe(recipe);
+                    JOptionPane.showMessageDialog(null, "Ajout effectué avec succès");
+                    refToRecipePanel.removeAll();
+                    refToRecipePanel.revalidate();
+                    refToRecipePanel.repaint();
+                    refToRecipePanel.add(new AddFormPanel(frameContainer));
+                }
+                catch (AddRecipeException | ConnectionException exception) {
+                    JOptionPane.showMessageDialog(null, exception.getMessage());
+                }*/
 
                 ProgressBarWindow progressBarWindow = new ProgressBarWindow();
             }
-            activeFormStep++;
             refToRecipePanel.revalidate();
             refToRecipePanel.repaint();
         }

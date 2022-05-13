@@ -20,8 +20,7 @@ public class AllRecipesModel extends AbstractTableModel {
         columnNames.add("Difficulté");
         columnNames.add("Temps préparation");
         columnNames.add("Nombre personnes");
-        /*columnNames.add("saison");
-        columnNames.add("commentaire");*/
+        /*columnNames.add("saison");*/
         this.recipes = recipes;
     }
 
@@ -52,8 +51,7 @@ public class AllRecipesModel extends AbstractTableModel {
             case 6 : return recipe.getDifficulty();
             case 7 : return recipe.getPreparationTime();
             case 8 : return recipe.getNbPersons();
-          /*  case 9 : return recipe.getSeason();
-            case 10 : return recipe.getComment();*/
+          /*  case 9 : return recipe.getSeason();*/
             default: return null;
         }
     }

@@ -4,14 +4,23 @@ import controllerPackage.ApplicationController;
 import exceptionPackage.AllIngredientsException;
 import exceptionPackage.ConnectionException;
 import modelPackage.Ingredient;
+import modelPackage.IngredientQuantity;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
-public class IngredientsSelectionPanel extends JPanel {
+import static java.util.stream.Collectors.toList;
+
+public class AddIngredientsPanel extends JPanel {
     private ApplicationController controller;
     private static int NB_INGREDIENTS = 32;
     private String[] ingredientsValues = new String[NB_INGREDIENTS];
@@ -23,8 +32,12 @@ public class IngredientsSelectionPanel extends JPanel {
     private JSpinner quantity;
     private JButton addIngredientBtn, resetBtn;
     private JList selectedIngredList;
+    private ArrayList<IngredientQuantity> ingredientQuantities;
+    protected String recipeName;
 
-    public IngredientsSelectionPanel() throws ConnectionException {
+    public AddIngredientsPanel(String recipeName) throws ConnectionException {
+        this.recipeName = recipeName;
+        ingredientQuantities = new ArrayList<>();
         controller = new ApplicationController();
 
         selectedIngredients = new Object[NB_INGREDIENTS];
@@ -46,11 +59,12 @@ public class IngredientsSelectionPanel extends JPanel {
         JPanel ingredPanel = new JPanel();
         ingredPanel.setLayout(new GridLayout(2, 1));
         JPanel ingred = new JPanel();
-        ingredientLabel = new JLabel("Ingrédient :");
+        ingredientLabel = new JLabel("Ingrédient* :");
         ingredient = new JComboBox(ingredientsValues);
         ingredient.setMaximumRowCount(6);
         JPanel quant = new JPanel();
-        quantityLabel = new JLabel("Quantité :");
+        quant.setLayout(new FlowLayout(FlowLayout.LEFT,3,3));
+        quantityLabel = new JLabel("Quantité* :");
         quantity = new JSpinner(new SpinnerNumberModel(1, 1, 10000, 1));
         ingred.add(ingredientLabel);
         ingred.add(ingredient);
@@ -73,15 +87,36 @@ public class IngredientsSelectionPanel extends JPanel {
         this.add(new JScrollPane(selectedIngredList));
     }
 
+    public ArrayList<IngredientQuantity> getIngredientQuantities() {
+            return ingredientQuantities;
+    }
+
     private class AddButtonListener implements ActionListener {
         public void actionPerformed( ActionEvent event) {
             int convertedQuantity = Integer.parseInt(quantity.getValue().toString());
+            String[] ingredAndUnit = ingredient.getSelectedItem().toString().split("[()]", 2);
+            String selectedIngredient = ingredAndUnit[0];
+            /*String unit = ingredAndUnit[1];
+            if (selectedIngredient.contains("(")) {
 
-            selectedIngredients[nbSelectedIngred] = convertedQuantity + " " + ingredient.getSelectedItem().toString();
-            nbSelectedIngred++;
+            }
+            System.out.println(unit.equals("")?"":unit);*/
 
-            selectedIngredList.setListData(selectedIngredients);
-            IngredientsSelectionPanel.this.repaint();
+            List<IngredientQuantity> duplicate = ingredientQuantities.stream().filter(x ->
+                    x.getIngredient().equals(selectedIngredient)).collect(toList());
+
+            if (duplicate.isEmpty()) {
+                ingredientQuantities.add(new IngredientQuantity(selectedIngredient,recipeName,convertedQuantity));
+                selectedIngredients[nbSelectedIngred] = convertedQuantity + " " + ingredient.getSelectedItem().toString();
+                nbSelectedIngred++;
+
+                selectedIngredList.setListData(selectedIngredients);
+                AddIngredientsPanel.this.repaint();
+            } else {
+                JOptionPane.showMessageDialog(null, "Cet ingrédient est déjà dans la liste !");
+            }
+
+
         }
     }
 }
