@@ -13,7 +13,7 @@ public class Main {
     //docker stop projetrecettes
 
     public static void main(String[] args){
-        //WelcomeWindow welcomeWindow = new WelcomeWindow();
-        MainWindow mainWindow = new MainWindow();
+        WelcomeWindow welcomeWindow = new WelcomeWindow();
+        //ainWindow mainWindow = new MainWindow();
     }
 }

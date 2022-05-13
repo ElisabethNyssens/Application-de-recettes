@@ -10,4 +10,16 @@ public class Author {
         this.firstName = firstName;
         this.lastName = lastName;
     }
+
+    public String getPseudo() {
+        return pseudo;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
 }

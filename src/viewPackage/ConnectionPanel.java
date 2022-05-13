@@ -1,20 +1,31 @@
 package viewPackage;
 
+import controllerPackage.ApplicationController;
+import exceptionPackage.AllAuthorsException;
+import exceptionPackage.AllCategoriesException;
+import exceptionPackage.ConnectionException;
+import modelPackage.Author;
+import modelPackage.Category;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class ConnectionPanel extends JPanel {
+    private ApplicationController controller;
     private JPanel formPanel, buttonPanel;
     private JLabel title;
     private JComboBox pseudosBox;
     private JButton validation;
 
-    private final String[] pseudos = {"Bichon", "Marvin", "Prof", "Anonyme1", "Anonyme2"};
+    public static int NB_PSEUDOS = 5;
+    private String[] pseudos = new String[NB_PSEUDOS];
 
-    public ConnectionPanel() {
+    public ConnectionPanel() throws ConnectionException {
+        controller = new ApplicationController();
         setLayout(new BorderLayout());
 
         // Titre
@@ -26,6 +37,16 @@ public class ConnectionPanel extends JPanel {
         formPanel.setLayout(new GridLayout(3, 2));
         formPanel.setBorder(new EmptyBorder(0, 150, 0, 150));
 
+        int iPseudo = 0;
+        try {
+            ArrayList<Author> authorsList = controller.getAllAuthors();
+            for(Author author : authorsList) {
+                pseudos[iPseudo] = author.getPseudo() + " (" + author.getFirstName() + " " + author.getLastName() + ")";
+                iPseudo++;
+            }
+        } catch (AllAuthorsException exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage());
+        }
         pseudosBox = new JComboBox(pseudos);
         pseudosBox.setSelectedItem(pseudos[0]);
         formPanel.add(pseudosBox);

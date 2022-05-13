@@ -1,5 +1,7 @@
 package viewPackage;
 
+import exceptionPackage.ConnectionException;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -76,7 +78,11 @@ public class WelcomeWindow extends JFrame {
     private class ConnectionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            changePanel(new ConnectionPanel());
+            try {
+                changePanel(new ConnectionPanel());
+            } catch (ConnectionException exception) {
+                exception.printStackTrace();
+            }
         }
     }
 

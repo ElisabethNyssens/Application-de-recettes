@@ -2,10 +2,7 @@ package controllerPackage;
 
 import businessPackage.RecipeManager;
 import exceptionPackage.*;
-import modelPackage.Category;
-import modelPackage.DieteryRegime;
-import modelPackage.Ingredient;
-import modelPackage.Recipe;
+import modelPackage.*;
 
 import java.util.ArrayList;
 
@@ -17,7 +14,15 @@ public class ApplicationController {
     }
 
     // Create
-
+    public void addRecipe(Recipe recipe) throws AddRecipeException {
+        recipeManager.addRecipe(recipe);
+    }
+    public void addStep(Step step) throws AddStepException {
+        recipeManager.addStep(step);
+    }
+    public void addIngredientQuantity(IngredientQuantity ingredientQuantity) throws AddIngredQuantException {
+        recipeManager.addIngredientQuantity(ingredientQuantity);
+    }
     // Read
     public ArrayList<Recipe> getAllRecipes() throws AllRecipesException {
         return recipeManager.getAllRecipes();
@@ -30,6 +35,9 @@ public class ApplicationController {
     }
     public ArrayList<DieteryRegime> getAllRegimes() throws AllRegimesException {
         return recipeManager.getAllRegimes();
+    }
+    public ArrayList<Author> getAllAuthors() throws AllAuthorsException {
+        return recipeManager.getAllAuthors();
     }
 
     // Update
