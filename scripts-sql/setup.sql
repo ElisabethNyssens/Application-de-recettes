@@ -1,10 +1,30 @@
 create database App_de_recettes;
 
-use App_de_recettes;
+USE App_de_recettes;
 
-create table recipes
+CREATE TABLE authors
 (
-    title varchar(100) not null primary key,
+    pseudo varchar(15) PRIMARY KEY,
+    first_name varchar(30) not null,
+    last_name varchar(30) not null
+);
+
+CREATE TABLE categories
+(
+    id varchar(10) PRIMARY KEY,
+    cat_name varchar(20) not null
+);
+
+CREATE TABLE dietery_regimes
+(
+    id   varchar(10) PRIMARY KEY,
+    dr_name varchar(20) not null
+);
+
+CREATE TABLE recipes
+(
+	id int PRIMARY KEY AUTO_INCREMENT,
+    title varchar(100) not null,
     creation_date date not null,
     is_hot bit not null,
     is_sweet bit not null,
@@ -13,64 +33,63 @@ create table recipes
     difficulty varchar(15) not null,
     preparation_time varchar(15) not null,
     nb_persons int not null,
-    season varchar(10) null,
-    comment varchar(200) null
+    season varchar(10),
+    author varchar(15) not null,
+	dietery_regime varchar(10),
+	category varchar(10) not null,
+    FOREIGN KEY (author) REFERENCES authors (pseudo),
+	FOREIGN KEY (dietery_regime) REFERENCES dietery_regimes (id),
+    FOREIGN KEY (category) REFERENCES categories (id)
 );
 
-create table authors
+CREATE TABLE ingredients
 (
-    pseudo           varchar(15) not null
-        primary key,
-    first_name       varchar(30) not null,
-    last_name        varchar(30) not null
-);
-
-
-create table categories
-(
-    id varchar(10) not null
-        primary key,
-    name varchar(20) not null
-);
-
-create table dietery_regimes
-(
-    id   varchar(10) not null
-        primary key,
-    name varchar(20) not null
-);
-
-create table ingredients
-(
-    name varchar(30) not null
-        primary key,
+    ing_name varchar(30) PRIMARY KEY,
     unit varchar(10) not null
 );
 
-create table ingredient_quantities
+CREATE TABLE ingredient_quantities
 (
-    ingredient_id varchar(30)  not null,
-    recipe_id     varchar(100) not null,
-    quantity      int          not null,
-    primary key (ingredient_id, recipe_id)
+    ingredient_id varchar(30) ,
+    recipe_id     int,
+    quantity      int         not null,
+    FOREIGN KEY (ingredient_id) REFERENCES ingredients (ing_name),
+    FOREIGN KEY (recipe_id) REFERENCES recipes (id),
+    PRIMARY KEY (ingredient_id, recipe_id)
 );
 
-create table steps
+CREATE TABLE steps
 (
-    number      int          not null,
-    recipe_id   varchar(100) not null,
-    description varchar(200) not null,
-    primary key (number, recipe_id)
+    order_number      int,
+    recipe_id   int,
+    content varchar(400) not null,
+    FOREIGN KEY (recipe_id) REFERENCES recipes (id),
+    PRIMARY KEY (order_number, recipe_id)
+);
+
+CREATE TABLE menus 
+(
+	id int PRIMARY KEY AUTO_INCREMENT,
+    title varchar(100) not null,
+    comment varchar(200)
+);
+
+CREATE TABLE menu_components
+(
+	order_number int not null,
+    menu_id int ,
+    recipe_id int not null,
+    FOREIGN KEY (menu_id) REFERENCES menus (id),
+    FOREIGN KEY (recipe_id) REFERENCES recipes (id),
+    PRIMARY KEY(order_number, menu_id)
 );
 
 insert into recipes
-values (1, 'Curry au tofu','2021-04-25',true,false,true,'Bon marche','Facile','Moyen',4,'hiver',null);
-
+values ('Curry au tofu','2021-04-25',true,false,true,'Bon marche','Facile','Moyen',4,'hiver','bichon',null,'RC_PLAT');
 insert into recipes
-values (2, 'Salade fraise menthe','2021-07-18',false,true,true,'Cout moyen','Tres facile','Rapide',4,'ete',null);
-
+values ('Salade fraise menthe','2021-07-18',false,true,true,'Cout moyen','Tres facile','Rapide',4,'ete','marvin','D_VEGA','RC_DESS');
 insert into recipes
-values (3, 'Soupe carotte gingembre','2022-01-13',true,false,true,'Bon marche','Tres Facile','Moyen',4,'automne',null);
+values ('Soupe carotte gingembre','2022-01-13',true,false,true,'Bon marche','Tres Facile','Moyen',4,'automne','anonyme','D_VEGE','RC_SOU');
 
 
 insert into categories values ('RC_ENT', 'Entree');
@@ -81,6 +100,7 @@ insert into categories values ('RC_ACC', 'Accompagnement');
 insert into categories values ('RC_SNA', 'Snack');
 insert into categories values ('RC_SAU', 'Sauce');
 insert into categories values ('RC_BOI', 'Boisson');
+insert into categories values ('RC_SOU', 'Soupe');
 
 insert into dietery_regimes values ('D_VEGA', 'Vegan');
 insert into dietery_regimes values ('D_VEGE', 'Vegetarien');

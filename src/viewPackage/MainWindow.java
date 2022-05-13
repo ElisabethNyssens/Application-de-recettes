@@ -101,12 +101,22 @@ public class MainWindow extends JFrame {
         home.addActionListener(new HomeListener());
         // Menu Créer recette
         createRecipe.addActionListener(new NewRecipeListener());
+        // Menu Créer menu
+        createMenu.addActionListener(new NewMenuListener());
 
         // Afficher recettes
         displayRecipes.addActionListener(new DisplayRecipesListener());
 
 
         setVisible(true);
+    }
+
+    private class HomeListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            mainContainer.removeAll();
+            mainContainer.add(new HomePanel());
+            setVisible(true);
+        }
     }
 
     private class NewRecipeListener implements ActionListener {
@@ -117,10 +127,11 @@ public class MainWindow extends JFrame {
         }
     }
 
-    private class HomeListener implements ActionListener {
-        public void actionPerformed(ActionEvent event) {
+    private class NewMenuListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
             mainContainer.removeAll();
-            mainContainer.add(new HomePanel());
+            mainContainer.add(new MenuCreationPanel());
             setVisible(true);
         }
     }
