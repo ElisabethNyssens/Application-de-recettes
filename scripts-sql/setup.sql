@@ -4,18 +4,38 @@ use App_de_recettes;
 
 create table recipes
 (
-    title varchar(100) not null primary key,
-    creation_date date not null,
-    is_hot bit not null,
-    is_sweet bit not null,
-    is_salty bit not null,
-    budget varchar(15) not null,
-    difficulty varchar(15) not null,
-    preparation_time varchar(15) not null,
-    nb_persons int not null,
-    season varchar(10) null,
-    comment varchar(200) null
+    id               int auto_increment
+        primary key,
+    title            varchar(100) not null,
+    creation_date    date         not null,
+    is_hot           bit          not null,
+    is_sweet         bit          not null,
+    is_salty         bit          not null,
+    budget           varchar(15)  not null,
+    difficulty       varchar(15)  not null,
+    preparation_time varchar(15)  not null,
+    nb_persons       int          not null,
+    season           varchar(10)  null,
+    author           varchar(15)  not null,
+    dietery_regime   varchar(10)  null,
+    category         varchar(10)  not null,
+    constraint recipes_ibfk_1
+        foreign key (author) references authors (pseudo),
+    constraint recipes_ibfk_2
+        foreign key (dietery_regime) references dietery_regimes (id),
+    constraint recipes_ibfk_3
+        foreign key (category) references categories (id)
 );
+
+create index author
+    on recipes (author);
+
+create index category
+    on recipes (category);
+
+create index dietery_regime
+    on recipes (dietery_regime);
+
 
 create table authors
 (
@@ -64,14 +84,11 @@ create table steps
 );
 
 insert into recipes
-values (1, 'Curry au tofu','2021-04-25',true,false,true,'Bon marche','Facile','Moyen',4,'hiver',null);
-
+values (null,'Curry au tofu','2021-04-25',true,false,true,'Bon marche','Facile','Moyen',4,'hiver','marvin','D_VEGA','RC_PLAT');
 insert into recipes
-values (2, 'Salade fraise menthe','2021-07-18',false,true,true,'Cout moyen','Tres facile','Rapide',4,'ete',null);
-
+values (null,'Salade fraise menthe','2021-07-18',false,true,true,'Cout moyen','Tres facile','Rapide',4,'ete','bichon','D_VEGE','RC_ACC');
 insert into recipes
-values (3, 'Soupe carotte gingembre','2022-01-13',true,false,true,'Bon marche','Tres Facile','Moyen',4,'automne',null);
-
+values (null,'Soupe carotte gingembre','2022-01-13',true,false,true,'Bon marche','Tres Facile','Moyen',4,'automne','marvin','D_VEGE','RC_SOU');
 
 insert into categories values ('RC_ENT', 'Entree');
 insert into categories values ('RC_PLAT', 'Plat principal');

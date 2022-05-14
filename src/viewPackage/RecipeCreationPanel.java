@@ -17,7 +17,7 @@ public class RecipeCreationPanel extends JPanel {
         title.setHorizontalAlignment(SwingConstants.CENTER);
 
         try {
-        recipeForm = new RecipeForm();
+            recipeForm = new RecipeForm();
         } catch (ConnectionException exception) {
             exception.getMessage();
         }
