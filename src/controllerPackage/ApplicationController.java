@@ -37,6 +37,9 @@ public class ApplicationController {
     public ArrayList<DieteryRegime> getAllRegimes() throws AllRegimesException {
         return recipeManager.getAllRegimes();
     }
+    public ArrayList<Author> getAllAuthors() throws AllAuthorsException {
+        return recipeManager.getAllAuthors();
+    }
 
     // Update
 

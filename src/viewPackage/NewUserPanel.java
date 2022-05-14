@@ -1,5 +1,7 @@
 package viewPackage;
 
+import exceptionPackage.ConnectionException;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -58,7 +60,11 @@ public class NewUserPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             WelcomeWindow frame = (WelcomeWindow) SwingUtilities.getAncestorOfClass(WelcomeWindow.class, validation);
-            frame.changePanel(new ConnectionPanel());
+            try {
+                frame.changePanel(new ConnectionPanel());
+            } catch (ConnectionException exception) {
+                System.out.println(exception.getMessage());
+            }
         }
     }
 }

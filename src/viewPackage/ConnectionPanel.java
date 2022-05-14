@@ -13,16 +13,20 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class ConnectionPanel extends JPanel {
+    private ApplicationController controller;
     private JPanel formPanel, buttonPanel;
     private JLabel title;
     private JComboBox pseudo;
     private JButton validation;
 
-    private final String[] pseudos = {"Bichon", "Marvin", "Prof", "Anonyme1", "Anonyme2"};
+    public static int NB_PSEUDOS = 5;
+    private final String[] pseudos = new String[NB_PSEUDOS];
 
-    public ConnectionPanel() {
+    public ConnectionPanel() throws ConnectionException {
+        controller = new ApplicationController();
         setLayout(new BorderLayout());
 
         // Titre

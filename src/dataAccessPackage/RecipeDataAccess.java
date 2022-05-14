@@ -1,9 +1,6 @@
 package dataAccessPackage;
 
-import exceptionPackage.AllCategoriesException;
-import exceptionPackage.AllIngredientsException;
-import exceptionPackage.AllRecipesException;
-import exceptionPackage.AllRegimesException;
+import exceptionPackage.*;
 import modelPackage.*;
 
 import java.util.ArrayList;
@@ -18,6 +15,7 @@ public interface RecipeDataAccess {
      ArrayList<Category> getAllCategories() throws AllCategoriesException;
      ArrayList<Ingredient> getAllIngredients() throws AllIngredientsException;
      ArrayList<DieteryRegime> getAllRegimes() throws AllRegimesException;
+     ArrayList<Author> getAllAuthors() throws AllAuthorsException;
      // Update
 
      // Delete

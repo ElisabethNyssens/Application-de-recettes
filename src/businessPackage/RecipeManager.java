@@ -41,6 +41,9 @@ public class RecipeManager {
     public ArrayList<DieteryRegime> getAllRegimes() throws AllRegimesException {
         return dao.getAllRegimes();
     }
+    public ArrayList<Author> getAllAuthors() throws AllAuthorsException {
+        return dao.getAllAuthors();
+    }
 
     // Setter
     public void setDao(RecipeDataAccess dao) {

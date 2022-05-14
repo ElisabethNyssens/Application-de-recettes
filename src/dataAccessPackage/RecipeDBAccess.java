@@ -81,7 +81,7 @@ public class RecipeDBAccess implements RecipeDataAccess {
             while(data.next()) {
                 category = new Category(
                         data.getString("id"),
-                        data.getString("name")
+                        data.getString("cat_name")
                 );
                 allCategories.add(category);
             }
@@ -104,7 +104,7 @@ public class RecipeDBAccess implements RecipeDataAccess {
 
             while(data.next()) {
                 ingredient = new Ingredient(
-                        data.getString("name"),
+                        data.getString("ing_name"),
                         data.getString("unit")
                 );
                 allIngredients.add(ingredient);
@@ -129,7 +129,7 @@ public class RecipeDBAccess implements RecipeDataAccess {
             while(data.next()) {
                 regime = new DieteryRegime(
                         data.getString("id"),
-                        data.getString("name")
+                        data.getString("dr_name")
                 );
                 allRegimes.add(regime);
             }
@@ -137,6 +137,31 @@ public class RecipeDBAccess implements RecipeDataAccess {
         }
         catch (SQLException exception) {
             throw new AllRegimesException();
+        }
+    }
+
+    @Override
+    public ArrayList<Author> getAllAuthors() throws AllAuthorsException {
+        ArrayList <Author> allAuthors = new ArrayList <>();
+        String SQLInstruction = "select * from authors";
+
+        try {
+            PreparedStatement preparedStatement = singletonConnection.prepareStatement(SQLInstruction);
+            ResultSet data = preparedStatement.executeQuery();
+            Author author;
+
+            while(data.next()) {
+                author = new Author(
+                        data.getString("pseudo"),
+                        data.getString("first_name"),
+                        data.getString("last_name")
+                );
+                allAuthors.add(author);
+            }
+            return allAuthors;
+        }
+        catch (SQLException exception) {
+            throw new AllAuthorsException();
         }
     }
 

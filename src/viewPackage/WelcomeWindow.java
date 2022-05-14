@@ -1,5 +1,7 @@
 package viewPackage;
 
+import exceptionPackage.ConnectionException;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -38,6 +40,7 @@ public class WelcomeWindow extends JFrame {
 
         registrationButton = new JButton("Inscription");
         RegistrationListener registrationListener = new RegistrationListener();
+        registrationButton.setEnabled(false);
         registrationButton.addActionListener(registrationListener);
         buttonsPanel.add(registrationButton);
 
@@ -76,7 +79,11 @@ public class WelcomeWindow extends JFrame {
     private class ConnectionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            changePanel(new ConnectionPanel());
+            try {
+                changePanel(new ConnectionPanel());
+            } catch (ConnectionException exception) {
+                System.out.println(exception.getMessage());
+            }
         }
     }
 
