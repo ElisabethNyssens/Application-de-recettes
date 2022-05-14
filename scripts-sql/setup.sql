@@ -66,7 +66,6 @@ CREATE TABLE steps
     PRIMARY KEY (order_number, recipe_id)
 );
 
-
 CREATE TABLE menus
 (
     id int PRIMARY KEY AUTO_INCREMENT not null,
