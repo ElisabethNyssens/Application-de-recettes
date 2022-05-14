@@ -179,7 +179,7 @@ insert into ingredients values ('Vin blanc','cl');
 insert into ingredients values ('Yaourt nature','unite');
 
 insert into recipes
-values ('Curry au tofu','2021-04-25',true,false,true,'Bon marche','Facile','Moyen',4,'hiver','bichon',null,'RC_PLAT');
+values (null,'Curry au tofu','2021-04-25',true,false,true,'Bon marche','Facile','Moyen',4,'hiver','bichon',null,'RC_PLAT');
 
 insert into ingredient_quantities
 values ('Pois chiches',1,250);
@@ -227,7 +227,7 @@ values (7,1,"Ajouter le persil avant de servir.");
 
 
 insert into recipes
-values ('Salade fraise menthe','2021-07-18',false,true,true,'Cout moyen','Tres facile','Rapide',4,'ete','marvin','D_VEGA','RC_ACC');
+values (null,'Salade fraise menthe','2021-07-18',false,true,true,'Cout moyen','Tres facile','Rapide',4,'ete','marvin','D_VEGA','RC_ACC');
 
 insert into ingredient_quantities
 values ('Asperge verte',2,600);
@@ -267,7 +267,7 @@ values (5,2,"Disposez les asperges dans un large saladier avec les morceaux de f
 
 
 insert into recipes
-values ('Soupe carotte gingembre','2022-01-13',true,false,true,'Bon marche','Tres Facile','Moyen',4,'automne','anonyme','D_VEGE','RC_SOU');
+values (null, 'Soupe carotte gingembre','2022-01-13',true,false,true,'Bon marche','Tres Facile','Moyen',4,'automne','anonyme','D_VEGE','RC_SOU');
 
 insert into ingredient_quantities
 values ('Beurre',3,50);
