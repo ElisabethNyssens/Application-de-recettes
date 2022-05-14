@@ -9,13 +9,12 @@ public class Recipe {
     private boolean isSweet;
     private boolean isSalty;
     private String budget;
-    private String difficulty;
     private String preparationTime;
     private int nbPersons;
   /*  private String season; */
 
     public Recipe(String title, GregorianCalendar creationDate, boolean isHot, boolean isSweet,
-                  boolean isSalty, String budget, String difficulty, String preparationTime,
+                  boolean isSalty, String budget, String preparationTime,
                   int nbPersons) {
         this.title = title;
         this.creationDate = creationDate;
@@ -23,7 +22,6 @@ public class Recipe {
         this.isSweet = isSweet;
         this.isSalty = isSalty;
         this.budget = budget;
-        this.difficulty = difficulty;
         this.preparationTime = preparationTime;
         this.nbPersons = nbPersons;
         /*this.season = season; */
@@ -55,10 +53,6 @@ public class Recipe {
 
     public String getBudget() {
         return budget;
-    }
-
-    public String getDifficulty() {
-        return difficulty;
     }
 
     public String getPreparationTime() {

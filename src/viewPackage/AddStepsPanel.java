@@ -7,13 +7,13 @@ import java.awt.event.ActionListener;
 
 public class AddStepsPanel extends JPanel {
     private static int NB_MAX_STEPS = 32;
-    protected Object[] steps;
-    protected int nbSteps;
+    private Object[] steps;
+    private int nbSteps;
 
     private JLabel stepLabel, numberLabel;
     private JTextArea step;
     private JPanel numberContainer, stepContainer;
-    protected JSpinner stepNumber;
+    private JSpinner stepNumber;
     private JButton addStepBtn, resetBtn;
     private JList stepsList;
 

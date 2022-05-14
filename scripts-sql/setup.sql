@@ -32,12 +32,12 @@ CREATE TABLE recipes
     difficulty varchar(15) not null,
     preparation_time varchar(15) not null,
     nb_persons int not null,
-    season varchar(10) null,
+    season varchar(15) null,
     author varchar(15) not null,
-	dietery_regime varchar(10) null,
-	category varchar(10) not null,
+    dietery_regime varchar(10) null,
+    category varchar(10) not null,
     FOREIGN KEY (author) REFERENCES authors (pseudo),
-	FOREIGN KEY (dietery_regime) REFERENCES dietery_regimes (id),
+    FOREIGN KEY (dietery_regime) REFERENCES dietery_regimes (id),
     FOREIGN KEY (category) REFERENCES categories (id)
 );
 
@@ -61,12 +61,12 @@ CREATE TABLE steps
 (
     order_number int not null,
     recipe_id varchar(100) not null,
-    content varchar(500) not null,
+    description varchar(1000) not null,
     FOREIGN KEY (recipe_id) REFERENCES recipes (title),
     PRIMARY KEY (order_number, recipe_id)
 );
 
-CREATE TABLE menus 
+CREATE TABLE menus
 (
     title varchar(100) PRIMARY KEY not null,
     comment varchar(200) null
@@ -74,7 +74,7 @@ CREATE TABLE menus
 
 CREATE TABLE menu_components
 (
-	order_number int not null,
+    order_number int not null,
     menu_id varchar(100) not null,
     recipe_id varchar(100) not null,
     FOREIGN KEY (menu_id) REFERENCES menus (title),
@@ -153,7 +153,7 @@ insert into ingredients values ('Moutarde a l\'ancienne','c.a.c');
 insert into ingredients values ('Muscade','c.a.c');
 insert into ingredients values ('Nectarine','unite');
 insert into ingredients values ('Noix','g');
-insert into ingredients values ('Oeufs','unite');
+insert into ingredients values ('Oeuf','unite');
 insert into ingredients values ('Oignon jaune','unite');
 insert into ingredients values ('Orange','unite');
 insert into ingredients values ('Parmesan','g');
@@ -170,7 +170,7 @@ insert into ingredients values ('Sesame','c.a.c');
 insert into ingredients values ('Sucre','g');
 insert into ingredients values ('Tofu','g');
 insert into ingredients values ('Tomate','unite');
-insert into ingredients values ('Vinaigre a l\'estragon','c.a.s');
+insert into ingredients values ("Vinaigre a l'estragon",'c.a.s');
 insert into ingredients values ('Vinaigre balsamique','c.a.s');
 insert into ingredients values ('Vinaigre de cidre','c.a.s');
 insert into ingredients values ('Vin blanc','cl');
@@ -198,7 +198,7 @@ values ('Curcuma','Curry au tofu',1);
 insert into ingredient_quantities
 values ('Persil','Curry au tofu',2);
 insert into ingredient_quantities
-values ('Huile d\'arachide','Curry au tofu',2);
+values ("Huile d'arachide",1,2);
 insert into ingredient_quantities
 values ('Sel','Curry au tofu',2);
 insert into ingredient_quantities
@@ -225,47 +225,45 @@ values (7,'Curry au tofu',"Ajouter le persil avant de servir.");
 
 
 insert into recipes
-values (null,'Salade fraise menthe','2021-07-18',false,true,true,'Cout moyen','Tres facile','Rapide',4,'ete','marvin','D_VEGA','RC_ACC');
+values (null,'Salade fraise menthe','2021-07-18',false,true,true,'Cout moyen','< 30min',4,'ete','bichon','D_VEGE','RC_ACC');
 
 insert into ingredient_quantities
-values ('Asperge verte','Salade fraise menthe',600);
+values ('Epinard frais','Salade fraise menthe',600);
 insert into ingredient_quantities
 values ('Fraise','Salade fraise menthe',400);
 insert into ingredient_quantities
 values ('Feta','Salade fraise menthe',250);
 insert into ingredient_quantities
-values ('Pignons de pin','Salade fraise menthe',80);
+values ('Noix','Salade fraise menthe',80);
 insert into ingredient_quantities
-values ('Basilic','Salade fraise menthe',50);
+values ('Menthe','Salade fraise menthe',50);
 insert into ingredient_quantities
-values ('Moutarde a l\'ancienne','Salade fraise menthe',2);
+values ('Graines de pavot','Salade fraise menthe',2);
 insert into ingredient_quantities
 values ('Miel','Salade fraise menthe',1);
 insert into ingredient_quantities
-values ('Vinaigre de cidre','Salade fraise menthe',1);
+values ('Vinaigre balsamique','Salade fraise menthe',1);
 insert into ingredient_quantities
-values ('Orange','Salade fraise menthe',1);
-insert into ingredient_quantities
-values ('Huile d\'olive','Salade fraise menthe',6);
+values ("Huile d'olive",'Salade fraise menthe',6);
 insert into ingredient_quantities
 values ('Sel','Salade fraise menthe',2);
 insert into ingredient_quantities
 values ('Poivre','Salade fraise menthe',1);
 
 insert into steps
-values (1,'Salade fraise menthe',"Pelez les asperges, coupez les bouts plus secs et faites-les cuire a l'eau bouillante salée, 7 min. Plongez-les dans de l'eau glacee. Egouttez et coupez-les en tronçons de 3 cm.");
+values (1,2,"Lavez et egouttez les épinards.");
 insert into steps
-values (2,'Salade fraise menthe',"Faites dorer les pignons 2 min dans une poele antiadhesive.");
+values (2,2,"Lavez et equeutez les fraises. Coupez-les en quartiers.");
 insert into steps
-values (3,'Salade fraise menthe',"Lavez et equeutez les fraises. Coupez-les en quartiers.");
+values (3,2,"Faites revenir les noix 2 min dans une poele antiadhesive.");
 insert into steps
-values (4,'Salade fraise menthe',"Preparez la vinaigrette : dans un bol, melangez la moutarde, avec le miel et le vinaigre. Emulsionnez avec le jus d’orange, l'huile d’olive, du sel et du poivre. Lavez et effeuillez le basilic.");
+values (4,2,"Preparez la vinaigrette : dans un bol, melangez le miel et le vinaigre. Emulsionnez avec l'huile d’olive, du sel et du poivre. Lavez et effeuillez la menthe.");
 insert into steps
-values (5,'Salade fraise menthe',"Disposez les asperges dans un large saladier avec les morceaux de fraises, la feta emiettee grossièrement, les pignons et le basilic. Arrosez de sauce et servez frais avec des tranches de baguette toastees.");
+values (5,2,"Disposez les épinards dans un large saladier avec les morceaux de fraises, la feta emiettee grossièrement, les noix et la menthe. Arrosez de sauce, saupoudrez de graines de pavot et servez frais avec des tranches de baguette toastees.");
 
 
 insert into recipes
-values (null, 'Soupe carotte gingembre','2022-01-13',true,false,true,'Bon marche','Tres Facile','Moyen',4,'automne','anonyme','D_VEGE','RC_SOU');
+values (null, 'Soupe carotte gingembre','2022-01-13',true,false,true,'Bon marche','< 30min',4,'automne','anonyme','D_VEGE','RC_SOU');
 
 insert into ingredient_quantities
 values ('Beurre','Soupe carotte gingembre',50);
@@ -302,8 +300,8 @@ insert into steps
 values (5,'Soupe carotte gingembre',"Mixer la soupe et assaisonner le tout de jus de citron, sel et poivre, pourquoi pas d'un peu de curry.");
 
 
-insert into recipes 
-values ("Oeufs cocottes", "2022-05-13", true, false, true, "Bon marche", "30min >< 1h", 4, null, "bichon", "D_VEGE", "RC_ENT");
+insert into recipes
+values (null,"Oeufs cocottes", "2022-05-13", true, false, true, "Bon marche", "30min >< 1h", 4, "Toute saison", "bichon", "D_VEGE", "RC_ENT");
 
 insert into ingredient_quantities
 values ('Gruyere rape',"Oeufs cocottes",150);
@@ -336,15 +334,15 @@ insert into steps
 values (8,"Oeufs cocottes","Enfourner pendant 35 minutes en position chaleur tournante.");
 
 
-insert into ingredients
-values ("Pate a crepes", "2022-05-13", true, true, false, "Bon marche", "Facile", "< 30min", 4, null, "abdobeir", null, "RD_DESS");
+insert into recipes
+values (null,"Pate a crepes", "2022-05-13", true, true, false, "Bon marche", "< 30min", 4, null, "abdobeir", null, "RC_DESS");
 
 insert into ingredient_quantities
 values ('Farine',"Pate a crepes",300);
 insert into ingredient_quantities
 values ('Sucre',"Pate a crepes",45);
 insert into ingredient_quantities
-values ('Huile d\'arachide',"Pate a crepes",2);
+values ("Huile d'arachide","Pate a crepes",2);
 insert into ingredient_quantities
 values ('Beurre',"Pate a crepes",50);
 insert into ingredient_quantities
@@ -368,15 +366,15 @@ insert into steps
 values (6,"Pate a crepes","Faire chauffer une poele antiadhesive et la huiler tres legerement à l'aide d'un papier Essuie-tout. Y verser une louche de pate, la repartir dans la poele puis attendre qu'elle soit cuite d'un cote avant de la retourner. Cuire ainsi toutes les crepes a feu doux.");
 
 
-insert into recipes 
-values ("Amuse-bouches de Gambas", "2022-05-13", false, true, true, "Bon marche", "Facile", "< 30min", 6, null, "frandubi", "D_PESC", "RC_AMU_G");
+insert into recipes
+values (null,"Amuse-bouches de Gambas", "2022-05-13", false, true, true, "Assez cher", "< 30min", 6, null, "frandubi", "D_PESC", "RC_AMU_G");
 
 insert into ingredient_quantities
 values ('Miel',"Amuse-bouches de Gambas",3);
 insert into ingredient_quantities
 values ('Sesame',"Amuse-bouches de Gambas",1);
 insert into ingredient_quantities
-values ('Huile d\'olive',"Amuse-bouches de Gambas",2);
+values ("Huile d'olive","Amuse-bouches de Gambas",2);
 insert into ingredient_quantities
 values ('Gambas',"Amuse-bouches de Gambas",6);
 insert into ingredient_quantities
@@ -394,8 +392,8 @@ insert into steps
 values (4,"Amuse-bouches de Gambas","Dans des petits verres, versez une cuillere à soupe du melange fromage frais - cinq baies, deposez une gambas aux graines de sesame cuite et finissez par un filet de miel.");
 
 
-insert into recipes 
-values ("Hot-dog flemmard du dimanche soir", "2022-05-14", true, false, true, "Bon marche", "Tres facile", "< 30min", 2, null, "bichon", null, "RC_SNA");
+insert into recipes
+values (null,"Hot-dog flemmard du dimanche soir", "2022-05-14", true, false, true, "Bon marche", "< 30min", 2, null, "bichon", null, "RC_SNA");
 
 insert into ingredient_quantities
 values ('Gruyere rape',"Hot-dog flemmard du dimanche soir",100);
@@ -421,20 +419,20 @@ values (5,"Hot-dog flemmard du dimanche soir","Servir accompagne d'une salade.")
 
 
 insert into recipes
-values ("Mayonnaise maison", "2022-05-14", false, false, true, "Bon marche", "Tres facile", "< 30min", 4, null, "marvin", "D_SG", "RC_SAU");
+values (null,"Mayonnaise maison", "2022-05-14", false, false, true, "Bon marche", "< 30min", 4, null, "marvin", "D_SG", "RC_SAU");
 
 insert into ingredient_quantities
 values ('Moutarde',"Mayonnaise maison",2);
 insert into ingredient_quantities
-values ('Vinaigre a l\'estragon',"Mayonnaise maison",1);
+values ("Vinaigre a l'estragon","Mayonnaise maison",1);
 insert into ingredient_quantities
-values ('Huile d\'arachide',"Mayonnaise maison",7);
+values ("Huile d'arachide","Mayonnaise maison",7);
 insert into ingredient_quantities
 values ('Sel',"Mayonnaise maison",1);
 insert into ingredient_quantities
 values ('Poivre',"Mayonnaise maison",1);
 insert into ingredient_quantities
-values ('Jaune d\'oeuf',"Mayonnaise maison",1);
+values ("Jaune d'oeuf","Mayonnaise maison",1);
 
 insert into steps
 values (1,"Mayonnaise maison","Les ingredients doivent etre a temperature ambiante. Melangez le jaune d'oeuf, un peu de sel, poivre, la moutarde et le vinaigre.");
@@ -445,7 +443,7 @@ values (3,"Mayonnaise maison","On peut y ajouter des herbes ou du citron pour la
 
 
 insert into recipes
-values ("Smoothie nectarine","2022-05-14", false, true, false, "Bon marche", "Tres facile", "< 30min", 1, "ete", "frandubi", "D_VEGE", "RC_BOI");
+values (null,"Smoothie nectarine","2022-05-14", false, true, false, "Bon marche", "< 30min", 1, "ete", "frandubi", "D_VEGE", "RC_BOI");
 
 insert into ingredient_quantities
 values ('Lait',"Smoothie nectarine",9);
@@ -458,8 +456,8 @@ insert into steps
 values (1,"Smoothie nectarine","Mettre le yaourt, le lait et la nectarine lavee et denoyautee dans un mixeur et mixer jusqu'a obtenir une substance cremeuse ou liquide. Puis servir dans un verre avec 1 ou 2 glaçons.");
 
 
-insert into menu
-values ("Anniversaire Bichon","C'etait super bon, par contre un peu trop copieux");
+insert into menus
+values (null,"Anniversaire Bichon","C'etait super bon, par contre un peu trop copieux");
 
 insert into menu_components
 values (1,"Anniversaire Bichon","Amuse-bouches de Gambas");
@@ -471,8 +469,8 @@ insert into menu_components
 values (4,"Anniversaire Bichon","Pate a crepes");
 
 
-insert into menu
-values ("Anniversaire Marvin", null);
+insert into menus
+values (null,"Anniversaire Marvin", null);
 
 insert into menu_components
 values (1,"Anniversaire Marvin","Smoothie nectarine");

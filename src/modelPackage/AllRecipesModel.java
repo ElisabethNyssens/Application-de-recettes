@@ -48,9 +48,8 @@ public class AllRecipesModel extends AbstractTableModel {
             case 3 : return recipe.isSweet();
             case 4 : return recipe.isSalty();
             case 5 : return recipe.getBudget();
-            case 6 : return recipe.getDifficulty();
-            case 7 : return recipe.getPreparationTime();
-            case 8 : return recipe.getNbPersons();
+            case 6 : return recipe.getPreparationTime();
+            case 7 : return recipe.getNbPersons();
           /*  case 9 : return recipe.getSeason();*/
             default: return null;
         }
