@@ -61,7 +61,7 @@ CREATE TABLE steps
 (
     order_number int not null,
     recipe_id int not null,
-    content varchar(1000) not null,
+    description varchar(1000) not null,
     FOREIGN KEY (recipe_id) REFERENCES recipes (id),
     PRIMARY KEY (order_number, recipe_id)
 );

@@ -1,10 +1,7 @@
 package dataAccessPackage;
 
 import exceptionPackage.*;
-import modelPackage.Category;
-import modelPackage.DieteryRegime;
-import modelPackage.Ingredient;
-import modelPackage.Recipe;
+import modelPackage.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

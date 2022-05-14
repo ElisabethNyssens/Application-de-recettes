@@ -2,10 +2,7 @@ package controllerPackage;
 
 import businessPackage.RecipeManager;
 import exceptionPackage.*;
-import modelPackage.Category;
-import modelPackage.DieteryRegime;
-import modelPackage.Ingredient;
-import modelPackage.Recipe;
+import modelPackage.*;
 
 import java.util.ArrayList;
 

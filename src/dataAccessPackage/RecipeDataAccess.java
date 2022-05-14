@@ -4,16 +4,15 @@ import exceptionPackage.AllCategoriesException;
 import exceptionPackage.AllIngredientsException;
 import exceptionPackage.AllRecipesException;
 import exceptionPackage.AllRegimesException;
-import modelPackage.Category;
-import modelPackage.DieteryRegime;
-import modelPackage.Ingredient;
-import modelPackage.Recipe;
+import modelPackage.*;
 
 import java.util.ArrayList;
 
 public interface RecipeDataAccess {
      // Create
      void addRecipe(Recipe recipe);
+     public void addIngredientQuantity(IngredientQuantity ingredientQuantity);
+     void addStep(Step step);
      // Read
      ArrayList<Recipe> getAllRecipes() throws AllRecipesException;
      ArrayList<Category> getAllCategories() throws AllCategoriesException;

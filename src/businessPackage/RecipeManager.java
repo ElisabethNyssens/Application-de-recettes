@@ -7,10 +7,7 @@ import exceptionPackage.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import modelPackage.Category;
-import modelPackage.DieteryRegime;
-import modelPackage.Ingredient;
-import modelPackage.Recipe;
+import modelPackage.*;
 
 public class RecipeManager {
     private RecipeDataAccess dao;
@@ -23,6 +20,12 @@ public class RecipeManager {
     // Create
     public void addRecipe(Recipe recipe) {
         dao.addRecipe(recipe);
+    }
+    public void addStep(Step step) {
+        dao.addStep(step);
+    }
+    public void addIngredientQuantity(IngredientQuantity ingredientQuantity) {
+        dao.addIngredientQuantity(ingredientQuantity);
     }
 
     // Read
