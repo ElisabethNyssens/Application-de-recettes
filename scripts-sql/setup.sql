@@ -29,7 +29,6 @@ CREATE TABLE recipes
     is_sweet bit not null,
     is_salty bit not null,
     budget varchar(15) not null,
-    difficulty varchar(15) not null,
     preparation_time varchar(15) not null,
     nb_persons int not null,
     season varchar(15) null,
@@ -107,77 +106,81 @@ insert into dietery_regimes values ('D_PESC', 'Pescetarien');
 insert into dietery_regimes values ('D_SG', 'Sans gluten');
 
 
-insert into ingredients values ('Ail','gousse');
-insert into ingredients values ('Asperge verte','g');
-insert into ingredients values ('Aubergine','unite');
-insert into ingredients values ('Bacon','tranches');
-insert into ingredients values ('Baguette','unite');
-insert into ingredients values ('Basilic','feuilles');
-insert into ingredients values ('Beurre','g');
-insert into ingredients values ('Bouillon de legumes','cubes');
-insert into ingredients values ('Carotte','unite');
-insert into ingredients values ('Chou-fleur','unite');
-insert into ingredients values ('Ciboulette','c.a.s');
-insert into ingredients values ('Citron jaune','unite');
-insert into ingredients values ('Citron vert','unite');
-insert into ingredients values ('Concentre de tomates','g');
-insert into ingredients values ('Concombre','unite');
-insert into ingredients values ('Coriandre','feuilles');
-insert into ingredients values ('Courgette','unite');
-insert into ingredients values ('Creme','cl');
-insert into ingredients values ('Cumin','c.a.c');
-insert into ingredients values ('Curcuma','c.a.c');
-insert into ingredients values ('Curry','c.a.c');
-insert into ingredients values ('Epinard frais','g');
-insert into ingredients values ('Farine','g');
-insert into ingredients values ('Feta','g');
-insert into ingredients values ('Fraise','g');
-insert into ingredients values ('Fromage frais','g');
-insert into ingredients values ('Gambas','unite');
-insert into ingredients values ('Gingembre','g');
-insert into ingredients values ('Graines de cumin','c.a.c');
-insert into ingredients values ('Graines de pavot','c.a.s');
-insert into ingredients values ('Gruyere rape','g');
-insert into ingredients values ("Huile d'arachide",'c.a.s');
-insert into ingredients values ("Huile d'olive",'c.a.s');
-insert into ingredients values ("Jaune d'oeuf",'unite');
-insert into ingredients values ('Jus de citron', 'cl');
-insert into ingredients values ('Lait','cl');
-insert into ingredients values ('Lait de coco','cl');
-insert into ingredients values ('Lentilles','g');
-insert into ingredients values ('Melange 5 baies','c.a.c');
-insert into ingredients values ('Menthe','feuilles');
-insert into ingredients values ('Miel','c.a.c');
-insert into ingredients values ('Moutarde','c.a.c');
-insert into ingredients values ("Moutarde a l'ancienne",'c.a.c');
-insert into ingredients values ('Muscade','c.a.c');
-insert into ingredients values ('Nectarine','unite');
-insert into ingredients values ('Noix','g');
-insert into ingredients values ('Oeuf','unite');
-insert into ingredients values ('Oignon jaune','unite');
-insert into ingredients values ('Orange','unite');
-insert into ingredients values ('Parmesan','g');
-insert into ingredients values ('Pates','g');
-insert into ingredients values ('Persil','c.a.s');
-insert into ingredients values ('Pignons de pin','g');
-insert into ingredients values ('Pois chiches','g');
-insert into ingredients values ('Poivre','c.a.c');
-insert into ingredients values ('Rhum','cl');
-insert into ingredients values ('Riz','g');
-insert into ingredients values ('Saucisse de Strasbourg','unite');
-insert into ingredients values ('Sel','c.a.c');
-insert into ingredients values ('Sesame','c.a.c');
-insert into ingredients values ('Sucre','g');
-insert into ingredients values ('Tofu','g');
-insert into ingredients values ('Tomate','unite');
-insert into ingredients values ("Vinaigre a l'estragon",'c.a.s');
-insert into ingredients values ('Vinaigre balsamique','c.a.s');
-insert into ingredients values ('Vinaigre de cidre','c.a.s');
-insert into ingredients values ('Vin blanc','cl');
-insert into ingredients values ('Yaourt nature','unite');
+insert into ingredients values ('ail','gousse');
+insert into ingredients values ('asperge verte','g');
+insert into ingredients values ('aubergine','unite');
+insert into ingredients values ('bacon','tranches');
+insert into ingredients values ('baguette','unite');
+insert into ingredients values ('basilic','feuilles');
+insert into ingredients values ('boudoirs','g');
+insert into ingredients values ('beurre','g');
+insert into ingredients values ('bouillon de legumes','cubes');
+insert into ingredients values ('cacao','c.a.c');
+insert into ingredients values ('cafe','cl');
+insert into ingredients values ('carotte','unite');
+insert into ingredients values ('chou-fleur','unite');
+insert into ingredients values ('ciboulette','c.a.s');
+insert into ingredients values ('citron jaune','unite');
+insert into ingredients values ('citron vert','unite');
+insert into ingredients values ('concentre de tomates','g');
+insert into ingredients values ('concombre','unite');
+insert into ingredients values ('coriandre','feuilles');
+insert into ingredients values ('courgette','unite');
+insert into ingredients values ('creme','cl');
+insert into ingredients values ('cumin','c.a.c');
+insert into ingredients values ('curcuma','c.a.c');
+insert into ingredients values ('curry','c.a.c');
+insert into ingredients values ('epinard frais','g');
+insert into ingredients values ('farine','g');
+insert into ingredients values ('feta','g');
+insert into ingredients values ('fraise','g');
+insert into ingredients values ('fromage frais','g');
+insert into ingredients values ('gambas','unite');
+insert into ingredients values ('gingembre','g');
+insert into ingredients values ('graines de cumin','c.a.c');
+insert into ingredients values ('graines de pavot','c.a.s');
+insert into ingredients values ('gruyere rape','g');
+insert into ingredients values ("huile d'arachide",'c.a.s');
+insert into ingredients values ("huile d'olive",'c.a.s');
+insert into ingredients values ("jaune d'oeuf",'unite');
+insert into ingredients values ('jus de citron', 'cl');
+insert into ingredients values ('lait','cl');
+insert into ingredients values ('lait de coco','cl');
+insert into ingredients values ('lentilles','g');
+insert into ingredients values ('melange 5 baies','c.a.c');
+insert into ingredients values ('menthe','feuilles');
+insert into ingredients values ('miel','c.a.c');
+insert into ingredients values ('mascarpone','g');
+insert into ingredients values ('moutarde','c.a.c');
+insert into ingredients values ("moutarde a l'ancienne",'c.a.c');
+insert into ingredients values ('muscade','c.a.c');
+insert into ingredients values ('nectarine','unite');
+insert into ingredients values ('noix','g');
+insert into ingredients values ('oeuf','unite');
+insert into ingredients values ('oignon jaune','unite');
+insert into ingredients values ('orange','unite');
+insert into ingredients values ('parmesan','g');
+insert into ingredients values ('pates','g');
+insert into ingredients values ('persil','c.a.s');
+insert into ingredients values ('pignons de pin','g');
+insert into ingredients values ('pois chiches','g');
+insert into ingredients values ('poivre','c.a.c');
+insert into ingredients values ('rhum','cl');
+insert into ingredients values ('riz','g');
+insert into ingredients values ('saucisse de Strasbourg','unite');
+insert into ingredients values ('sel','c.a.c');
+insert into ingredients values ('sesame','c.a.c');
+insert into ingredients values ('sucre','g');
+insert into ingredients values ('tofu','g');
+insert into ingredients values ('tomate','unite');
+insert into ingredients values ("vinaigre a l'estragon",'c.a.s');
+insert into ingredients values ('vinaigre balsamique','c.a.s');
+insert into ingredients values ('vinaigre de cidre','c.a.s');
+insert into ingredients values ('vin blanc','cl');
+insert into ingredients values ('yaourt nature','unite');
 
 insert into recipes
-values ('Curry au tofu','2021-04-25',true,false,true,'Bon marche','Facile','Moyen',4,'hiver','bichon',null,'RC_PLAT');
+values ('Curry au tofu','2021-04-25',true,false,true,'Bon marche','30min >< 1h',4,'hiver','bichon',D_VEGA,'RC_PLAT');
 
 insert into ingredient_quantities
 values ('Pois chiches','Curry au tofu',250);
@@ -198,7 +201,7 @@ values ('Curcuma','Curry au tofu',1);
 insert into ingredient_quantities
 values ('Persil','Curry au tofu',2);
 insert into ingredient_quantities
-values ("Huile d'arachide",1,2);
+values ("Huile d'arachide",'Curry au tofu',2);
 insert into ingredient_quantities
 values ('Sel','Curry au tofu',2);
 insert into ingredient_quantities
@@ -222,7 +225,6 @@ insert into steps
 values (6,'Curry au tofu',"Delayer avec la puree de tomate, ajouter le chou fleur, les pois chiches, le tofu, le sel et un verre d'eau. Bien melanger et laisser mijoter a couvert jusqu'a ce que le chou-fleur soit bien tendre. Ajoutez un peu d'eau en cour de route si le melange s'asseche.");
 insert into steps
 values (7,'Curry au tofu',"Ajouter le persil avant de servir.");
-
 
 insert into recipes
 values ('Salade fraise menthe','2021-07-18',false,true,true,'Cout moyen','< 30min',4,'ete','bichon','D_VEGE','RC_ACC');

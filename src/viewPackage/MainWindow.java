@@ -103,7 +103,8 @@ public class MainWindow extends JFrame {
         createRecipe.addActionListener(new NewRecipeListener());
         // Menu Créer menu
         createMenu.addActionListener(new NewMenuListener());
-
+        // Modif recette
+        editRecipe.addActionListener(new EditRecipeListener());
         // Afficher recettes
         displayRecipes.addActionListener(new DisplayRecipesListener());
 
@@ -122,7 +123,12 @@ public class MainWindow extends JFrame {
     private class NewRecipeListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             mainContainer.removeAll();
-            mainContainer.add(new RecipeCreationPanel());
+            try {
+                mainContainer.add(new RecipeCreationPanel());
+            } catch (ConnectionException exception) {
+                exception.printStackTrace();
+                System.out.println(exception.getMessage());
+            }
             setVisible(true);
         }
     }
@@ -132,6 +138,14 @@ public class MainWindow extends JFrame {
         public void actionPerformed(ActionEvent e) {
             mainContainer.removeAll();
             mainContainer.add(new MenuCreationPanel());
+            setVisible(true);
+        }
+    }
+
+    private class EditRecipeListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            mainContainer.removeAll();
+            mainContainer.add(new RecipeModifPanel());
             setVisible(true);
         }
     }
@@ -148,5 +162,4 @@ public class MainWindow extends JFrame {
         }
     }
 
-    // TO DO:  fonction affichage panel
 }

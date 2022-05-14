@@ -14,17 +14,17 @@ public class RecipeManager {
 
     // Constructeur
     public RecipeManager() throws ConnectionException {
-        setDao(new RecipeDBAccess());
+        dao = new RecipeDBAccess();
     }
 
     // Create
-    public void addRecipe(Recipe recipe) {
+    public void addRecipe(Recipe recipe) throws AddRecipeException{
         dao.addRecipe(recipe);
     }
-    public void addStep(Step step) {
+    public void addStep(Step step) throws AddStepException {
         dao.addStep(step);
     }
-    public void addIngredientQuantity(IngredientQuantity ingredientQuantity) {
+    public void addIngredientQuantity(IngredientQuantity ingredientQuantity) throws AddIngredQuantException {
         dao.addIngredientQuantity(ingredientQuantity);
     }
 
@@ -45,8 +45,4 @@ public class RecipeManager {
         return dao.getAllAuthors();
     }
 
-    // Setter
-    public void setDao(RecipeDataAccess dao) {
-        this.dao = dao;
-    }
 }

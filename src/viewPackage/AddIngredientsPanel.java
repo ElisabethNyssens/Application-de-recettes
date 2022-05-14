@@ -22,7 +22,7 @@ import static java.util.stream.Collectors.toList;
 
 public class AddIngredientsPanel extends JPanel {
     private ApplicationController controller;
-    private static int NB_INGREDIENTS = 32;
+    private static int NB_INGREDIENTS = 68;
     private String[] ingredientsValues = new String[NB_INGREDIENTS];
     protected Object[] selectedIngredients;
     protected int nbSelectedIngred;
@@ -94,20 +94,16 @@ public class AddIngredientsPanel extends JPanel {
     private class AddButtonListener implements ActionListener {
         public void actionPerformed( ActionEvent event) {
             int convertedQuantity = Integer.parseInt(quantity.getValue().toString());
-            String[] ingredAndUnit = ingredient.getSelectedItem().toString().split("[()]", 2);
+            String[] ingredAndUnit = ingredient.getSelectedItem().toString().split("[)(]", 3);
             String selectedIngredient = ingredAndUnit[0];
-            /*String unit = ingredAndUnit[1];
-            if (selectedIngredient.contains("(")) {
-
-            }
-            System.out.println(unit.equals("")?"":unit);*/
+            String unit = ingredAndUnit.length > 1 ? (ingredAndUnit[1] + " ") : "";
 
             List<IngredientQuantity> duplicate = ingredientQuantities.stream().filter(x ->
                     x.getIngredient().equals(selectedIngredient)).collect(toList());
 
             if (duplicate.isEmpty()) {
                 ingredientQuantities.add(new IngredientQuantity(selectedIngredient,recipeName,convertedQuantity));
-                selectedIngredients[nbSelectedIngred] = convertedQuantity + " " + ingredient.getSelectedItem().toString();
+                selectedIngredients[nbSelectedIngred] = convertedQuantity + " " + unit + selectedIngredient;
                 nbSelectedIngred++;
 
                 selectedIngredList.setListData(selectedIngredients);

@@ -11,11 +11,14 @@ public class Recipe {
     private String budget;
     private String preparationTime;
     private int nbPersons;
-  /*  private String season; */
+    private String season;
+    private String author;
+    private String regime;
+    private String category;
 
     public Recipe(String title, GregorianCalendar creationDate, boolean isHot, boolean isSweet,
                   boolean isSalty, String budget, String preparationTime,
-                  int nbPersons) {
+                  int nbPersons, String season, String author, String regime, String category) {
         this.title = title;
         this.creationDate = creationDate;
         this.isHot = isHot;
@@ -24,7 +27,16 @@ public class Recipe {
         this.budget = budget;
         this.preparationTime = preparationTime;
         this.nbPersons = nbPersons;
-        /*this.season = season; */
+        this.season = season;
+        this.author = author;
+        this.regime = regime;
+        this.category = category;
+    }
+
+    public Recipe(String title, GregorianCalendar creationDate, boolean isHot, boolean isSweet,
+                  boolean isSalty, String budget, String preparationTime,
+                  int nbPersons, String author, String category) {
+        this(title,creationDate,isHot,isSweet,isSalty,budget,preparationTime,nbPersons,null,author,null,category);
     }
 
     public String getTitle() {
@@ -59,7 +71,27 @@ public class Recipe {
         return preparationTime;
     }
 
- /*   public String getSeason() {
+    public String getSeason() {
         return season;
-    }*/
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getRegime() {
+        return regime;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setSeason(String season) {
+        this.season = season;
+    }
+
+    public void setRegime(String regime) {
+        this.regime = regime;
+    }
 }

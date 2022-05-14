@@ -1,13 +1,17 @@
 package viewPackage;
 
+import modelPackage.IngredientQuantity;
+import modelPackage.Step;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class AddStepsPanel extends JPanel {
     private static int NB_MAX_STEPS = 32;
-    private Object[] steps;
+    private Object[] stepsObj;
     private int nbSteps;
 
     private JLabel stepLabel, numberLabel;
@@ -16,9 +20,13 @@ public class AddStepsPanel extends JPanel {
     private JSpinner stepNumber;
     private JButton addStepBtn, resetBtn;
     private JList stepsList;
+    private ArrayList<Step> steps;
+    private String recipeName;
 
-    public AddStepsPanel() {
-        steps = new Object[NB_MAX_STEPS];
+    public AddStepsPanel(String recipeName) {
+        this.recipeName = recipeName;
+        stepsObj = new Object[NB_MAX_STEPS];
+        steps = new ArrayList<>();
         nbSteps = 0;
 
         JPanel stepPanel = new JPanel();
@@ -57,13 +65,19 @@ public class AddStepsPanel extends JPanel {
         this.add(new JScrollPane(stepsList));
     }
 
+    public ArrayList<Step> getSteps() {
+        return steps;
+    }
+
     private class AddButtonListener implements ActionListener {
         public void actionPerformed( ActionEvent event) {
             if (!step.getText().isBlank()) {
-                steps[nbSteps] = (nbSteps+1) + ". " + step.getText();
+                steps.add(new Step(nbSteps+1, recipeName, step.getText()));
+
+                stepsObj[nbSteps] = (nbSteps+1) + ". " + step.getText();
                 nbSteps++;
                 stepNumber.setValue(nbSteps + 1);
-                stepsList.setListData(steps);
+                stepsList.setListData(stepsObj);
                 step.setText(null);
                 AddStepsPanel.this.repaint();
             }

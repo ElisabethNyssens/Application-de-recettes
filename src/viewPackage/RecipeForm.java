@@ -25,7 +25,7 @@ public class RecipeForm extends JPanel {
     private Date today;
 
     private int activeFormStep;
-    private static int NB_CATEGORIES = 8;
+    private static int NB_CATEGORIES = 9;
     public static int NB_REGIMES = 4;
 
     private JButton prevStepBtn, nextStepBtn;
@@ -33,11 +33,13 @@ public class RecipeForm extends JPanel {
     private AddIngredientsPanel addIngredientsPanel;
     private AddStepsPanel addStepsPanel;
 
+    private ArrayList<Category> categList;
+    private ArrayList<DieteryRegime> regimesList;
     private String[] recipeCategories = new String[NB_CATEGORIES];
     private String[] regimes = new String[NB_REGIMES];
     private final String[] costs = {"Bon marché", "Coût moyen", "Assez cher"};
-    private final String[] preparationTimes = {"Rapide", "Moyen", "Long"};
-    private final String[] seasons = {"Printemps", "Ete", "Automne", "Hiver"};
+    private final String[] preparationTimes = {"< 30min", "30min >< 1h", "> 1h"};
+    private final String[] seasons = {"Printemps", "Ete", "Automne", "Hiver", "Toute saison"};
 
     private JPanel refToRecipePanel;
 
@@ -83,9 +85,10 @@ public class RecipeForm extends JPanel {
         recipeCategoryLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         int iCateg = 0;
         try {
-            ArrayList<Category> categList = controller.getAllCategories();
+            categList = controller.getAllCategories();
             for(Category category : categList) {
                 recipeCategories[iCateg] = category.getName();
+                //recipeCategories[iCateg] = category.getName() + " (" + category.getId() + ")";
                 iCateg++;
             }
         } catch (AllCategoriesException exception) {
@@ -95,7 +98,6 @@ public class RecipeForm extends JPanel {
         recipeCategory.setSelectedItem(recipeCategories[5]);
         step1Panel.add(recipeCategoryLabel);
         step1Panel.add(recipeCategory);
-
         // ------ Cost -------
         costLabel = new JLabel("Prix* :");
         costLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -121,18 +123,17 @@ public class RecipeForm extends JPanel {
         step1Panel.add(new JPanel());
         step1Panel.add(checkboxPanel);
 
-
         // ---------------- Form step 2 -----------------
         step2Panel = new JPanel();
         step2Panel.setLayout(new GridLayout(3,1));
         step2Panel.setBorder(new EmptyBorder(0, 150, 0, 150));
 
         // ------ Ingredients -------
-        addIngredientsPanel = new AddIngredientsPanel("");
+        addIngredientsPanel = new AddIngredientsPanel(recipeTitle.getText());
         step2Panel.add(addIngredientsPanel);
 
         // ------ Steps -------
-        addStepsPanel = new AddStepsPanel();
+        addStepsPanel = new AddStepsPanel(recipeTitle.getText());
         step2Panel.add(addStepsPanel);
 
         JPanel gridPanel = new JPanel();
@@ -144,9 +145,10 @@ public class RecipeForm extends JPanel {
         regimeLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         int iReg = 0;
         try {
-            ArrayList<DieteryRegime> regimesList = controller.getAllRegimes();
+            regimesList = controller.getAllRegimes();
             for(DieteryRegime regime : regimesList) {
                 regimes[iReg] = regime.getName();
+                //regimes[iReg] = regime.getName() + " (" + regime.getId() + ")";
                 iReg++;
             }
         } catch (AllRegimesException exception) {
@@ -170,7 +172,7 @@ public class RecipeForm extends JPanel {
         // ------------------------------------------------
         this.add(step1Panel, BorderLayout.CENTER);
 
-        // Buttons & progress bar
+        // Buttons
         prevStepBtn = new JButton("Retour");
         nextStepBtn = new JButton("Suivant");
 
@@ -205,7 +207,7 @@ public class RecipeForm extends JPanel {
             if (activeFormStep == 1) {
                 // validation step 1
                 if(recipeTitle.getText().isBlank()) {
-                    JOptionPane.showMessageDialog(null, "Ta recette n'a pas de nom ?\nPas de chance, nous ne pouvons pas l'enregistrer...");
+                    JOptionPane.showMessageDialog(null, "Ta recette a besoin d'un petit nom !");
                 } else if (recipeTitle.getText().length() < 3) {
                     JOptionPane.showMessageDialog(null, "C'est un peu court comme nom, tu ne trouves pas ?");
                 }
@@ -220,36 +222,56 @@ public class RecipeForm extends JPanel {
             } else if (activeFormStep == 2) {
                 // Validation step 2
                 ArrayList<IngredientQuantity> ingredientQuantites = addIngredientsPanel.getIngredientQuantities();
-                ingredientQuantites.forEach((n) -> System.out.println(n.getIngredient()));
+                ArrayList<Step> steps = addStepsPanel.getSteps();
 
-                if (!ingredientQuantites.isEmpty()) {
+                boolean ingredientMissing = ingredientQuantites.isEmpty();
+                boolean stepsMissing = steps.isEmpty();
+
+                if (!ingredientMissing && !stepsMissing) {
                     Date creationDate = (Date) date.getValue();
                     GregorianCalendar creationDateGC = new GregorianCalendar();
                     creationDateGC.setTime(creationDate);
+                    String categId = categList.stream().filter(c ->
+                            c.getName().equals(recipeCategory.getSelectedItem().toString())).findFirst().orElse(null).getId();
+                    String regimeId = regimesList.stream().filter(c ->
+                            c.getName().equals(regime.getSelectedItem().toString())).findFirst().orElse(null).getId();
 
                     Recipe recipe = new Recipe(
                             recipeTitle.getText(),
-                            creationDateGC,hot.isSelected(),
-                            sweet.isSelected(),salty.isSelected(),
+                            creationDateGC,
+                            hot.isSelected(),
+                            sweet.isSelected(),
+                            salty.isSelected(),
                             cost.getSelectedItem().toString(),
                             preparationTime.getSelectedItem().toString(),
-                            Integer.parseInt(nbPersons.getValue().toString()));
-                }
-              /*
+                            Integer.parseInt(nbPersons.getValue().toString()),
+                            season.getSelectedItem()!=null?season.getSelectedItem().toString():null,
+                            User.getInstance().getPseudo(),
+                            regimeId,
+                            categId
+                    );
 
-                try {
-                    controller.addRecipe(recipe);
-                    JOptionPane.showMessageDialog(null, "Ajout effectué avec succès");
-                    refToRecipePanel.removeAll();
-                    refToRecipePanel.revalidate();
-                    refToRecipePanel.repaint();
-                    refToRecipePanel.add(new AddFormPanel(frameContainer));
-                }
-                catch (AddRecipeException | ConnectionException exception) {
-                    JOptionPane.showMessageDialog(null, exception.getMessage());
-                }*/
+                    try {
+                        controller.addRecipe(recipe);
+                        JOptionPane.showMessageDialog(null, "Mmmh ça a l'air bon ! La recette a bien été enregistrée !");
+                        refToRecipePanel.removeAll();
+                        refToRecipePanel.revalidate();
+                        refToRecipePanel.repaint();
+                        refToRecipePanel.add(new RecipeForm());
+                    }
+                    catch (AddRecipeException | ConnectionException exception) {
+                        JOptionPane.showMessageDialog(null, exception.getMessage());
+                    }
 
-                ProgressBarWindow progressBarWindow = new ProgressBarWindow();
+
+                    ProgressBarWindow progressBarWindow = new ProgressBarWindow();
+                } else {
+                    String missingInfo = (ingredientMissing? "les ingrédients\n":"") + (stepsMissing? "les étapes":"");
+                    JOptionPane.showMessageDialog(null,
+                            "Il nous manque ces information pour créer ta recette :\n" + missingInfo);
+                }
+
+
             }
             refToRecipePanel.revalidate();
             refToRecipePanel.repaint();

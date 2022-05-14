@@ -7,9 +7,9 @@ import java.util.ArrayList;
 
 public interface RecipeDataAccess {
      // Create
-     void addRecipe(Recipe recipe);
-     public void addIngredientQuantity(IngredientQuantity ingredientQuantity);
-     void addStep(Step step);
+     void addRecipe(Recipe recipe) throws AddRecipeException;
+     void addIngredientQuantity(IngredientQuantity ingredientQuantity) throws AddIngredQuantException;
+     void addStep(Step step) throws AddStepException;
      // Read
      ArrayList<Recipe> getAllRecipes() throws AllRecipesException;
      ArrayList<Category> getAllCategories() throws AllCategoriesException;
