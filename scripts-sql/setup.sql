@@ -23,7 +23,6 @@ CREATE TABLE dietery_regimes
 
 CREATE TABLE recipes
 (
-
     id int PRIMARY KEY AUTO_INCREMENT not null,
     title varchar(100) not null,
     creation_date date not null,
@@ -67,16 +66,17 @@ CREATE TABLE steps
     PRIMARY KEY (order_number, recipe_id)
 );
 
-CREATE TABLE menus 
+
+CREATE TABLE menus
 (
-	id int PRIMARY KEY AUTO_INCREMENT not null,
+    id int PRIMARY KEY AUTO_INCREMENT not null,
     title varchar(100) not null,
     comment varchar(200) null
 );
 
 CREATE TABLE menu_components
 (
-	order_number int not null,
+    order_number int not null,
     menu_id int not null,
     recipe_id int not null,
     FOREIGN KEY (menu_id) REFERENCES menus (id),
@@ -172,7 +172,7 @@ insert into ingredients values ('Sesame','c.a.c');
 insert into ingredients values ('Sucre','g');
 insert into ingredients values ('Tofu','g');
 insert into ingredients values ('Tomate','unite');
-insert into ingredients values ('Vinaigre a l\'estragon','c.a.s');
+insert into ingredients values ("Vinaigre a l'estragon",'c.a.s');
 insert into ingredients values ('Vinaigre balsamique','c.a.s');
 insert into ingredients values ('Vinaigre de cidre','c.a.s');
 insert into ingredients values ('Vin blanc','cl');
@@ -181,35 +181,6 @@ insert into ingredients values ('Yaourt nature','unite');
 insert into recipes
 values (null,'Curry au tofu','2021-04-25',true,false,true,'Bon marche','30min >< 1h',4,'hiver','marvin','D_VEGA','RC_PLAT');
 
-insert into steps
-values (1,2,"Pelez les asperges, coupez les bouts plus secs et faites-les cuire a l'eau bouillante salée, 7 min. Plongez-les dans de l'eau glacee. Egouttez et coupez-les en tronçons de 3 cm.");
-insert into steps
-values (2,2,"Faites dorer les pignons 2 min dans une poele antiadhesive.");
-insert into steps
-values (3,2,"Lavez et equeutez les fraises. Coupez-les en quartiers.");
-insert into steps
-values (4,2,"Preparez la vinaigrette : dans un bol, melangez la moutarde, avec le miel et le vinaigre. Emulsionnez avec le jus d’orange, l'huile d’olive, du sel et du poivre. Lavez et effeuillez le basilic.");
-insert into steps
-values (5,2,"Disposez les asperges dans un large saladier avec les morceaux de fraises, la feta emiettee grossièrement, les pignons et le basilic. Arrosez de sauce et servez frais avec des tranches de baguette toastees.");
-
-
-insert into recipes
-values (null, 'Soupe carotte gingembre','2022-01-13',true,false,true,'Bon marche','Tres Facile','Moyen',4,'automne','anonyme','D_VEGE','RC_SOU');
-
-insert into ingredient_quantities
-values ('Beurre',3,50);
-insert into ingredient_quantities
-values ('Oignon jaune',3,1);
-insert into ingredient_quantities
-values ('Gingembre',3,50);
-insert into ingredient_quantities
-values ('Ail',3,3);
-insert into ingredient_quantities
-values ('Bouillon de legumes',3,2);
-insert into ingredient_quantities
-values ('Vin blanc',3,25);
-insert into ingredient_quantities
-values ('Carotte',3,4);
 insert into ingredient_quantities
 values ('Pois chiches',1,250);
 insert into ingredient_quantities
@@ -229,7 +200,7 @@ values ('Curcuma',1,1);
 insert into ingredient_quantities
 values ('Persil',1,2);
 insert into ingredient_quantities
-values ('Huile d\'arachide',1,2);
+values ("Huile d'arachide",1,2);
 insert into ingredient_quantities
 values ('Sel',1,2);
 insert into ingredient_quantities
@@ -275,7 +246,7 @@ values ('Miel',2,1);
 insert into ingredient_quantities
 values ('Vinaigre balsamique',2,1);
 insert into ingredient_quantities
-values ('Huile d\'olive',2,6);
+values ("Huile d'olive",2,6);
 insert into ingredient_quantities
 values ('Sel',2,2);
 insert into ingredient_quantities
@@ -373,7 +344,7 @@ values ('Farine',5,300);
 insert into ingredient_quantities
 values ('Sucre',5,45);
 insert into ingredient_quantities
-values ('Huile d\'arachide',5,2);
+values ("Huile d'arachide",5,2);
 insert into ingredient_quantities
 values ('Beurre',5,50);
 insert into ingredient_quantities
@@ -405,7 +376,7 @@ values ('Miel',6,3);
 insert into ingredient_quantities
 values ('Sesame',6,1);
 insert into ingredient_quantities
-values ('Huile d\'olive',6,2);
+values ("Huile d'olive",6,2);
 insert into ingredient_quantities
 values ('Gambas',6,6);
 insert into ingredient_quantities
@@ -455,15 +426,15 @@ values (null,"Mayonnaise maison", "2022-05-14", false, false, true, "Bon marche"
 insert into ingredient_quantities
 values ('Moutarde',8,2);
 insert into ingredient_quantities
-values ('Vinaigre a l\'estragon',8,1);
+values ("Vinaigre a l'estragon",8,1);
 insert into ingredient_quantities
-values ('Huile d\'arachide',8,7);
+values ("Huile d'arachide",8,7);
 insert into ingredient_quantities
 values ('Sel',8,1);
 insert into ingredient_quantities
 values ('Poivre',8,1);
 insert into ingredient_quantities
-values ('Jaune d\'oeuf',8,1);
+values ("Jaune d'oeuf",8,1);
 
 insert into steps
 values (1,8,"Les ingredients doivent etre a temperature ambiante. Melangez le jaune d'oeuf, un peu de sel, poivre, la moutarde et le vinaigre.");
@@ -473,8 +444,8 @@ insert into steps
 values (3,8,"On peut y ajouter des herbes ou du citron pour la parfumer.");
 
 
+insert into recipes
 values (null,"Smoothie nectarine","2022-05-14", false, true, false, "Bon marche", "< 30min", 1, "ete", "frandubi", "D_VEGE", "RC_BOI");
-
 
 insert into ingredient_quantities
 values ('Lait',9,9);
@@ -502,7 +473,6 @@ values (4,1,5);
 
 insert into menus
 values (null,"Anniversaire Marvin", null);
-
 
 insert into menu_components
 values (1,2,9);
