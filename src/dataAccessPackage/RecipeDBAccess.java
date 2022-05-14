@@ -25,6 +25,14 @@ public class RecipeDBAccess implements RecipeDataAccess {
     public void addRecipe(Recipe recipe) {
 
     }
+    @Override
+    public void addStep(Step step) {
+
+    }
+    @Override
+    public void addIngredientQuantity(IngredientQuantity ingredientQuantity) {
+
+    }
 
     // Read
     @Override

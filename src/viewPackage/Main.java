@@ -13,12 +13,7 @@ public class Main {
     //docker stop projetrecettes
 
     public static void main(String[] args){
-<<<<<<< Updated upstream
-        //WelcomeWindow welcomeWindow = new WelcomeWindow();
-        MainWindow mainWindow = new MainWindow();
-=======
         WelcomeWindow welcomeWindow = new WelcomeWindow();
         //MainWindow mainWindow = new MainWindow();
->>>>>>> Stashed changes
     }
 }
