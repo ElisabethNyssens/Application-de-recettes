@@ -138,9 +138,9 @@ insert into ingredients values ('Gingembre','g');
 insert into ingredients values ('Graines de cumin','c.a.c');
 insert into ingredients values ('Graines de pavot','c.a.s');
 insert into ingredients values ('Gruyere rape','g');
-insert into ingredients values ('Huile d\'arachide','c.a.s');
-insert into ingredients values ('Huile d\'olive','c.a.s');
-insert into ingredients values ('Jaune d\'oeuf','unite');
+insert into ingredients values ("Huile d'arachide",'c.a.s');
+insert into ingredients values ("Huile d'olive",'c.a.s');
+insert into ingredients values ("Jaune d'oeuf",'unite');
 insert into ingredients values ('Jus de citron', 'cl');
 insert into ingredients values ('Lait','cl');
 insert into ingredients values ('Lait de coco','cl');
@@ -149,7 +149,7 @@ insert into ingredients values ('Melange 5 baies','c.a.c');
 insert into ingredients values ('Menthe','feuilles');
 insert into ingredients values ('Miel','c.a.c');
 insert into ingredients values ('Moutarde','c.a.c');
-insert into ingredients values ('Moutarde a l\'ancienne','c.a.c');
+insert into ingredients values ("Moutarde a l'ancienne",'c.a.c');
 insert into ingredients values ('Muscade','c.a.c');
 insert into ingredients values ('Nectarine','unite');
 insert into ingredients values ('Noix','g');
@@ -225,7 +225,7 @@ values (7,'Curry au tofu',"Ajouter le persil avant de servir.");
 
 
 insert into recipes
-values (null,'Salade fraise menthe','2021-07-18',false,true,true,'Cout moyen','< 30min',4,'ete','bichon','D_VEGE','RC_ACC');
+values ('Salade fraise menthe','2021-07-18',false,true,true,'Cout moyen','< 30min',4,'ete','bichon','D_VEGE','RC_ACC');
 
 insert into ingredient_quantities
 values ('Epinard frais','Salade fraise menthe',600);
@@ -251,19 +251,19 @@ insert into ingredient_quantities
 values ('Poivre','Salade fraise menthe',1);
 
 insert into steps
-values (1,2,"Lavez et egouttez les épinards.");
+values (1,'Salade fraise menthe',"Lavez et egouttez les épinards.");
 insert into steps
-values (2,2,"Lavez et equeutez les fraises. Coupez-les en quartiers.");
+values (2,'Salade fraise menthe',"Lavez et equeutez les fraises. Coupez-les en quartiers.");
 insert into steps
-values (3,2,"Faites revenir les noix 2 min dans une poele antiadhesive.");
+values (3,'Salade fraise menthe',"Faites revenir les noix 2 min dans une poele antiadhesive.");
 insert into steps
-values (4,2,"Preparez la vinaigrette : dans un bol, melangez le miel et le vinaigre. Emulsionnez avec l'huile d’olive, du sel et du poivre. Lavez et effeuillez la menthe.");
+values (4,'Salade fraise menthe',"Preparez la vinaigrette : dans un bol, melangez le miel et le vinaigre. Emulsionnez avec l'huile d’olive, du sel et du poivre. Lavez et effeuillez la menthe.");
 insert into steps
-values (5,2,"Disposez les épinards dans un large saladier avec les morceaux de fraises, la feta emiettee grossièrement, les noix et la menthe. Arrosez de sauce, saupoudrez de graines de pavot et servez frais avec des tranches de baguette toastees.");
+values (5,'Salade fraise menthe',"Disposez les épinards dans un large saladier avec les morceaux de fraises, la feta emiettee grossièrement, les noix et la menthe. Arrosez de sauce, saupoudrez de graines de pavot et servez frais avec des tranches de baguette toastees.");
 
 
 insert into recipes
-values (null, 'Soupe carotte gingembre','2022-01-13',true,false,true,'Bon marche','< 30min',4,'automne','anonyme','D_VEGE','RC_SOU');
+values ('Soupe carotte gingembre','2022-01-13',true,false,true,'Bon marche','< 30min',4,'automne','anonyme','D_VEGE','RC_SOU');
 
 insert into ingredient_quantities
 values ('Beurre','Soupe carotte gingembre',50);
@@ -301,7 +301,7 @@ values (5,'Soupe carotte gingembre',"Mixer la soupe et assaisonner le tout de ju
 
 
 insert into recipes
-values (null,"Oeufs cocottes", "2022-05-13", true, false, true, "Bon marche", "30min >< 1h", 4, "Toute saison", "bichon", "D_VEGE", "RC_ENT");
+values ("Oeufs cocottes", "2022-05-13", true, false, true, "Bon marche", "30min >< 1h", 4, "Toute saison", "bichon", "D_VEGE", "RC_ENT");
 
 insert into ingredient_quantities
 values ('Gruyere rape',"Oeufs cocottes",150);
@@ -335,7 +335,7 @@ values (8,"Oeufs cocottes","Enfourner pendant 35 minutes en position chaleur tou
 
 
 insert into recipes
-values (null,"Pate a crepes", "2022-05-13", true, true, false, "Bon marche", "< 30min", 4, null, "abdobeir", null, "RC_DESS");
+values ("Pate a crepes", "2022-05-13", true, true, false, "Bon marche", "< 30min", 4, null, "abdobeir", null, "RC_DESS");
 
 insert into ingredient_quantities
 values ('Farine',"Pate a crepes",300);
@@ -367,7 +367,7 @@ values (6,"Pate a crepes","Faire chauffer une poele antiadhesive et la huiler tr
 
 
 insert into recipes
-values (null,"Amuse-bouches de Gambas", "2022-05-13", false, true, true, "Assez cher", "< 30min", 6, null, "frandubi", "D_PESC", "RC_AMU_G");
+values ("Amuse-bouches de Gambas", "2022-05-13", false, true, true, "Assez cher", "< 30min", 6, null, "frandubi", "D_PESC", "RC_AMU_G");
 
 insert into ingredient_quantities
 values ('Miel',"Amuse-bouches de Gambas",3);
@@ -393,7 +393,7 @@ values (4,"Amuse-bouches de Gambas","Dans des petits verres, versez une cuillere
 
 
 insert into recipes
-values (null,"Hot-dog flemmard du dimanche soir", "2022-05-14", true, false, true, "Bon marche", "< 30min", 2, null, "bichon", null, "RC_SNA");
+values ("Hot-dog flemmard du dimanche soir", "2022-05-14", true, false, true, "Bon marche", "< 30min", 2, null, "bichon", null, "RC_SNA");
 
 insert into ingredient_quantities
 values ('Gruyere rape',"Hot-dog flemmard du dimanche soir",100);
@@ -419,7 +419,7 @@ values (5,"Hot-dog flemmard du dimanche soir","Servir accompagne d'une salade.")
 
 
 insert into recipes
-values (null,"Mayonnaise maison", "2022-05-14", false, false, true, "Bon marche", "< 30min", 4, null, "marvin", "D_SG", "RC_SAU");
+values ("Mayonnaise maison", "2022-05-14", false, false, true, "Bon marche", "< 30min", 4, null, "marvin", "D_SG", "RC_SAU");
 
 insert into ingredient_quantities
 values ('Moutarde',"Mayonnaise maison",2);
@@ -443,7 +443,7 @@ values (3,"Mayonnaise maison","On peut y ajouter des herbes ou du citron pour la
 
 
 insert into recipes
-values (null,"Smoothie nectarine","2022-05-14", false, true, false, "Bon marche", "< 30min", 1, "ete", "frandubi", "D_VEGE", "RC_BOI");
+values ("Smoothie nectarine","2022-05-14", false, true, false, "Bon marche", "< 30min", 1, "ete", "frandubi", "D_VEGE", "RC_BOI");
 
 insert into ingredient_quantities
 values ('Lait',"Smoothie nectarine",9);
@@ -457,7 +457,7 @@ values (1,"Smoothie nectarine","Mettre le yaourt, le lait et la nectarine lavee 
 
 
 insert into menus
-values (null,"Anniversaire Bichon","C'etait super bon, par contre un peu trop copieux");
+values ("Anniversaire Bichon","C'etait super bon, par contre un peu trop copieux");
 
 insert into menu_components
 values (1,"Anniversaire Bichon","Amuse-bouches de Gambas");
@@ -470,7 +470,7 @@ values (4,"Anniversaire Bichon","Pate a crepes");
 
 
 insert into menus
-values (null,"Anniversaire Marvin", null);
+values ("Anniversaire Marvin", null);
 
 insert into menu_components
 values (1,"Anniversaire Marvin","Smoothie nectarine");
