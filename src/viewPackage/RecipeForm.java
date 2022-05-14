@@ -16,9 +16,9 @@ import java.util.GregorianCalendar;
 
 public class RecipeForm extends JPanel {
     private ApplicationController controller;
-    private JLabel recipeTitleLabel, dateLabel, recipeCategoryLabel, costLabel, difficultyLabel, preparationTimeLabel,
+    private JLabel recipeTitleLabel, dateLabel, recipeCategoryLabel, costLabel, preparationTimeLabel,
             nbPersonsLabel, regimeLabel, seasonLabel;
-    private JComboBox recipeCategory, cost, difficulty, preparationTime, regime, season;
+    private JComboBox recipeCategory, cost, preparationTime, regime, season;
     private JTextField recipeTitle;
     private JSpinner date, nbPersons;
     private JCheckBox hot, sweet, salty;
@@ -30,13 +30,12 @@ public class RecipeForm extends JPanel {
 
     private JButton prevStepBtn, nextStepBtn;
     private JPanel step1Panel, step2Panel, bottomPanel;
-    protected AddIngredientsPanel addIngredientsPanel;
+    private AddIngredientsPanel addIngredientsPanel;
     private AddStepsPanel addStepsPanel;
 
     private String[] recipeCategories = new String[NB_CATEGORIES];
     private String[] regimes = new String[NB_REGIMES];
     private final String[] costs = {"Bon marché", "Coût moyen", "Assez cher"};
-    private final String[] difficulties = {"Très facile", "Facile", "Moyen", "Difficile"};
     private final String[] preparationTimes = {"Rapide", "Moyen", "Long"};
     private final String[] seasons = {"Printemps", "Ete", "Automne", "Hiver"};
 
@@ -52,7 +51,7 @@ public class RecipeForm extends JPanel {
         // --------------- Form step 1 ----------------
         step1Panel = new JPanel();
         step1Panel.setBorder(new EmptyBorder(0, 150, 0, 150));
-        step1Panel.setLayout(new GridLayout(9, 2));
+        step1Panel.setLayout(new GridLayout(8, 2));
 
         // ------ Title -------
         recipeTitleLabel = new JLabel("Nom de la recette* :");
@@ -103,13 +102,6 @@ public class RecipeForm extends JPanel {
         cost = new JComboBox(costs);
         step1Panel.add(costLabel);
         step1Panel.add(cost);
-
-        // ------ Difficulty level -------
-        difficultyLabel = new JLabel("Difficulté* :");
-        difficultyLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        difficulty = new JComboBox(difficulties);
-        step1Panel.add(difficultyLabel);
-        step1Panel.add(difficulty);
 
         // ------ preparation time -------
         preparationTimeLabel = new JLabel("Temps de préparation* :");
@@ -240,7 +232,6 @@ public class RecipeForm extends JPanel {
                             creationDateGC,hot.isSelected(),
                             sweet.isSelected(),salty.isSelected(),
                             cost.getSelectedItem().toString(),
-                            difficulty.getSelectedItem().toString(),
                             preparationTime.getSelectedItem().toString(),
                             Integer.parseInt(nbPersons.getValue().toString()));
                 }

@@ -48,12 +48,10 @@ public class RecipeDBAccess implements RecipeDataAccess {
                         data.getBoolean("is_sweet"),
                         data.getBoolean("is_salty"),
                         data.getString("budget"),
-                        data.getString("difficulty"),
                         data.getString("preparation_time"),
                         data.getInt("nb_persons")
                         // Gérer attributs facultatifs
-                   /*     data.getString("season"),
-                        data.getString("comment")*/
+                   /*     data.getString("season")  */
                 );
 
                 allRecipes.add(recipe);

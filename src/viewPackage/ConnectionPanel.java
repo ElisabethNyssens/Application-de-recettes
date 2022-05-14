@@ -1,5 +1,13 @@
 package viewPackage;
 
+import controllerPackage.ApplicationController;
+import exceptionPackage.AllAuthorsException;
+import exceptionPackage.AllCategoriesException;
+import exceptionPackage.ConnectionException;
+import modelPackage.Author;
+import modelPackage.Category;
+import modelPackage.User;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -9,7 +17,7 @@ import java.awt.event.ActionListener;
 public class ConnectionPanel extends JPanel {
     private JPanel formPanel, buttonPanel;
     private JLabel title;
-    private JComboBox pseudosBox;
+    private JComboBox pseudo;
     private JButton validation;
 
     private final String[] pseudos = {"Bichon", "Marvin", "Prof", "Anonyme1", "Anonyme2"};
@@ -26,9 +34,19 @@ public class ConnectionPanel extends JPanel {
         formPanel.setLayout(new GridLayout(3, 2));
         formPanel.setBorder(new EmptyBorder(0, 150, 0, 150));
 
-        pseudosBox = new JComboBox(pseudos);
-        pseudosBox.setSelectedItem(pseudos[0]);
-        formPanel.add(pseudosBox);
+        int iPseudo = 0;
+        try {
+            ArrayList<Author> authorsList = controller.getAllAuthors();
+            for(Author author : authorsList) {
+                pseudos[iPseudo] = author.getPseudo() + " (" + author.getFirstName() + " " + author.getLastName() + ")";
+                iPseudo++;
+            }
+        } catch (AllAuthorsException exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage());
+        }
+        pseudo = new JComboBox(pseudos);
+        pseudo.setSelectedItem(pseudos[1]);
+        formPanel.add(pseudo);
 
         add(formPanel, BorderLayout.CENTER);
 
@@ -49,7 +67,11 @@ public class ConnectionPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             WelcomeWindow frame = (WelcomeWindow) SwingUtilities.getAncestorOfClass(WelcomeWindow.class, validation);
+            String selectPseudo = pseudo.getSelectedItem().toString().split(" ",2)[0];
+            String firstName = pseudo.getSelectedItem().toString().split("[ )(]",4)[2];
+            String lastName = pseudo.getSelectedItem().toString().split("[ )(]",5)[3];
 
+            User user = new User(selectPseudo,firstName,lastName);
             MainWindow mainWindow = new MainWindow();
 
             frame.dispose();

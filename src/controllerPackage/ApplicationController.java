@@ -17,6 +17,15 @@ public class ApplicationController {
     }
 
     // Create
+    public void addRecipe(Recipe recipe) throws AddRecipeException {
+        recipeManager.addRecipe(recipe);
+    }
+    public void addStep(Step step) throws AddStepException {
+        recipeManager.addStep(step);
+    }
+    public void addIngredientQuantity(IngredientQuantity ingredientQuantity) throws AddIngredQuantException {
+        recipeManager.addIngredientQuantity(ingredientQuantity);
+    }
 
     // Read
     public ArrayList<Recipe> getAllRecipes() throws AllRecipesException {
