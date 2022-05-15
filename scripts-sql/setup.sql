@@ -50,7 +50,7 @@ CREATE TABLE ingredient_quantities
 (
     ingredient_id varchar(30) not null,
     recipe_id varchar(100) not null,
-    quantity int not null,
+    quantity numeric(5,1) not null,
     FOREIGN KEY (ingredient_id) REFERENCES ingredients (ing_name),
     FOREIGN KEY (recipe_id) REFERENCES recipes (title),
     PRIMARY KEY (ingredient_id, recipe_id)
@@ -118,6 +118,7 @@ insert into ingredients values ('bouillon de legumes','cubes');
 insert into ingredients values ('brocoli','unite');
 insert into ingredients values ('cacao','c.a.c');
 insert into ingredients values ('cafe','cl');
+insert into ingredients values ('capres','g');
 insert into ingredients values ('carotte','unite');
 insert into ingredients values ('chou-fleur','unite');
 insert into ingredients values ('ciboulette','c.a.s');
@@ -143,11 +144,13 @@ insert into ingredients values ('graines de pavot','c.a.s');
 insert into ingredients values ('gruyere rape','g');
 insert into ingredients values ("huile d'arachide",'c.a.s');
 insert into ingredients values ("huile d'olive",'c.a.s');
+insert into ingredients values ("huile de tournesol",'c.a.s');
 insert into ingredients values ("jaune d'oeuf",'unite');
 insert into ingredients values ('jus de citron', 'cl');
 insert into ingredients values ('lait','cl');
 insert into ingredients values ('lait de coco','cl');
 insert into ingredients values ('lentilles','g');
+insert into ingredients values ('levure chimique','sachet');
 insert into ingredients values ('melange 5 baies','c.a.c');
 insert into ingredients values ('menthe','feuilles');
 insert into ingredients values ('miel','c.a.c');
@@ -159,59 +162,66 @@ insert into ingredients values ('nectarine','unite');
 insert into ingredients values ('noix','g');
 insert into ingredients values ('oeuf','unite');
 insert into ingredients values ('oignon jaune','unite');
+insert into ingredients values ('oignon nouveau','unite');
 insert into ingredients values ('orange','unite');
 insert into ingredients values ('parmesan','g');
 insert into ingredients values ('pates','g');
 insert into ingredients values ('persil','c.a.s');
+insert into ingredients values ('pave de saumon','unite');
 insert into ingredients values ('pignons de pin','g');
 insert into ingredients values ('pois chiches','g');
 insert into ingredients values ('poivre','c.a.c');
 insert into ingredients values ('poivron','unite');
+insert into ingredients values ('pomme','unite');
 insert into ingredients values ('rhum','cl');
 insert into ingredients values ('riz','g');
 insert into ingredients values ('saucisse de Strasbourg','unite');
 insert into ingredients values ('sel','c.a.c');
 insert into ingredients values ('sesame','c.a.c');
 insert into ingredients values ('sucre','g');
+insert into ingredients values ('sucre roux','g');
+insert into ingredients values ('sucre vanile','sachet');
 insert into ingredients values ('tofu','g');
 insert into ingredients values ('tomate','unite');
 insert into ingredients values ("vinaigre a l'estragon",'c.a.s');
 insert into ingredients values ('vinaigre balsamique','c.a.s');
 insert into ingredients values ('vinaigre de cidre','c.a.s');
 insert into ingredients values ('vin blanc','cl');
+insert into ingredients values ('yaourt de soja','unite');
 insert into ingredients values ('yaourt nature','unite');
 
+
 insert into recipes
-values ('Curry au tofu','2021-04-25',true,false,true,'Bon marche','30min >< 1h',4,'hiver','bichon',D_VEGA,'RC_PLAT');
+values ('Curry au tofu','2021-04-25',true,false,true,'Bon marche','30min >< 1h',4,'hiver','bichon','D_VEGA','RC_PLAT');
 
 insert into ingredient_quantities
-values ('Pois chiches','Curry au tofu',250);
+values ('pois chiches','Curry au tofu',250);
 insert into ingredient_quantities
-values ('Concentre de tomates','Curry au tofu',500);
+values ('concentre de tomates','Curry au tofu',500);
 insert into ingredient_quantities
-values ('Oignon jaune','Curry au tofu',2);
+values ('oignon jaune','Curry au tofu',2);
 insert into ingredient_quantities
-values ('Ail','Curry au tofu',1);
+values ('ail','Curry au tofu',1);
 insert into ingredient_quantities
-values ('Gingembre','Curry au tofu',20);
+values ('gingembre','Curry au tofu',20);
 insert into ingredient_quantities
-values ('Graines de cumin','Curry au tofu',2);
+values ('graines de cumin','Curry au tofu',2);
 insert into ingredient_quantities
-values ('Curry','Curry au tofu',2);
+values ('curry','Curry au tofu',2);
 insert into ingredient_quantities
-values ('Curcuma','Curry au tofu',1);
+values ('curcuma','Curry au tofu',1);
 insert into ingredient_quantities
-values ('Persil','Curry au tofu',2);
+values ('persil','Curry au tofu',2);
 insert into ingredient_quantities
-values ("Huile d'arachide",'Curry au tofu',2);
+values ("huile d'arachide",'Curry au tofu',2);
 insert into ingredient_quantities
-values ('Sel','Curry au tofu',2);
+values ('sel','Curry au tofu',2);
 insert into ingredient_quantities
-values ('Chou-fleur','Curry au tofu',1);
+values ('chou-fleur','Curry au tofu',1);
 insert into ingredient_quantities
-values ('Tofu','Curry au tofu',250);
+values ('tofu','Curry au tofu',250);
 insert into ingredient_quantities
-values ('Riz','Curry au tofu',500);
+values ('riz','Curry au tofu',500);
 
 insert into steps
 values (1,'Curry au tofu',"Egoutter les poids chiches, emincer les oignons et l'ail, hacher le persil et couper le chou-fleur en petits morceaux");
@@ -232,27 +242,27 @@ insert into recipes
 values ('Salade fraise menthe','2021-07-18',false,true,true,'Cout moyen','< 30min',4,'ete','bichon','D_VEGE','RC_ACC');
 
 insert into ingredient_quantities
-values ('Epinard frais','Salade fraise menthe',600);
+values ('epinard frais','Salade fraise menthe',600);
 insert into ingredient_quantities
-values ('Fraise','Salade fraise menthe',400);
+values ('fraise','Salade fraise menthe',400);
 insert into ingredient_quantities
-values ('Feta','Salade fraise menthe',250);
+values ('feta','Salade fraise menthe',250);
 insert into ingredient_quantities
-values ('Noix','Salade fraise menthe',80);
+values ('noix','Salade fraise menthe',80);
 insert into ingredient_quantities
-values ('Menthe','Salade fraise menthe',50);
+values ('menthe','Salade fraise menthe',50);
 insert into ingredient_quantities
-values ('Graines de pavot','Salade fraise menthe',2);
+values ('graines de pavot','Salade fraise menthe',2);
 insert into ingredient_quantities
-values ('Miel','Salade fraise menthe',1);
+values ('miel','Salade fraise menthe',1);
 insert into ingredient_quantities
-values ('Vinaigre balsamique','Salade fraise menthe',1);
+values ('vinaigre balsamique','Salade fraise menthe',1);
 insert into ingredient_quantities
-values ("Huile d'olive",'Salade fraise menthe',6);
+values ("huile d'olive",'Salade fraise menthe',6);
 insert into ingredient_quantities
-values ('Sel','Salade fraise menthe',2);
+values ('sel','Salade fraise menthe',2);
 insert into ingredient_quantities
-values ('Poivre','Salade fraise menthe',1);
+values ('poivre','Salade fraise menthe',1);
 
 insert into steps
 values (1,'Salade fraise menthe',"Lavez et egouttez les épinards.");
@@ -270,27 +280,27 @@ insert into recipes
 values ('Soupe carotte gingembre','2022-01-13',true,false,true,'Bon marche','< 30min',4,'automne','anonyme','D_VEGE','RC_SOU');
 
 insert into ingredient_quantities
-values ('Beurre','Soupe carotte gingembre',50);
+values ('beurre','Soupe carotte gingembre',50);
 insert into ingredient_quantities
-values ('Oignon jaune','Soupe carotte gingembre',1);
+values ('oignon jaune','Soupe carotte gingembre',1);
 insert into ingredient_quantities
-values ('Gingembre','Soupe carotte gingembre',50);
+values ('gingembre','Soupe carotte gingembre',50);
 insert into ingredient_quantities
-values ('Ail','Soupe carotte gingembre',3);
+values ('ail','Soupe carotte gingembre',3);
 insert into ingredient_quantities
-values ('Bouillon de legumes','Soupe carotte gingembre',2);
+values ('bouillon de legumes','Soupe carotte gingembre',2);
 insert into ingredient_quantities
-values ('Vin blanc','Soupe carotte gingembre',25);
+values ('vin blanc','Soupe carotte gingembre',25);
 insert into ingredient_quantities
-values ('Carotte','Soupe carotte gingembre',4);
+values ('carotte','Soupe carotte gingembre',4);
 insert into ingredient_quantities
-values ('Jus de citron','Soupe carotte gingembre',3);
+values ('jus de citron','Soupe carotte gingembre',3);
 insert into ingredient_quantities
-values ('Poivre','Soupe carotte gingembre',1);
+values ('poivre','Soupe carotte gingembre',1);
 insert into ingredient_quantities
-values ('Sel','Soupe carotte gingembre',1);
+values ('sel','Soupe carotte gingembre',1);
 insert into ingredient_quantities
-values ('Ciboulette','Soupe carotte gingembre',2);
+values ('ciboulette','Soupe carotte gingembre',2);
 
 insert into steps
 values (1,'Soupe carotte gingembre',"Emincer l'oignon et la ciboulette. Couper finement l'ail et le gingembre. Couper les carottes en lamelles de 1cm.");
@@ -308,17 +318,17 @@ insert into recipes
 values ("Oeufs cocottes", "2022-05-13", true, false, true, "Bon marche", "30min >< 1h", 4, "Toute saison", "bichon", "D_VEGE", "RC_ENT");
 
 insert into ingredient_quantities
-values ('Gruyere rape',"Oeufs cocottes",150);
+values ('gruyere rape',"Oeufs cocottes",150);
 insert into ingredient_quantities
-values ('Beurre',"Oeufs cocottes",60);
+values ('beurre',"Oeufs cocottes",60);
 insert into ingredient_quantities
-values ('Farine',"Oeufs cocottes",60);
+values ('farine',"Oeufs cocottes",60);
 insert into ingredient_quantities
-values ('Lait',"Oeufs cocottes",40);
+values ('lait',"Oeufs cocottes",40);
 insert into ingredient_quantities
-values ('Muscade',"Oeufs cocottes",1);
+values ('muscade',"Oeufs cocottes",1);
 insert into ingredient_quantities
-values ('Oeuf',"Oeufs cocottes",4);
+values ('oeuf',"Oeufs cocottes",4);
 
 insert into steps
 values (1,"Oeufs cocottes","Prechauffer le four a 180°C (thermostat 6). Beurrer le moule.");
@@ -342,19 +352,19 @@ insert into recipes
 values ("Pate a crepes", "2022-05-13", true, true, false, "Bon marche", "< 30min", 4, null, "abdobeir", null, "RC_DESS");
 
 insert into ingredient_quantities
-values ('Farine',"Pate a crepes",300);
+values ('farine',"Pate a crepes",300);
 insert into ingredient_quantities
-values ('Sucre',"Pate a crepes",45);
+values ('sucre',"Pate a crepes",45);
 insert into ingredient_quantities
-values ("Huile d'arachide","Pate a crepes",2);
+values ("huile d'arachide","Pate a crepes",2);
 insert into ingredient_quantities
-values ('Beurre',"Pate a crepes",50);
+values ('beurre',"Pate a crepes",50);
 insert into ingredient_quantities
-values ('Lait',"Pate a crepes",60);
+values ('lait',"Pate a crepes",60);
 insert into ingredient_quantities
-values ('Rhum',"Pate a crepes",5);
+values ('rhum',"Pate a crepes",5);
 insert into ingredient_quantities
-values ('Oeuf',"Pate a crepes",3);
+values ('oeuf',"Pate a crepes",3);
 
 insert into steps
 values (1,"Pate a crepes","Faire fondre le beurre.");
@@ -374,17 +384,17 @@ insert into recipes
 values ("Amuse-bouches de Gambas", "2022-05-13", false, true, true, "Assez cher", "< 30min", 6, null, "frandubi", "D_PESC", "RC_AMU_G");
 
 insert into ingredient_quantities
-values ('Miel',"Amuse-bouches de Gambas",3);
+values ('miel',"Amuse-bouches de Gambas",3);
 insert into ingredient_quantities
-values ('Sesame',"Amuse-bouches de Gambas",1);
+values ('sesame',"Amuse-bouches de Gambas",1);
 insert into ingredient_quantities
-values ("Huile d'olive","Amuse-bouches de Gambas",2);
+values ("huile d'olive","Amuse-bouches de Gambas",2);
 insert into ingredient_quantities
-values ('Gambas',"Amuse-bouches de Gambas",6);
+values ('gambas',"Amuse-bouches de Gambas",6);
 insert into ingredient_quantities
-values ('Fromage frais',"Amuse-bouches de Gambas",120);
+values ('fromage frais',"Amuse-bouches de Gambas",120);
 insert into ingredient_quantities
-values ('Melange 5 baies',"Amuse-bouches de Gambas",1);
+values ('melange 5 baies',"Amuse-bouches de Gambas",1);
 
 insert into steps
 values (1,"Amuse-bouches de Gambas","Otez les tetes des gambas et decortiquez-les jusqu'a ce qu'il ne reste que la queue.");
@@ -400,15 +410,15 @@ insert into recipes
 values ("Hot-dog flemmard du dimanche soir", "2022-05-14", true, false, true, "Bon marche", "< 30min", 2, null, "bichon", null, "RC_SNA");
 
 insert into ingredient_quantities
-values ('Gruyere rape',"Hot-dog flemmard du dimanche soir",100);
+values ('gruyere rape',"Hot-dog flemmard du dimanche soir",100);
 insert into ingredient_quantities
-values ('Moutarde',"Hot-dog flemmard du dimanche soir",4);
+values ('moutarde',"Hot-dog flemmard du dimanche soir",4);
 insert into ingredient_quantities
-values ('Bacon',"Hot-dog flemmard du dimanche soir",4);
+values ('bacon',"Hot-dog flemmard du dimanche soir",4);
 insert into ingredient_quantities
-values ('Saucisse de Strasbourg',"Hot-dog flemmard du dimanche soir",4);
+values ('saucisse de Strasbourg',"Hot-dog flemmard du dimanche soir",4);
 insert into ingredient_quantities
-values ('Baguette',"Hot-dog flemmard du dimanche soir",1);
+values ('baguette',"Hot-dog flemmard du dimanche soir",1);
 
 insert into steps
 values (1,"Hot-dog flemmard du dimanche soir","Tartiner le bacon de moutarde, enrouler le cote tartine autour des saucisses.");
@@ -426,17 +436,17 @@ insert into recipes
 values ("Mayonnaise maison", "2022-05-14", false, false, true, "Bon marche", "< 30min", 4, null, "marvin", "D_SG", "RC_SAU");
 
 insert into ingredient_quantities
-values ('Moutarde',"Mayonnaise maison",2);
+values ('moutarde',"Mayonnaise maison",2);
 insert into ingredient_quantities
-values ("Vinaigre a l'estragon","Mayonnaise maison",1);
+values ("vinaigre a l'estragon","Mayonnaise maison",1);
 insert into ingredient_quantities
-values ("Huile d'arachide","Mayonnaise maison",7);
+values ("huile d'arachide","Mayonnaise maison",7);
 insert into ingredient_quantities
-values ('Sel',"Mayonnaise maison",1);
+values ('sel',"Mayonnaise maison",1);
 insert into ingredient_quantities
-values ('Poivre',"Mayonnaise maison",1);
+values ('poivre',"Mayonnaise maison",1);
 insert into ingredient_quantities
-values ("Jaune d'oeuf","Mayonnaise maison",1);
+values ("jaune d'oeuf","Mayonnaise maison",1);
 
 insert into steps
 values (1,"Mayonnaise maison","Les ingredients doivent etre a temperature ambiante. Melangez le jaune d'oeuf, un peu de sel, poivre, la moutarde et le vinaigre.");
@@ -447,17 +457,83 @@ values (3,"Mayonnaise maison","On peut y ajouter des herbes ou du citron pour la
 
 
 insert into recipes
-values ("Smoothie nectarine","2022-05-14", false, true, false, "Bon marche", "< 30min", 1, "ete", "frandubi", "D_VEGE", "RC_BOI");
+values ("Smoothie nectarine","2022-05-14", false, true, false, "Bon marche", "< 30min", 1, "ete", "frandubi", "D_SG", "RC_BOI");
 
 insert into ingredient_quantities
-values ('Lait',"Smoothie nectarine",9);
+values ('lait',"Smoothie nectarine",9);
 insert into ingredient_quantities
-values ('Nectarine',"Smoothie nectarine",1);
+values ('nectarine',"Smoothie nectarine",1);
 insert into ingredient_quantities
-values ('Yaourt nature',"Smoothie nectarine",1);
+values ('yaourt nature',"Smoothie nectarine",1);
 
 insert into steps
 values (1,"Smoothie nectarine","Mettre le yaourt, le lait et la nectarine lavee et denoyautee dans un mixeur et mixer jusqu'a obtenir une substance cremeuse ou liquide. Puis servir dans un verre avec 1 ou 2 glaçons.");
+
+
+insert into recipes
+values ("Gateau au yaourt de soja et pommes", "2022-05-15", false, true, false, "Bon marche", "> 1h", 8, null, "anonyme", "D_VEGA", "RC_DESS");
+
+insert into ingredient_quantities
+values ('pomme',"Gateau au yaourt de soja et pommes",2);
+insert into ingredient_quantities
+values ('farine',"Gateau au yaourt de soja et pommes",200);
+insert into ingredient_quantities
+values ('yaourt de soja',"Gateau au yaourt de soja et pommes",3);
+insert into ingredient_quantities
+values ('huile de tournesol',"Gateau au yaourt de soja et pommes",2);
+insert into ingredient_quantities
+values ('jus de citron',"Gateau au yaourt de soja et pommes",1.5);
+insert into ingredient_quantities
+values ('sucre roux',"Gateau au yaourt de soja et pommes",80);
+insert into ingredient_quantities
+values ('sucre vanille',"Gateau au yaourt de soja et pommes",1);
+insert into ingredient_quantities
+values ('levure chimique',"Gateau au yaourt de soja et pommes",0.5);
+
+insert into steps
+values (1,"Gateau au yaourt de soja et pommes","Prechauffez votre four a 180°C.");
+insert into steps
+values (2,"Gateau au yaourt de soja et pommes","Epluchez les pommes, coupez-les en des et faites-les cuire a la poele avec une cuillere à soupe de sucre roux et une autre d’eau. Laissez carameliser pendant 5 a 10 minutes. Reservez.");
+insert into steps
+values (3,"Gateau au yaourt de soja et pommes","Dans un saladier, melangez les yaourts de soja, le sucre roux, l’huile, le jus de citron et une cuillere a soupe d'eau. Puis, ajoutez progressivement la farine et la levure chimique.");
+insert into steps
+values (4,"Gateau au yaourt de soja et pommes","Ajoutez les pommes a la pate, melangez bien l’ensemble.");
+insert into steps
+values (5,"Gateau au yaourt de soja et pommes","Graissez le moule, versez la preparation puis saupoudrez le tout de sucre roux.");
+insert into steps
+values (6,"Gateau au yaourt de soja et pommes","Enfournez pour environ 50 minutes et laissez refroidir avant de démouler le gateau au yaourt de soja et pommes.");
+
+
+insert into recipes
+values ("Paves de saumon au four", "2022-05-15", true, false, true, "Moyen", "30min >< 1h", 2, "printemps", "abdobeir", "D_PESC", "RC_PLAT");
+
+insert into ingredient_quantities
+values ('citron jaune',"Paves de saumon au four",1);
+insert into ingredient_quantities
+values ('vin blanc',"Paves de saumon au four",10);
+insert into ingredient_quantities
+values ('oignon nouveau',"Paves de saumon au four",4);
+insert into ingredient_quantities
+values ("huile d'olive","Paves de saumon au four",4);
+insert into ingredient_quantities
+values ('poivre',"Paves de saumon au four",1);
+insert into ingredient_quantities
+values ('sel',"Paves de saumon au four",1);
+insert into ingredient_quantities
+values ('capres',"Paves de saumon au four",50);
+insert into ingredient_quantities
+values ('pave de saumon',"Paves de saumon au four",2);
+
+insert into steps
+values (1,"Paves de saumon au four","Mettre les paves de saumon dans un plat allant au four.");
+insert into steps
+values (1,"Paves de saumon au four","Couper un citron en 2 et le presser sur les paves. Couper le demi-citron restant en rondelles et les deposer directement sur le saumon.");
+insert into steps
+values (1,"Paves de saumon au four","Ciseler les petits oignons ainsi que le 'vert' puis les mettre sur les paves.");
+insert into steps
+values (1,"Paves de saumon au four","Ecraser les capres et les poser sur le saumon (facultatif).");
+insert into steps
+values (1,"Paves de saumon au four","Verser le vin blanc et un filet d'huile d'olive sur les saumons, saler (tres peu), poivrer et faire cuire à 180°, thermostat 6, pendant environ 25 min.");
 
 
 insert into menus
@@ -482,3 +558,50 @@ insert into menu_components
 values (2,"Anniversaire Marvin",'Soupe carotte gingembre');
 insert into menu_components
 values (3,"Anniversaire Marvin","Hot-dog flemmard du dimanche soir");
+
+
+insert into menus
+values ("Menu vegan", "Tous les plats de ce menu ont l'etiquette vegan");
+
+insert into menu_components
+values (1,"Menu vegan","Curry au tofu");
+insert into menu_components
+values (2,"Menu vegan","Gateau au yaourt de soja et pommes");
+
+
+insert into menus
+values ("Menu vegetarien", "Tous les plats de ce menu ont l'etiquette vegetarien");
+
+insert into menu_components
+values (1, "Menu vegetarien", 'Soupe carotte gingembre');
+insert into menu_components
+values (2, "Menu vegetarien", "Oeufs cocottes");
+insert into menu_components
+values (3, "Menu vegetarien", 'Salade fraise menthe');
+
+
+insert into menus
+values ("Menu Pescetarien", "Tous les plats de ce menu ont l'etiquette pescetarien");
+
+insert into menu_components
+values (1, "Menu Pescetarien", "Amuse-bouches de Gambas");
+insert into menu_components
+values (2, "Menu Pescetarien", "Paves de saumon au four");
+
+
+insert into menus
+values ("Menu sans-gluten", "Tous les plats de ce menu ont l'etiquette sans-gluten, du coup le menu est peut-etre un peu bizarre");
+
+insert into menu_components
+values (1, "Menu sans-gluten", "Mayonnaise maison");
+insert into menu_components
+values (2, "Menu sans-gluten", "Smoothie nectarine");
+
+
+insert into menu
+values ("Menu sans etiquette de regime", null);
+
+insert into menu_components
+values (1, "Menu sans etiquette de regime", "Hot-dog flemmard du dimanche soir");
+insert into menu_components
+values (2, "Menu sans etiquette de regime", "Pate a crepes");
