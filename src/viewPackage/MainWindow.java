@@ -145,7 +145,11 @@ public class MainWindow extends JFrame {
     private class EditRecipeListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             mainContainer.removeAll();
-            mainContainer.add(new RecipeModifPanel());
+            try {
+                mainContainer.add(new RecipeModifPanel());
+            } catch (ConnectionException exception) {
+                exception.printStackTrace();
+            }
             setVisible(true);
         }
     }

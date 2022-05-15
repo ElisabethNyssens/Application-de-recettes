@@ -25,8 +25,8 @@ public class AddIngredientsPanel extends JPanel {
     private ApplicationController controller;
     private static int NB_INGREDIENTS = 68;
     private String[] ingredientsValues = new String[NB_INGREDIENTS];
-    protected Object[] selectedIngredients;
-    protected int nbSelectedIngred;
+    private Object[] selectedIngredients;
+    private int nbSelectedIngred;
 
     private JLabel ingredientLabel, quantityLabel;
     private JComboBox ingredient;
@@ -34,10 +34,10 @@ public class AddIngredientsPanel extends JPanel {
     private JButton addIngredientBtn, resetBtn;
     private JList selectedIngredList;
     private ArrayList<IngredientQuantity> ingredientQuantities;
-    protected String recipeName;
+    private RecipeForm parentPanel;
 
-    public AddIngredientsPanel(String recipeName) throws ConnectionException {
-        this.recipeName = recipeName;
+    public AddIngredientsPanel(RecipeForm parentPanel) throws ConnectionException {
+        this.parentPanel = parentPanel;
         ingredientQuantities = new ArrayList<>();
         controller = new ApplicationController();
 
@@ -97,14 +97,19 @@ public class AddIngredientsPanel extends JPanel {
             double convertedQuantity = Double.parseDouble(quantity.getValue().toString());
             DecimalFormat df = new DecimalFormat("###.#");
             String[] ingredAndUnit = ingredient.getSelectedItem().toString().split("[)(]", 3);
+
             String selectedIngredient = ingredAndUnit[0];
+            if (Character.compare(selectedIngredient.charAt(selectedIngredient.length()-1), ' ') == 0) {
+                selectedIngredient = selectedIngredient.substring(0, selectedIngredient.length()-1);
+            }
             String unit = ingredAndUnit.length > 1 ? (ingredAndUnit[1] + " ") : "";
 
+            String finalSelectedIngredient = selectedIngredient;
             List<IngredientQuantity> duplicate = ingredientQuantities.stream().filter(x ->
-                    x.getIngredient().equals(selectedIngredient)).collect(toList());
+                    x.getIngredient().equals(finalSelectedIngredient)).collect(toList());
 
             if (duplicate.isEmpty()) {
-                ingredientQuantities.add(new IngredientQuantity(selectedIngredient,recipeName,convertedQuantity));
+                ingredientQuantities.add(new IngredientQuantity(selectedIngredient,parentPanel.getRecipeTitle(),convertedQuantity));
                 selectedIngredients[nbSelectedIngred] = df.format(convertedQuantity) + " " + unit + selectedIngredient;
                 nbSelectedIngred++;
 

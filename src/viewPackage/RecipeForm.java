@@ -136,11 +136,11 @@ public class RecipeForm extends JPanel {
         step2Panel.setBorder(new EmptyBorder(0, 150, 0, 150));
 
         // ------ Ingredients -------
-        addIngredientsPanel = new AddIngredientsPanel(recipeTitle.getText());
+        addIngredientsPanel = new AddIngredientsPanel(this);
         step2Panel.add(addIngredientsPanel);
 
         // ------ Steps -------
-        addStepsPanel = new AddStepsPanel(recipeTitle.getText());
+        addStepsPanel = new AddStepsPanel(this);
         step2Panel.add(addStepsPanel);
 
         JPanel gridPanel = new JPanel();
@@ -220,7 +220,10 @@ public class RecipeForm extends JPanel {
                     JOptionPane.showMessageDialog(null, "Le nom de ta recette est trop long !");
                 } else if (duplicateTitle) {
                     JOptionPane.showMessageDialog(null, "Une recette portant ce nom existe déjà... Choisis-en un autre !");
-                } else {
+                } else if (!salty.isSelected() && !sweet.isSelected()) {
+                    JOptionPane.showMessageDialog(null, "Ta recette est-elle salée et/ou sucrée ?");
+                }
+                else {
                     refToRecipePanel.remove(step1Panel);
                     refToRecipePanel.add(step2Panel);
                     prevStepBtn.setVisible(true);
@@ -266,13 +269,8 @@ public class RecipeForm extends JPanel {
                     );
 
                     try {
-                        steps.forEach(step -> {
-                            try {
-                                controller.addStep(step);
-                            } catch (AddStepException e) {
-                                e.printStackTrace();
-                            }
-                        });
+                        controller.addRecipe(recipe);
+                        System.out.println("recette ajoutée");
                         ingredientQuantites.forEach(ingred -> {
                             try {
                                 controller.addIngredientQuantity(ingred);
@@ -280,7 +278,14 @@ public class RecipeForm extends JPanel {
                                 e.printStackTrace();
                             }
                         });
-                        controller.addRecipe(recipe);
+                        steps.forEach(step -> {
+                            System.out.println(step.getOrderNumber() + " " + step.getRecipeName() + " " + step.getDescription());
+                            try {
+                                controller.addStep(step);
+                            } catch (AddStepException e) {
+                                e.printStackTrace();
+                            }
+                        });
                         ProgressBarWindow progressBarWindow = new ProgressBarWindow();
                         refToRecipePanel.removeAll();
                         refToRecipePanel.revalidate();
@@ -301,5 +306,9 @@ public class RecipeForm extends JPanel {
             refToRecipePanel.revalidate();
             refToRecipePanel.repaint();
         }
+    }
+
+    public String getRecipeTitle() {
+        return recipeTitle.getText();
     }
 }

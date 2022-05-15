@@ -21,10 +21,10 @@ public class AddStepsPanel extends JPanel {
     private JButton addStepBtn, resetBtn;
     private JList stepsList;
     private ArrayList<Step> steps;
-    private String recipeName;
+    private RecipeForm parentPanel;
 
-    public AddStepsPanel(String recipeName) {
-        this.recipeName = recipeName;
+    public AddStepsPanel(RecipeForm parentPanel) {
+        this.parentPanel = parentPanel;
         stepsObj = new Object[NB_MAX_STEPS];
         steps = new ArrayList<>();
         nbSteps = 0;
@@ -72,7 +72,7 @@ public class AddStepsPanel extends JPanel {
     private class AddButtonListener implements ActionListener {
         public void actionPerformed( ActionEvent event) {
             if (!step.getText().isBlank()) {
-                steps.add(new Step(nbSteps+1, recipeName, step.getText()));
+                steps.add(new Step(nbSteps+1, parentPanel.getRecipeTitle(), step.getText()));
 
                 stepsObj[nbSteps] = (nbSteps+1) + ". " + step.getText();
                 nbSteps++;
