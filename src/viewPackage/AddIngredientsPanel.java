@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -65,7 +66,7 @@ public class AddIngredientsPanel extends JPanel {
         JPanel quant = new JPanel();
         quant.setLayout(new FlowLayout(FlowLayout.LEFT,3,3));
         quantityLabel = new JLabel("Quantité* :");
-        quantity = new JSpinner(new SpinnerNumberModel(1, 1, 10000, 1));
+        quantity = new JSpinner(new SpinnerNumberModel(1, 0.5, 10000, 0.5));
         ingred.add(ingredientLabel);
         ingred.add(ingredient);
         quant.add(quantityLabel);
@@ -93,7 +94,8 @@ public class AddIngredientsPanel extends JPanel {
 
     private class AddButtonListener implements ActionListener {
         public void actionPerformed( ActionEvent event) {
-            int convertedQuantity = Integer.parseInt(quantity.getValue().toString());
+            double convertedQuantity = Double.parseDouble(quantity.getValue().toString());
+            DecimalFormat df = new DecimalFormat("###.#");
             String[] ingredAndUnit = ingredient.getSelectedItem().toString().split("[)(]", 3);
             String selectedIngredient = ingredAndUnit[0];
             String unit = ingredAndUnit.length > 1 ? (ingredAndUnit[1] + " ") : "";
@@ -103,7 +105,7 @@ public class AddIngredientsPanel extends JPanel {
 
             if (duplicate.isEmpty()) {
                 ingredientQuantities.add(new IngredientQuantity(selectedIngredient,recipeName,convertedQuantity));
-                selectedIngredients[nbSelectedIngred] = convertedQuantity + " " + unit + selectedIngredient;
+                selectedIngredients[nbSelectedIngred] = df.format(convertedQuantity) + " " + unit + selectedIngredient;
                 nbSelectedIngred++;
 
                 selectedIngredList.setListData(selectedIngredients);

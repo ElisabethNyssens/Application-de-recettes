@@ -31,5 +31,6 @@ public class ProgressBarThread extends Thread {
             }
         }
         progressBarWindow.dispose();
+        JOptionPane.showMessageDialog(null, "Mmmh ça a l'air bon ! La recette a bien été enregistrée !");
     }
 }

@@ -10,4 +10,16 @@ public class Step {
         this.recipeName = recipeName;
         this.description = description;
     }
+
+    public int getOrderNumber() {
+        return orderNumber;
+    }
+
+    public String getRecipeName() {
+        return recipeName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }
