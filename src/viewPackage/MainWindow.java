@@ -138,7 +138,12 @@ public class MainWindow extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             mainContainer.removeAll();
-            mainContainer.add(new MenuCreationPanel());
+            try {
+                mainContainer.add(new MenuCreationPanel());
+            } catch (ConnectionException exception) {
+                exception.printStackTrace();
+                System.out.println(exception.getMessage());
+            }
             setVisible(true);
         }
     }
