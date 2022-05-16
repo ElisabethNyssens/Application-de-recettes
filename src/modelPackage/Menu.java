@@ -9,6 +9,14 @@ public class Menu {
         this.comment = comment;
     }
 
+    public Menu(String title) {
+        this(title, null);
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
     public String getTitle() {
         return title;
     }

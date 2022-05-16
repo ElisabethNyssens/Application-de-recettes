@@ -68,12 +68,40 @@ public class RecipeDBAccess implements RecipeDataAccess {
 
     @Override
     public void addMenu(Menu menu) throws AddMenuException {
+        String sql = "insert into menus (title) values (?,?)";
 
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, menu.getTitle());
+            preparedStatement.executeUpdate();
+
+            if (menu.getComment() != null) {
+                sql = "update menus set comment = ? where title = ?";
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, menu.getComment());
+                preparedStatement.setString(2, menu.getTitle());
+                preparedStatement.executeUpdate();
+            }
+        }
+        catch(SQLException exception) {
+            throw new AddMenuException();
+        }
     }
 
     @Override
     public void addMenuComponent(MenuComponent menuComponent) throws AddMenuComponentException {
+        String sql = "insert into menu_components (order_number,menu_id,recipe_id) values (?,?,?)";
 
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, menuComponent.getOrderNumber());
+            preparedStatement.setString(2, menuComponent.getMenuId());
+            preparedStatement.setString(3, menuComponent.getRecipeId());
+            preparedStatement.executeUpdate();
+        }
+        catch(SQLException exception) {
+            throw new AddMenuComponentException();
+        }
     }
 
     // Read
@@ -224,7 +252,30 @@ public class RecipeDBAccess implements RecipeDataAccess {
 
     @Override
     public ArrayList<Menu> getAllMenus() throws AllMenusException {
-        return null;
+        ArrayList<Menu> allMenus = new ArrayList<>();
+        String sql = "select * from menus";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet data = preparedStatement.executeQuery();
+            Menu menu;
+            String comment;
+
+            while (data.next()) {
+                menu = new Menu(data.getString("title"));
+
+                comment = data.getString("comment");
+                if(!data.wasNull()) {
+                    menu.setComment(comment);
+                }
+
+                allMenus.add(menu);
+            }
+            return allMenus;
+        }
+        catch (SQLException exception) {
+            throw new AllMenusException();
+        }
     }
     // Update
 
