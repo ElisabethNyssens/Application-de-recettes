@@ -16,7 +16,7 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
-public class AddIngredientsPanel extends JPanel {
+public class UpdateIngredientsPanel extends JPanel {
     private ApplicationController controller;
     private static int NB_INGREDIENTS = 68;
     private String[] ingredientsValues = new String[NB_INGREDIENTS];
@@ -26,12 +26,12 @@ public class AddIngredientsPanel extends JPanel {
     private JLabel ingredientLabel, quantityLabel;
     private JComboBox ingredient;
     private JSpinner quantity;
-    private JButton addIngredientBtn, removeIngredBtn;
+    private JButton addIngredientBtn, resetBtn;
     private JList selectedIngredList;
     private ArrayList<IngredientQuantity> ingredientQuantities;
-    private RecipeCreationForm parentPanel;
+    private RecipeUpdateForm parentPanel;
 
-    public AddIngredientsPanel(RecipeCreationForm parentPanel) throws ConnectionException {
+    public UpdateIngredientsPanel(RecipeUpdateForm parentPanel) throws ConnectionException {
         this.parentPanel = parentPanel;
         ingredientQuantities = new ArrayList<>();
         controller = new ApplicationController();
@@ -69,14 +69,8 @@ public class AddIngredientsPanel extends JPanel {
         ingredPanel.add(ingred);
         ingredPanel.add(quant);
 
-        JPanel btnPanel = new JPanel();
-        btnPanel.setLayout(new GridLayout(2, 1));
         addIngredientBtn = new JButton("Ajouter l'ingrédient >>");
-        removeIngredBtn = new JButton("<< Retirer l'ingrédient");
-        addIngredientBtn.addActionListener(new AddButtonListener());
-        removeIngredBtn.addActionListener(new RemoveButtonListener());
-        btnPanel.add(addIngredientBtn);
-        btnPanel.add(removeIngredBtn);
+        addIngredientBtn.addActionListener(new UpdateIngredientsPanel.AddButtonListener());
 
         selectedIngredList = new JList();
         selectedIngredList.setFixedCellWidth(250);
@@ -85,12 +79,12 @@ public class AddIngredientsPanel extends JPanel {
         selectedIngredList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         this.add(ingredPanel);
-        this.add(btnPanel);
+        this.add(addIngredientBtn);
         this.add(new JScrollPane(selectedIngredList));
     }
 
     public ArrayList<IngredientQuantity> getIngredientQuantities() {
-            return ingredientQuantities;
+        return ingredientQuantities;
     }
 
     private class AddButtonListener implements ActionListener {
@@ -115,32 +109,12 @@ public class AddIngredientsPanel extends JPanel {
                 nbSelectedIngred++;
 
                 selectedIngredList.setListData(selectedIngredients);
-                AddIngredientsPanel.this.repaint();
+                UpdateIngredientsPanel.this.repaint();
             } else {
                 JOptionPane.showMessageDialog(null, "Cet ingrédient est déjà dans la liste !");
             }
 
 
-        }
-    }
-
-    private class RemoveButtonListener implements ActionListener {
-        public void actionPerformed( ActionEvent event) {
-            if (selectedIngredList.getSelectedValue() == null) {
-                JOptionPane.showMessageDialog(null, "Sélectionne un ingrédient !");
-            } else {
-                int iSelectIngred = selectedIngredList.getSelectedIndex();
-                System.out.println(selectedIngredList.getSelectedValue().toString());
-                System.out.println(selectedIngredList.getSelectedIndex());
-
-                ingredientQuantities.remove(iSelectIngred);
-                for (int i = iSelectIngred; i < nbSelectedIngred; i++) {
-                    selectedIngredients[i] = selectedIngredients[i+1];
-                    System.out.println(selectedIngredients[i+1]);
-                }
-                nbSelectedIngred--;
-                selectedIngredList.setListData(selectedIngredients);
-            }
         }
     }
 }

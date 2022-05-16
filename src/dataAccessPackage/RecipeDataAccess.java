@@ -19,5 +19,5 @@ public interface RecipeDataAccess {
      // Update
 
      // Delete
-
+     void deleteRecipe(String recipeTitle) throws DeleteRecipeException, DeleteStepException, DeleteIngredQuantException;
 }

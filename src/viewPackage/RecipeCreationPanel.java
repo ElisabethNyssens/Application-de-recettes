@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class RecipeCreationPanel extends JPanel {
     private JLabel title;
-    private RecipeForm recipeForm;
+    private RecipeCreationForm recipeCreationForm;
 
     public RecipeCreationPanel() throws ConnectionException {
         this.setLayout(new BorderLayout());
@@ -16,9 +16,9 @@ public class RecipeCreationPanel extends JPanel {
         title = new JLabel("<html><h1 style='margin: 30px 0 30px 0; font-size:24px'>Créer une recette</h1></html>");
         title.setHorizontalAlignment(SwingConstants.CENTER);
 
-        recipeForm = new RecipeForm();
+        recipeCreationForm = new RecipeCreationForm();
 
         this.add(title, BorderLayout.NORTH);
-        this.add(recipeForm, BorderLayout.CENTER);
+        this.add(recipeCreationForm, BorderLayout.CENTER);
     }
 }

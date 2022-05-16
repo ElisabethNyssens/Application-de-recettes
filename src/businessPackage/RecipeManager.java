@@ -45,4 +45,12 @@ public class RecipeManager {
         return dao.getAllAuthors();
     }
 
+    // Update
+
+
+    // Delete
+    public void deleteRecipe(String recipeTitle) throws DeleteRecipeException, DeleteStepException, DeleteIngredQuantException {
+        dao.deleteRecipe(recipeTitle);
+    }
+
 }

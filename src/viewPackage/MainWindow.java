@@ -8,14 +8,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.sql.SQLException;
 
 public class MainWindow extends JFrame {
     private Container mainContainer;
     private JMenuBar menuBar;
     private JMenu app, create, edit, delete, display, reseach;
     private JMenuItem home, exit, createRecipe, createMenu, editRecipe, editMenu,
-            deleteRecipes, deleteMenus,
+            deleteRecipe, deleteMenu,
             displayRecipes, displayMenus,
             ingredientResearch, menuResearch, seasonResearch, shoppingList;
 
@@ -79,10 +78,10 @@ public class MainWindow extends JFrame {
         edit.add(editRecipe);
         edit.add(editMenu);
 
-        deleteRecipes = new JMenuItem("Recettes");
-        deleteMenus = new JMenuItem("Menus");
-        delete.add(deleteRecipes);
-        delete.add(deleteMenus);
+        deleteRecipe = new JMenuItem("Recette");
+        deleteMenu = new JMenuItem("Menu");
+        delete.add(deleteRecipe);
+        delete.add(deleteMenu);
 
         ingredientResearch = new JMenuItem("Recettes selon ingrédients");
         menuResearch = new JMenuItem("Menus de régime alimentaire");
@@ -97,16 +96,18 @@ public class MainWindow extends JFrame {
 
         // Quitter
         exit.addActionListener(event -> System.exit(0));
-        // Menu accueil
+        // Accueil
         home.addActionListener(new HomeListener());
-        // Menu Créer recette
+        // Créer recette
         createRecipe.addActionListener(new NewRecipeListener());
-        // Menu Créer menu
-        createMenu.addActionListener(new NewMenuListener());
-        // Modif recette
-        editRecipe.addActionListener(new EditRecipeListener());
         // Afficher recettes
         displayRecipes.addActionListener(new DisplayRecipesListener());
+        // Modif recette
+        editRecipe.addActionListener(new EditRecipeListener());
+        // Supprimer recette
+        deleteRecipe.addActionListener(new DeleteRecipeListener());
+        // Créer menu
+        createMenu.addActionListener(new NewMenuListener());
 
 
         setVisible(true);
@@ -142,11 +143,23 @@ public class MainWindow extends JFrame {
         }
     }
 
+    private class DisplayRecipesListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            mainContainer.removeAll();
+            try {
+                mainContainer.add(new AllRecipesPanel());
+            } catch (ConnectionException exception) {
+                System.out.println(exception.getMessage());
+            }
+            setVisible(true);
+        }
+    }
+
     private class EditRecipeListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             mainContainer.removeAll();
             try {
-                mainContainer.add(new RecipeModifPanel());
+                mainContainer.add(new RecipeUpdatePanel());
             } catch (ConnectionException exception) {
                 exception.printStackTrace();
             }
@@ -154,11 +167,11 @@ public class MainWindow extends JFrame {
         }
     }
 
-    private class DisplayRecipesListener implements ActionListener {
+    private class DeleteRecipeListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             mainContainer.removeAll();
             try {
-                mainContainer.add(new AllRecipesPanel());
+                mainContainer.add(new RecipeDeletePanel(mainContainer));
             } catch (ConnectionException exception) {
                 System.out.println(exception.getMessage());
             }

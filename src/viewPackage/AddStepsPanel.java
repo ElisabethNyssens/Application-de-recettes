@@ -1,6 +1,5 @@
 package viewPackage;
 
-import modelPackage.IngredientQuantity;
 import modelPackage.Step;
 
 import javax.swing.*;
@@ -21,9 +20,9 @@ public class AddStepsPanel extends JPanel {
     private JButton addStepBtn, resetBtn;
     private JList stepsList;
     private ArrayList<Step> steps;
-    private RecipeForm parentPanel;
+    private RecipeCreationForm parentPanel;
 
-    public AddStepsPanel(RecipeForm parentPanel) {
+    public AddStepsPanel(RecipeCreationForm parentPanel) {
         this.parentPanel = parentPanel;
         stepsObj = new Object[NB_MAX_STEPS];
         steps = new ArrayList<>();

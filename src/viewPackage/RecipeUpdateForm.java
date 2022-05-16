@@ -14,8 +14,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-public class RecipeForm extends JPanel {
+public class RecipeUpdateForm extends JPanel {
     private ApplicationController controller;
+    private Recipe initRecipe;
     private JLabel recipeTitleLabel, dateLabel, recipeCategoryLabel, costLabel, preparationTimeLabel,
             nbPersonsLabel, regimeLabel, seasonLabel;
     private JComboBox recipeCategory, cost, preparationTime, regime, season;
@@ -25,12 +26,12 @@ public class RecipeForm extends JPanel {
     private Date today;
 
     private int activeFormStep;
-    private static int NB_CATEGORIES = 9;
-    public static int NB_REGIMES = 4;
+    private static final int NB_CATEGORIES = 9;
+    public static final int NB_REGIMES = 4;
 
     private JButton prevStepBtn, nextStepBtn;
     private JPanel step1Panel, step2Panel, bottomPanel;
-    private AddIngredientsPanel addIngredientsPanel;
+    private UpdateIngredientsPanel updateIngredientsPanel;
     private AddStepsPanel addStepsPanel;
 
     private ArrayList<Category> categList = new ArrayList<>();
@@ -38,15 +39,16 @@ public class RecipeForm extends JPanel {
     ArrayList<Recipe> allRecipes = new ArrayList<>();
     private String[] recipeCategories = new String[NB_CATEGORIES];
     private String[] regimes = new String[NB_REGIMES];
-    private final String[] costs = {"Bon marché", "Coût moyen", "Assez cher"};
+    private final String[] costs = {"Bon marche", "Cout moyen", "Assez cher"};
     private final String[] preparationTimes = {"< 30min", "30min >< 1h", "1h >< 2h", "2h >< 1j", "> 1j"};
     private final String[] seasons = {"Printemps", "Ete", "Automne", "Hiver", "Toute saison"};
 
     private JPanel refToRecipePanel;
 
 
-    public RecipeForm() throws ConnectionException {
+    public RecipeUpdateForm(Recipe initRecipe) throws ConnectionException {
         controller = new ApplicationController();
+        this.initRecipe = initRecipe;
         refToRecipePanel = this;
         this.setLayout(new BorderLayout());
         activeFormStep = 1;
@@ -67,6 +69,7 @@ public class RecipeForm extends JPanel {
         recipeTitleLabel = new JLabel("Nom de la recette* :");
         recipeTitleLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         recipeTitle = new JTextField();
+        recipeTitle.setText(initRecipe.getTitle());
         step1Panel.add(recipeTitleLabel);
         step1Panel.add(recipeTitle);
 
@@ -84,7 +87,7 @@ public class RecipeForm extends JPanel {
         // ------ Number of persons -------
         nbPersonsLabel = new JLabel("Nombre de personnes* :");
         nbPersonsLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        nbPersons = new JSpinner(new SpinnerNumberModel(4, 1, 50, 1));
+        nbPersons = new JSpinner(new SpinnerNumberModel(initRecipe.getNbPersons(), 1, 50, 1));
         step1Panel.add(nbPersonsLabel);
         step1Panel.add(nbPersons);
 
@@ -94,7 +97,7 @@ public class RecipeForm extends JPanel {
         int iCateg = 0;
         try {
             categList = controller.getAllCategories();
-            for(Category category : categList) {
+            for (Category category : categList) {
                 recipeCategories[iCateg] = category.getName();
                 iCateg++;
             }
@@ -102,13 +105,15 @@ public class RecipeForm extends JPanel {
             JOptionPane.showMessageDialog(null, exception.getMessage());
         }
         recipeCategory = new JComboBox(recipeCategories);
-        recipeCategory.setSelectedItem(recipeCategories[5]);
+        recipeCategory.setSelectedItem(initRecipe.getCategory());
         step1Panel.add(recipeCategoryLabel);
         step1Panel.add(recipeCategory);
+
         // ------ Cost -------
         costLabel = new JLabel("Prix* :");
         costLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         cost = new JComboBox(costs);
+        cost.setSelectedItem(initRecipe.getBudget());
         step1Panel.add(costLabel);
         step1Panel.add(cost);
 
@@ -116,14 +121,18 @@ public class RecipeForm extends JPanel {
         preparationTimeLabel = new JLabel("Temps de préparation* :");
         preparationTimeLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         preparationTime = new JComboBox(preparationTimes);
+        preparationTime.setSelectedItem(initRecipe.getPreparationTime());
         step1Panel.add(preparationTimeLabel);
         step1Panel.add(preparationTime);
 
         // ------ Checkboxes -------
         JPanel checkboxPanel = new JPanel();
         hot = new JCheckBox("Chaude");
+        hot.setSelected(initRecipe.isHot());
         sweet = new JCheckBox("Sucrée");
+        sweet.setSelected(initRecipe.isSweet());
         salty = new JCheckBox("Salée");
+        salty.setSelected(initRecipe.isSalty());
         checkboxPanel.add(sweet);
         checkboxPanel.add(salty);
         checkboxPanel.add(hot);
@@ -132,19 +141,19 @@ public class RecipeForm extends JPanel {
 
         // ---------------- Form step 2 -----------------
         step2Panel = new JPanel();
-        step2Panel.setLayout(new GridLayout(3,1));
+        step2Panel.setLayout(new GridLayout(3, 1));
         step2Panel.setBorder(new EmptyBorder(0, 150, 0, 150));
 
         // ------ Ingredients -------
-        addIngredientsPanel = new AddIngredientsPanel(this);
-        step2Panel.add(addIngredientsPanel);
+        updateIngredientsPanel = new UpdateIngredientsPanel(this);
+        step2Panel.add(updateIngredientsPanel);
 
         // ------ Steps -------
-        addStepsPanel = new AddStepsPanel(this);
-        step2Panel.add(addStepsPanel);
+        //addStepsPanel = new AddStepsPanel(this);
+        //step2Panel.add(addStepsPanel);
 
         JPanel gridPanel = new JPanel();
-        gridPanel.setLayout(new GridLayout(3,2));
+        gridPanel.setLayout(new GridLayout(3, 2));
 
         // ------ Dietery regime -------
         regimeLabel = new JLabel("Régime alimentaire :");
@@ -152,7 +161,7 @@ public class RecipeForm extends JPanel {
         int iReg = 0;
         try {
             regimesList = controller.getAllRegimes();
-            for(DieteryRegime regime : regimesList) {
+            for (DieteryRegime regime : regimesList) {
                 regimes[iReg] = regime.getName();
                 iReg++;
             }
@@ -160,7 +169,7 @@ public class RecipeForm extends JPanel {
             JOptionPane.showMessageDialog(null, exception.getMessage());
         }
         regime = new JComboBox(regimes);
-        regime.setSelectedItem(null);
+        regime.setSelectedItem(initRecipe.getRegime());
         gridPanel.add(regimeLabel);
         gridPanel.add(regime);
 
@@ -168,7 +177,7 @@ public class RecipeForm extends JPanel {
         seasonLabel = new JLabel("Saison :");
         seasonLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         season = new JComboBox(seasons);
-        season.setSelectedItem(null);
+        season.setSelectedItem(initRecipe.getSeason());
         gridPanel.add(seasonLabel);
         gridPanel.add(season);
 
@@ -182,7 +191,7 @@ public class RecipeForm extends JPanel {
         nextStepBtn = new JButton("Suivant");
 
         bottomPanel = new JPanel();
-        bottomPanel.setLayout(new GridLayout(1,2));
+        bottomPanel.setLayout(new GridLayout(1, 2));
         bottomPanel.add(prevStepBtn);
         bottomPanel.add(nextStepBtn);
         prevStepBtn.setVisible(false);
@@ -190,8 +199,8 @@ public class RecipeForm extends JPanel {
         this.add(bottomPanel, BorderLayout.SOUTH);
 
         // Buttons Listeners
-        prevStepBtn.addActionListener(new PrevStepListener());
-        nextStepBtn.addActionListener(new NextStepListener());
+        prevStepBtn.addActionListener(new RecipeUpdateForm.PrevStepListener());
+        nextStepBtn.addActionListener(new RecipeUpdateForm.NextStepListener());
     }
 
     private class PrevStepListener implements ActionListener {
@@ -211,9 +220,10 @@ public class RecipeForm extends JPanel {
 
             if (activeFormStep == 1) {
                 // validation step 1
-                boolean duplicateTitle = allRecipes.stream().anyMatch(recipe -> recipe.getTitle().equals(recipeTitle.getText()));
+                boolean duplicateTitle = allRecipes.stream().anyMatch(
+                        recipe -> recipe.getTitle().equals(recipeTitle.getText()) && !recipe.getTitle().equals(initRecipe.getTitle()));
                 if(recipeTitle.getText().isBlank()) {
-                    JOptionPane.showMessageDialog(null, "Ta recette a besoin d'un petit nom !");
+                    JOptionPane.showMessageDialog(null, "Ta recette a besoin d'un nom !");
                 } else if (recipeTitle.getText().length() < 3) {
                     JOptionPane.showMessageDialog(null, "C'est un peu court comme nom, tu ne trouves pas ?");
                 } else if (recipeTitle.getText().length() > 70) {
@@ -233,7 +243,7 @@ public class RecipeForm extends JPanel {
                 }
             } else if (activeFormStep == 2) {
                 // Validation step 2
-                ArrayList<IngredientQuantity> ingredientQuantites = addIngredientsPanel.getIngredientQuantities();
+                ArrayList<IngredientQuantity> ingredientQuantites = updateIngredientsPanel.getIngredientQuantities();
                 ArrayList<Step> steps = addStepsPanel.getSteps();
 
                 boolean ingredientMissing = ingredientQuantites.isEmpty();
@@ -270,7 +280,6 @@ public class RecipeForm extends JPanel {
 
                     try {
                         controller.addRecipe(recipe);
-                        System.out.println("recette ajoutée");
                         ingredientQuantites.forEach(ingred -> {
                             try {
                                 controller.addIngredientQuantity(ingred);
@@ -290,7 +299,7 @@ public class RecipeForm extends JPanel {
                         refToRecipePanel.removeAll();
                         refToRecipePanel.revalidate();
                         refToRecipePanel.repaint();
-                        refToRecipePanel.add(new RecipeForm());
+                        refToRecipePanel.add(new RecipeCreationForm());
                     }
                     catch (AddRecipeException | ConnectionException exception) {
                         JOptionPane.showMessageDialog(null, exception.getMessage());
@@ -312,3 +321,4 @@ public class RecipeForm extends JPanel {
         return recipeTitle.getText();
     }
 }
+

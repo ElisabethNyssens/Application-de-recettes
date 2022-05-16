@@ -44,4 +44,7 @@ public class ApplicationController {
     // Update
 
     // Delete
+    public void deleteRecipe(String recipeTitle) throws DeleteRecipeException, DeleteStepException, DeleteIngredQuantException {
+        recipeManager.deleteRecipe(recipeTitle);
+    }
 }
