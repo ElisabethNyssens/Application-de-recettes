@@ -66,6 +66,16 @@ public class RecipeDBAccess implements RecipeDataAccess {
 
     }
 
+    @Override
+    public void addMenu(Menu menu) throws AddMenuException {
+
+    }
+
+    @Override
+    public void addMenuComponent(MenuComponent menuComponent) throws AddMenuComponentException {
+
+    }
+
     // Read
     @Override
     public ArrayList <Recipe> getAllRecipes() throws AllRecipesException {
@@ -212,6 +222,10 @@ public class RecipeDBAccess implements RecipeDataAccess {
         }
     }
 
+    @Override
+    public ArrayList<Menu> getAllMenus() throws AllMenusException {
+        return null;
+    }
     // Update
 
     // Delete
