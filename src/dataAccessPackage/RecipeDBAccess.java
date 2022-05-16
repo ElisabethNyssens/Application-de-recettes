@@ -58,12 +58,32 @@ public class RecipeDBAccess implements RecipeDataAccess {
     }
     @Override
     public void addStep(Step step) throws AddStepException {
-
-
+        String sql = "insert into steps (order_number,recipe_id,description) values (?,?,?)";
+        System.out.println(step.getOrderNumber() + " " + step.getRecipeName() + " " + step.getDescription());
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, step.getOrderNumber());
+            preparedStatement.setString(2, step.getRecipeName());
+            preparedStatement.setString(3, step.getDescription());
+            preparedStatement.executeUpdate();
+        }
+        catch(SQLException exception) {
+            throw new AddStepException();
+        }
     }
     @Override
     public void addIngredientQuantity(IngredientQuantity ingredientQuantity) throws AddIngredQuantException {
-
+        String sql = "insert into ingredient_quantities (ingredient_id,recipe_id,quantity) values (?,?,?)";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, ingredientQuantity.getIngredient());
+            preparedStatement.setString(2, ingredientQuantity.getRecipe());
+            preparedStatement.setDouble(3, ingredientQuantity.getQuantity());
+            preparedStatement.executeUpdate();
+        }
+        catch(SQLException exception) {
+            throw new AddIngredQuantException();
+        }
     }
 
     @Override
@@ -280,5 +300,36 @@ public class RecipeDBAccess implements RecipeDataAccess {
     // Update
 
     // Delete
+    @Override
+    public void deleteRecipe(String recipeTitle) throws DeleteRecipeException, DeleteStepException, DeleteIngredQuantException {
+        String sql1 = "delete from steps where recipe_id = ?";
+        String sql2 = "delete from ingredient_quantities where recipe_id = ?";
+        String sql3 = "delete from recipes where title = ?";
 
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql1);
+            preparedStatement.setString(1, recipeTitle);
+            preparedStatement.executeUpdate();
+        }
+        catch(SQLException exception) {
+            throw new DeleteStepException();
+        }
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql2);
+            preparedStatement.setString(1, recipeTitle);
+            preparedStatement.executeUpdate();
+        }
+        catch(SQLException exception) {
+            throw new DeleteIngredQuantException();
+        }
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql3);
+            System.out.println("'" + recipeTitle + "'");
+            preparedStatement.setString(1, recipeTitle);
+            preparedStatement.executeUpdate();
+        }
+        catch(SQLException exception) {
+            throw new DeleteRecipeException();
+        }
+    }
 }
