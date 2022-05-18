@@ -35,6 +35,12 @@ public class RecipeManager {
     public ArrayList<Ingredient> getAllIngredients() throws AllIngredientsException {
         return dao.getAllIngredients();
     }
+    public ArrayList<IngredientQuantity> getAllIngredientsOfRecipe(String recipeName) throws AllIngredQuantitiesException {
+        return dao.getAllIngredientsOfRecipe(recipeName);
+    }
+    public ArrayList<Step> getAllStepsOfRecipe(String recipeName) throws AllStepsException  {
+        return dao.getAllStepsOfRecipe(recipeName);
+    }
     public ArrayList<Category> getAllCategories() throws AllCategoriesException {
         return dao.getAllCategories();
     }
@@ -46,11 +52,19 @@ public class RecipeManager {
     }
 
     // Update
-
+    public void updateRecipe(Recipe recipe) throws UpdateRecipeException {
+        dao.updateRecipe(recipe);
+    }
 
     // Delete
     public void deleteRecipe(String recipeTitle) throws DeleteRecipeException, DeleteStepException, DeleteIngredQuantException {
         dao.deleteRecipe(recipeTitle);
+    }
+    public void deleteSteps(String recipeTitle) throws DeleteStepException {
+        dao.deleteSteps(recipeTitle);
+    }
+    public void deleteIngredQuants(String recipeTitle) throws DeleteIngredQuantException {
+        dao.deleteIngredQuants(recipeTitle);
     }
 
 }

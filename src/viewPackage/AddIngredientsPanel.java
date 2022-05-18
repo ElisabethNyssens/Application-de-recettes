@@ -57,6 +57,7 @@ public class AddIngredientsPanel extends JPanel {
         JPanel ingred = new JPanel();
         ingredientLabel = new JLabel("Ingrédient* :");
         ingredient = new JComboBox(ingredientsValues);
+        ingredient.setSelectedItem(null);
         ingredient.setMaximumRowCount(6);
         JPanel quant = new JPanel();
         quant.setLayout(new FlowLayout(FlowLayout.LEFT,3,3));

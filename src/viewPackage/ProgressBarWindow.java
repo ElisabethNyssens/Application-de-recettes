@@ -8,10 +8,14 @@ public class ProgressBarWindow extends JFrame {
     private JPanel messagesPanel;
     private ProgressBarPanel progressBarPanel;
     private JLabel progressMessage;
-    private String [] messages = { "Vérification du titre de la recette", "Collecte des ingrédients", "Nettoyage du matériel", "Réalisation des étapes de préparation", "Validation par les chefs Nyssens et Hanquet" };
+    private String [] messages = { "Validation du titre de la recette", "Collecte des ingrédients", "Nettoyage du matériel", "Réalisation des étapes de préparation", "Validation par les chefs Nyssens et Hanquet" };
+    private Container mainContainer;
+    private boolean update;
 
-    public ProgressBarWindow() {
-        super("Progression création recette");
+    public ProgressBarWindow(Container mainContainer, boolean update) {
+        super(update?"Progression modification recette":"Progression création recette");
+        this.mainContainer = mainContainer;
+        this.update = update;
         setSize(700, 300);
         setLocationRelativeTo(null);
         setLayout(new GridLayout(2, 1));
@@ -28,7 +32,7 @@ public class ProgressBarWindow extends JFrame {
         progressBarPanel = new ProgressBarPanel(this);
         add(progressBarPanel);
 
-        ProgressBarThread progressBarThread = new ProgressBarThread(progressBarPanel, this);
+        ProgressBarThread progressBarThread = new ProgressBarThread(mainContainer, progressBarPanel, this, update);
         progressBarThread.start();
 
         setVisible(true);

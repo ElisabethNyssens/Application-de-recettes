@@ -32,7 +32,7 @@ public class RecipeUpdateForm extends JPanel {
     private JButton prevStepBtn, nextStepBtn;
     private JPanel step1Panel, step2Panel, bottomPanel;
     private UpdateIngredientsPanel updateIngredientsPanel;
-    private AddStepsPanel addStepsPanel;
+    private UpdateStepsPanel updateStepsPanel;
 
     private ArrayList<Category> categList = new ArrayList<>();
     private ArrayList<DieteryRegime> regimesList = new ArrayList<>();
@@ -44,21 +44,15 @@ public class RecipeUpdateForm extends JPanel {
     private final String[] seasons = {"Printemps", "Ete", "Automne", "Hiver", "Toute saison"};
 
     private JPanel refToRecipePanel;
+    private Container mainContainer;
 
-
-    public RecipeUpdateForm(Recipe initRecipe) throws ConnectionException {
+    public RecipeUpdateForm(Container mainContainer, Recipe initRecipe) throws ConnectionException {
         controller = new ApplicationController();
         this.initRecipe = initRecipe;
         refToRecipePanel = this;
+        this.mainContainer = mainContainer;
         this.setLayout(new BorderLayout());
         activeFormStep = 1;
-
-        // Récupération liste recettes pour tester que le titre n'est pas déjà pris
-        try {
-            allRecipes = controller.getAllRecipes();
-        } catch (AllRecipesException exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage());
-        }
 
         // --------------- Form step 1 ----------------
         step1Panel = new JPanel();
@@ -70,6 +64,7 @@ public class RecipeUpdateForm extends JPanel {
         recipeTitleLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         recipeTitle = new JTextField();
         recipeTitle.setText(initRecipe.getTitle());
+        recipeTitle.setEnabled(false);
         step1Panel.add(recipeTitleLabel);
         step1Panel.add(recipeTitle);
 
@@ -145,12 +140,12 @@ public class RecipeUpdateForm extends JPanel {
         step2Panel.setBorder(new EmptyBorder(0, 150, 0, 150));
 
         // ------ Ingredients -------
-        updateIngredientsPanel = new UpdateIngredientsPanel(this);
+        updateIngredientsPanel = new UpdateIngredientsPanel(this, initRecipe.getTitle());
         step2Panel.add(updateIngredientsPanel);
 
         // ------ Steps -------
-        //addStepsPanel = new AddStepsPanel(this);
-        //step2Panel.add(addStepsPanel);
+        updateStepsPanel = new UpdateStepsPanel(this, initRecipe.getTitle());
+        step2Panel.add(updateStepsPanel);
 
         JPanel gridPanel = new JPanel();
         gridPanel.setLayout(new GridLayout(3, 2));
@@ -220,16 +215,12 @@ public class RecipeUpdateForm extends JPanel {
 
             if (activeFormStep == 1) {
                 // validation step 1
-                boolean duplicateTitle = allRecipes.stream().anyMatch(
-                        recipe -> recipe.getTitle().equals(recipeTitle.getText()) && !recipe.getTitle().equals(initRecipe.getTitle()));
                 if(recipeTitle.getText().isBlank()) {
                     JOptionPane.showMessageDialog(null, "Ta recette a besoin d'un nom !");
                 } else if (recipeTitle.getText().length() < 3) {
                     JOptionPane.showMessageDialog(null, "C'est un peu court comme nom, tu ne trouves pas ?");
-                } else if (recipeTitle.getText().length() > 70) {
+                } else if (recipeTitle.getText().length() > 99) {
                     JOptionPane.showMessageDialog(null, "Le nom de ta recette est trop long !");
-                } else if (duplicateTitle) {
-                    JOptionPane.showMessageDialog(null, "Une recette portant ce nom existe déjà... Choisis-en un autre !");
                 } else if (!salty.isSelected() && !sweet.isSelected()) {
                     JOptionPane.showMessageDialog(null, "Ta recette est-elle salée et/ou sucrée ?");
                 }
@@ -244,7 +235,7 @@ public class RecipeUpdateForm extends JPanel {
             } else if (activeFormStep == 2) {
                 // Validation step 2
                 ArrayList<IngredientQuantity> ingredientQuantites = updateIngredientsPanel.getIngredientQuantities();
-                ArrayList<Step> steps = addStepsPanel.getSteps();
+                ArrayList<Step> steps = updateStepsPanel.getSteps();
 
                 boolean ingredientMissing = ingredientQuantites.isEmpty();
                 boolean stepsMissing = steps.isEmpty();
@@ -279,7 +270,9 @@ public class RecipeUpdateForm extends JPanel {
                     );
 
                     try {
-                        controller.addRecipe(recipe);
+                        controller.updateRecipe(recipe);
+                        controller.deleteSteps(recipe.getTitle());
+                        controller.deleteIngredQuants(recipe.getTitle());
                         ingredientQuantites.forEach(ingred -> {
                             try {
                                 controller.addIngredientQuantity(ingred);
@@ -288,21 +281,17 @@ public class RecipeUpdateForm extends JPanel {
                             }
                         });
                         steps.forEach(step -> {
-                            System.out.println(step.getOrderNumber() + " " + step.getRecipeName() + " " + step.getDescription());
+                            System.out.println(step.getOrderNumber() + " " + step.getDescription());
                             try {
                                 controller.addStep(step);
                             } catch (AddStepException e) {
                                 e.printStackTrace();
                             }
                         });
-                        ProgressBarWindow progressBarWindow = new ProgressBarWindow();
-                        refToRecipePanel.removeAll();
-                        refToRecipePanel.revalidate();
-                        refToRecipePanel.repaint();
-                        refToRecipePanel.add(new RecipeCreationForm());
+                        ProgressBarWindow progressBarWindow = new ProgressBarWindow(mainContainer, true);
                     }
-                    catch (AddRecipeException | ConnectionException exception) {
-                        JOptionPane.showMessageDialog(null, exception.getMessage());
+                    catch (UpdateRecipeException | DeleteStepException | DeleteIngredQuantException exception) {
+                        exception.printStackTrace();
                     }
                 } else {
                     String missingInfo = (ingredientMissing? "les ingrédients\n":"") + (stepsMissing? "les étapes":"");

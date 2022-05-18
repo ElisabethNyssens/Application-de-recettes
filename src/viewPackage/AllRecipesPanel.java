@@ -67,17 +67,18 @@ public class AllRecipesPanel extends JPanel {
 
     private class NewRecipeListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-            mainContainer.removeAll();
-            System.out.println("yep");
             try {
-                mainContainer.add(new RecipeCreationPanel());
-                mainContainer.revalidate();
-                mainContainer.repaint();
+                System.out.println("yep");
+                title = new JLabel("<html><h1 style='margin: 30px 0 15px 0; font-size: 24px;'>Création d'une recette</h1></html>");
+                title.setHorizontalAlignment(SwingConstants.CENTER);
+                AllRecipesPanel.this.removeAll();
+                AllRecipesPanel.this.add(title, BorderLayout.NORTH);
+                AllRecipesPanel.this.add(new RecipeCreationForm(mainContainer), BorderLayout.CENTER);
+                AllRecipesPanel.this.revalidate();
+                AllRecipesPanel.this.repaint();
             } catch (ConnectionException exception) {
                 exception.printStackTrace();
-                System.out.println(exception.getMessage());
             }
-            setVisible(true);
         }
     }
 
@@ -117,11 +118,11 @@ public class AllRecipesPanel extends JPanel {
                     Recipe recipe = recipeRecovery(iRowSelect);
 
                     try {
-                        title = new JLabel("<html><h1 style='margin: 30px 0 15px 0; font-size: 24px;'>Modifier une recettes</h1></html>");
+                        title = new JLabel("<html><h1 style='margin: 30px 0 15px 0; font-size: 24px;'>Modification d'une recette</h1></html>");
                         title.setHorizontalAlignment(SwingConstants.CENTER);
                         AllRecipesPanel.this.removeAll();
                         AllRecipesPanel.this.add(title, BorderLayout.NORTH);
-                        AllRecipesPanel.this.add(new RecipeUpdateForm(recipe), BorderLayout.CENTER);
+                        AllRecipesPanel.this.add(new RecipeUpdateForm(mainContainer, recipe), BorderLayout.CENTER);
                         AllRecipesPanel.this.revalidate();
                         AllRecipesPanel.this.repaint();
                     } catch (ConnectionException exception) {

@@ -43,9 +43,10 @@ public class RecipeCreationForm extends JPanel {
     private final String[] seasons = {"Printemps", "Ete", "Automne", "Hiver", "Toute saison"};
 
     private JPanel refToRecipePanel;
+    private Container mainContainer;
 
-
-    public RecipeCreationForm() throws ConnectionException {
+    public RecipeCreationForm(Container mainContainer) throws ConnectionException {
+        this.mainContainer = mainContainer;
         controller = new ApplicationController();
         refToRecipePanel = this;
         this.setLayout(new BorderLayout());
@@ -216,7 +217,7 @@ public class RecipeCreationForm extends JPanel {
                     JOptionPane.showMessageDialog(null, "Ta recette a besoin d'un nom !");
                 } else if (recipeTitle.getText().length() < 3) {
                     JOptionPane.showMessageDialog(null, "C'est un peu court comme nom, tu ne trouves pas ?");
-                } else if (recipeTitle.getText().length() > 70) {
+                } else if (recipeTitle.getText().length() > 99) {
                     JOptionPane.showMessageDialog(null, "Le nom de ta recette est trop long !");
                 } else if (duplicateTitle) {
                     JOptionPane.showMessageDialog(null, "Une recette portant ce nom existe déjà... Choisis-en un autre !");
@@ -270,7 +271,6 @@ public class RecipeCreationForm extends JPanel {
 
                     try {
                         controller.addRecipe(recipe);
-                        System.out.println("recette ajoutée");
                         ingredientQuantites.forEach(ingred -> {
                             try {
                                 controller.addIngredientQuantity(ingred);
@@ -279,20 +279,15 @@ public class RecipeCreationForm extends JPanel {
                             }
                         });
                         steps.forEach(step -> {
-                            System.out.println(step.getOrderNumber() + " " + step.getRecipeName() + " " + step.getDescription());
                             try {
                                 controller.addStep(step);
                             } catch (AddStepException e) {
                                 e.printStackTrace();
                             }
                         });
-                        ProgressBarWindow progressBarWindow = new ProgressBarWindow();
-                        refToRecipePanel.removeAll();
-                        refToRecipePanel.revalidate();
-                        refToRecipePanel.repaint();
-                        refToRecipePanel.add(new RecipeCreationForm());
+                        ProgressBarWindow progressBarWindow = new ProgressBarWindow(mainContainer, false);
                     }
-                    catch (AddRecipeException | ConnectionException exception) {
+                    catch (AddRecipeException exception) {
                         JOptionPane.showMessageDialog(null, exception.getMessage());
                     }
                 } else {

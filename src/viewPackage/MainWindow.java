@@ -56,9 +56,9 @@ public class MainWindow extends JFrame {
         app.addSeparator();
         app.add(exit);
 
-        displayRecipes = new JMenuItem("Afficher");
-        displayMenus = new JMenuItem("Afficher");
-        createShopList = new JMenuItem("Liste de courses");
+        displayRecipes = new JMenuItem("Afficher les recettes");
+        displayMenus = new JMenuItem("Afficher les menus");
+        createShopList = new JMenuItem("Créer une liste de courses");
         recipes.add(displayRecipes);
         menus.add(displayMenus);
         shopList.add(createShopList);
@@ -102,7 +102,7 @@ public class MainWindow extends JFrame {
         }
     }
 
-    private class NewRecipeListener implements ActionListener {
+   /* private class NewRecipeListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             mainContainer.removeAll();
             try {
@@ -113,7 +113,7 @@ public class MainWindow extends JFrame {
             }
             setVisible(true);
         }
-    }
+    }*/
 
    /* private class NewMenuListener implements ActionListener {
         @Override

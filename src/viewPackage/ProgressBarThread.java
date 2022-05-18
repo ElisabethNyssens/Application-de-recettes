@@ -1,15 +1,22 @@
 package viewPackage;
 
+import exceptionPackage.ConnectionException;
+
 import javax.swing.*;
+import java.awt.*;
 
 public class ProgressBarThread extends Thread {
     private ProgressBarPanel progressBar;
     private ProgressBarWindow progressBarWindow;
+    private Container mainContainer;
+    private boolean update;
 
-    public ProgressBarThread(ProgressBarPanel progressBar, ProgressBarWindow progressBarWindow) {
+    public ProgressBarThread(Container mainContainer, ProgressBarPanel progressBar, ProgressBarWindow progressBarWindow, boolean update) {
         super("ProgressBarThread");
+        this.mainContainer = mainContainer;
         this.progressBar = progressBar;
         this.progressBarWindow = progressBarWindow;
+        this.update = update;
     }
 
     public void run() {
@@ -31,6 +38,19 @@ public class ProgressBarThread extends Thread {
             }
         }
         progressBarWindow.dispose();
-        JOptionPane.showMessageDialog(null, "Mmmh ça a l'air bon ! La recette a bien été enregistrée !");
+        if (update) {
+            JOptionPane.showMessageDialog(null, "Mmmh ça a l'air encore meilleur ! La recette a bien été modifiée !");
+        } else {
+            JOptionPane.showMessageDialog(null, "Mmmh ça a l'air bon ! La recette a bien été enregistrée !");
+        }
+        try {
+            mainContainer.removeAll();
+            mainContainer.add(new AllRecipesPanel(mainContainer));
+            mainContainer.revalidate();
+            mainContainer.repaint();
+        } catch (ConnectionException exception) {
+            exception.printStackTrace();
+        }
+
     }
 }
