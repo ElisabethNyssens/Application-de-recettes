@@ -67,4 +67,9 @@ public class RecipeManager {
         dao.deleteIngredQuants(recipeTitle);
     }
 
+    // Searches
+    public ArrayList<RecipeWithIngred> searchByIngredRecipes(String ingredients, Boolean with) throws SearchException {
+        return dao.searchByIngredRecipes(ingredients, with);
+    }
+
 }

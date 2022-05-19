@@ -62,4 +62,9 @@ public class ApplicationController {
     public void deleteIngredQuants(String recipeTitle) throws DeleteIngredQuantException {
         recipeManager.deleteIngredQuants(recipeTitle);
     }
+
+    // Searches
+    public ArrayList<RecipeWithIngred> searchByIngredRecipes(String ingredients, Boolean with) throws SearchException {
+        return recipeManager.searchByIngredRecipes(ingredients, with);
+    }
 }
