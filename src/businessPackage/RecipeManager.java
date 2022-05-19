@@ -27,6 +27,12 @@ public class RecipeManager {
     public void addIngredientQuantity(IngredientQuantity ingredientQuantity) throws AddIngredQuantException {
         dao.addIngredientQuantity(ingredientQuantity);
     }
+    public void addMenu(Menu menu) throws AddMenuException {
+        dao.addMenu(menu);
+    }
+    public void addMenuComponents(MenuComponent menuComponent) throws AddMenuComponentException {
+        dao.addMenuComponent(menuComponent);
+    }
 
     // Read
     public ArrayList<Recipe> getAllRecipes() throws AllRecipesException {
@@ -44,5 +50,7 @@ public class RecipeManager {
     public ArrayList<Author> getAllAuthors() throws AllAuthorsException {
         return dao.getAllAuthors();
     }
-
+    public ArrayList<Menu> getAllMenus() throws  AllMenusException {
+        return dao.getAllMenus();
+    }
 }

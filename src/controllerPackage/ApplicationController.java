@@ -23,6 +23,12 @@ public class ApplicationController {
     public void addIngredientQuantity(IngredientQuantity ingredientQuantity) throws AddIngredQuantException {
         recipeManager.addIngredientQuantity(ingredientQuantity);
     }
+    public void addMenu(Menu menu) throws AddMenuException {
+        recipeManager.addMenu(menu);
+    }
+    public void addMenuComponent(MenuComponent menuComponent) throws AddMenuComponentException {
+        recipeManager.addMenuComponents(menuComponent);
+    }
 
     // Read
     public ArrayList<Recipe> getAllRecipes() throws AllRecipesException {
@@ -39,6 +45,9 @@ public class ApplicationController {
     }
     public ArrayList<Author> getAllAuthors() throws AllAuthorsException {
         return recipeManager.getAllAuthors();
+    }
+    public ArrayList<Menu> getAllMenus() throws AllMenusException {
+        return recipeManager.getAllMenus();
     }
 
     // Update
