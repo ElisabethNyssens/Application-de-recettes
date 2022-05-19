@@ -1,5 +1,8 @@
 package viewPackage;
 
+import controllerPackage.ApplicationController;
+import exceptionPackage.AllStepsException;
+import exceptionPackage.ConnectionException;
 import modelPackage.Step;
 
 import javax.swing.*;
@@ -10,7 +13,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class AddStepsPanel extends JPanel {
+public class UpdateStepsPanel extends JPanel {
+    private ApplicationController controller;
     private static int NB_MAX_STEPS = 32;
     private Object[] stepsObj;
     private int nbSteps;
@@ -22,13 +26,43 @@ public class AddStepsPanel extends JPanel {
     private JButton addStepBtn, removeStepBtn;
     private JList stepsList;
     private ArrayList<Step> steps;
-    private RecipeCreationForm parentPanel;
+    private RecipeUpdateForm parentPanel;
+    private String recipeName;
 
-    public AddStepsPanel(RecipeCreationForm parentPanel) {
+    public UpdateStepsPanel(RecipeUpdateForm parentPanel, String recipeName) throws ConnectionException {
+        controller = new ApplicationController();
+        this.recipeName = recipeName;
         this.parentPanel = parentPanel;
         stepsObj = new Object[NB_MAX_STEPS];
         steps = new ArrayList<>();
-        nbSteps = 0;
+
+        JPanel btnPanel = new JPanel();
+        btnPanel.setLayout(new GridLayout(2, 1));
+        addStepBtn = new JButton("Ajouter l'étape >>");
+        removeStepBtn = new JButton("<< Retirer l'étape");
+        addStepBtn.addActionListener(new AddButtonListener());
+        removeStepBtn.addActionListener(new RemoveButtonListener());
+        btnPanel.add(addStepBtn);
+        btnPanel.add(removeStepBtn);
+
+        stepsList = new JList();
+        stepsList.setFixedCellWidth(250);
+        stepsList.setFixedCellHeight(20);
+        stepsList.setVisibleRowCount(8);
+        stepsList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+
+        try {
+            steps = controller.getAllStepsOfRecipe(recipeName);
+
+            for (Step step : steps) {
+                stepsObj[nbSteps] = (nbSteps+1) + ". " + step.getDescription();
+                nbSteps++;
+            }
+            stepsList.setListData(stepsObj);
+
+        } catch (AllStepsException e) {
+            e.printStackTrace();
+        }
 
         JPanel stepPanel = new JPanel();
         stepPanel.setLayout(new BorderLayout());
@@ -45,26 +79,12 @@ public class AddStepsPanel extends JPanel {
         stepLabel = new JLabel("Etape* :");
         step = new JTextArea(6,24);
         step.setLineWrap(true);
+        step.setText(steps.get(0).getDescription());
         stepContainer.add(stepLabel);
         stepContainer.add(new JScrollPane(step));
 
         stepPanel.add(numberContainer, BorderLayout.NORTH);
         stepPanel.add(stepContainer, BorderLayout.CENTER);
-
-        JPanel btnPanel = new JPanel();
-        btnPanel.setLayout(new GridLayout(2, 1));
-        addStepBtn = new JButton("Ajouter l'étape >>");
-        removeStepBtn = new JButton("<< Retirer l'étape");
-        addStepBtn.addActionListener(new AddButtonListener());
-        removeStepBtn.addActionListener(new RemoveButtonListener());
-        btnPanel.add(addStepBtn);
-        btnPanel.add(removeStepBtn);
-
-        stepsList = new JList();
-        stepsList.setFixedCellWidth(250);
-        stepsList.setFixedCellHeight(20);
-        stepsList.setVisibleRowCount(8);
-        stepsList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         this.add(stepPanel);
         this.add(btnPanel);
@@ -92,7 +112,7 @@ public class AddStepsPanel extends JPanel {
                 }
                 stepsList.setListData(stepsObj);
 
-                AddStepsPanel.this.repaint();
+                UpdateStepsPanel.this.repaint();
             }
         }
     }
@@ -111,9 +131,12 @@ public class AddStepsPanel extends JPanel {
                     }
                 }
                 steps.remove(iSelectStep);
+                for (int i = 0; i < steps.size(); i++) {
+                    steps.get(i).setOrderNumber(i+1);
+                }
                 nbSteps--;
                 stepsList.setListData(stepsObj);
-                AddStepsPanel.this.repaint();
+                UpdateStepsPanel.this.repaint();
             }
         }
     }
@@ -128,7 +151,7 @@ public class AddStepsPanel extends JPanel {
             } else if (selectNumber <= nbSteps){
                 step.setText(steps.get(selectNumber-1).getDescription());
             }
-            AddStepsPanel.this.repaint();
+            UpdateStepsPanel.this.repaint();
         }
     }
 }

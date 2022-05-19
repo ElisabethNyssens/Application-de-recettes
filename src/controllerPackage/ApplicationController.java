@@ -37,6 +37,12 @@ public class ApplicationController {
     public ArrayList<Ingredient> getAllIngredients() throws AllIngredientsException {
         return recipeManager.getAllIngredients();
     }
+    public ArrayList<IngredientQuantity> getAllIngredientsOfRecipe(String recipeName) throws AllIngredQuantitiesException {
+        return recipeManager.getAllIngredientsOfRecipe(recipeName);
+    }
+    public ArrayList<Step> getAllStepsOfRecipe(String recipeName) throws AllStepsException {
+        return recipeManager.getAllStepsOfRecipe(recipeName);
+    }
     public ArrayList<Category> getAllCategories() throws AllCategoriesException {
         return recipeManager.getAllCategories();
     }
@@ -51,6 +57,18 @@ public class ApplicationController {
     }
 
     // Update
+    public void updateRecipe(Recipe recipe) throws UpdateRecipeException {
+        recipeManager.updateRecipe(recipe);
+    }
 
     // Delete
+    public void deleteRecipe(String recipeTitle) throws DeleteRecipeException, DeleteStepException, DeleteIngredQuantException {
+        recipeManager.deleteRecipe(recipeTitle);
+    }
+    public void deleteSteps(String recipeTitle) throws DeleteStepException {
+        recipeManager.deleteSteps(recipeTitle);
+    }
+    public void deleteIngredQuants(String recipeTitle) throws DeleteIngredQuantException {
+        recipeManager.deleteIngredQuants(recipeTitle);
+    }
 }

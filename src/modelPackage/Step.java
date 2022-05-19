@@ -22,4 +22,8 @@ public class Step {
     public String getDescription() {
         return description;
     }
+
+    public void setOrderNumber(int orderNumber) {
+        this.orderNumber = orderNumber;
+    }
 }

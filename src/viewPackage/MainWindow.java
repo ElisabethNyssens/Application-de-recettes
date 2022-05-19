@@ -8,16 +8,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.sql.SQLException;
 
 public class MainWindow extends JFrame {
     private Container mainContainer;
     private JMenuBar menuBar;
-    private JMenu app, create, edit, delete, display, reseach;
-    private JMenuItem home, exit, createRecipe, createMenu, editRecipe, editMenu,
-            deleteRecipes, deleteMenus,
-            displayRecipes, displayMenus,
-            ingredientResearch, menuResearch, seasonResearch, shoppingList;
+    private JMenu app, recipes, menus, shopList, reseach;
+    private JMenuItem home, exit, displayRecipes, displayMenus,
+        ingredientResearch, menuResearch, seasonResearch, createShopList;
 
     public MainWindow() {
         super("TaCuisine");
@@ -42,17 +39,15 @@ public class MainWindow extends JFrame {
         setJMenuBar(menuBar);
 
         app = new JMenu("TaCuisine");
-        create = new JMenu("Créer");
-        edit = new JMenu("Modifier");
-        delete = new JMenu("Supprimer");
-        display = new JMenu("Afficher");
+        recipes = new JMenu("Recettes");
+        menus = new JMenu("Menus");
+        shopList = new JMenu("Liste de courses");
         reseach = new JMenu("Rechercher");
 
         menuBar.add(app);
-        menuBar.add(create);
-        menuBar.add(display);
-        menuBar.add(edit);
-        menuBar.add(delete);
+        menuBar.add(recipes);
+        menuBar.add(menus);
+        menuBar.add(shopList);
         menuBar.add(reseach);
 
         home = new JMenuItem("Accueil");
@@ -61,28 +56,12 @@ public class MainWindow extends JFrame {
         app.addSeparator();
         app.add(exit);
 
-        createRecipe = new JMenuItem("Recette");
-        createMenu = new JMenuItem("Menu");
-        shoppingList = new JMenuItem("Liste de courses");
-        create.add(createRecipe);
-        create.add(createMenu);
-        create.addSeparator();
-        create.add(shoppingList);
-
-        displayRecipes = new JMenuItem("Recettes");
-        displayMenus = new JMenuItem("Menus");
-        display.add(displayRecipes);
-        display.add(displayMenus);
-
-        editRecipe = new JMenuItem("Recette");
-        editMenu = new JMenuItem("Menu");
-        edit.add(editRecipe);
-        edit.add(editMenu);
-
-        deleteRecipes = new JMenuItem("Recettes");
-        deleteMenus = new JMenuItem("Menus");
-        delete.add(deleteRecipes);
-        delete.add(deleteMenus);
+        displayRecipes = new JMenuItem("Afficher les recettes");
+        displayMenus = new JMenuItem("Afficher les menus");
+        createShopList = new JMenuItem("Créer une liste de courses");
+        recipes.add(displayRecipes);
+        menus.add(displayMenus);
+        shopList.add(createShopList);
 
         ingredientResearch = new JMenuItem("Recettes selon ingrédients");
         menuResearch = new JMenuItem("Menus de régime alimentaire");
@@ -92,21 +71,24 @@ public class MainWindow extends JFrame {
         reseach.add(seasonResearch);
 
 
-
         // ----------- Menu Listeners ------------
 
         // Quitter
         exit.addActionListener(event -> System.exit(0));
-        // Menu accueil
+        // Accueil
         home.addActionListener(new HomeListener());
-        // Menu Créer recette
-        createRecipe.addActionListener(new NewRecipeListener());
-        // Menu Créer menu
-        createMenu.addActionListener(new NewMenuListener());
-        // Modif recette
-        editRecipe.addActionListener(new EditRecipeListener());
+
         // Afficher recettes
         displayRecipes.addActionListener(new DisplayRecipesListener());
+        // Afficher menus
+
+
+        /*
+        createRecipe.addActionListener(new NewRecipeListener());
+        editRecipe.addActionListener(new EditRecipeListener());
+        deleteRecipe.addActionListener(new DeleteRecipeListener());
+        createMenu.addActionListener(new NewMenuListener());
+        */
 
 
         setVisible(true);
@@ -120,7 +102,7 @@ public class MainWindow extends JFrame {
         }
     }
 
-    private class NewRecipeListener implements ActionListener {
+   /* private class NewRecipeListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             mainContainer.removeAll();
             try {
@@ -131,9 +113,9 @@ public class MainWindow extends JFrame {
             }
             setVisible(true);
         }
-    }
+    }*/
 
-    private class NewMenuListener implements ActionListener {
+   /* private class NewMenuListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             mainContainer.removeAll();
@@ -145,30 +127,42 @@ public class MainWindow extends JFrame {
             }
             setVisible(true);
         }
-    }
-
-    private class EditRecipeListener implements ActionListener {
-        public void actionPerformed(ActionEvent event) {
-            mainContainer.removeAll();
-            try {
-                mainContainer.add(new RecipeModifPanel());
-            } catch (ConnectionException exception) {
-                exception.printStackTrace();
-            }
-            setVisible(true);
-        }
-    }
+    }*/
 
     private class DisplayRecipesListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             mainContainer.removeAll();
             try {
-                mainContainer.add(new AllRecipesPanel());
+                mainContainer.add(new AllRecipesPanel(mainContainer));
             } catch (ConnectionException exception) {
                 System.out.println(exception.getMessage());
             }
             setVisible(true);
         }
     }
+
+ /*   private class EditRecipeListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            mainContainer.removeAll();
+            try {
+                mainContainer.add(new RecipeUpdatePanel());
+            } catch (ConnectionException exception) {
+                exception.printStackTrace();
+            }
+            setVisible(true);
+        }
+    }*/
+
+   /* private class DeleteRecipeListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            mainContainer.removeAll();
+            try {
+                mainContainer.add(new RecipeDeletePanel(mainContainer));
+            } catch (ConnectionException exception) {
+                System.out.println(exception.getMessage());
+            }
+            setVisible(true);
+        }
+    }*/
 
 }

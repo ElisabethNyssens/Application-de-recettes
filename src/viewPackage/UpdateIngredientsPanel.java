@@ -1,6 +1,7 @@
 package viewPackage;
 
 import controllerPackage.ApplicationController;
+import exceptionPackage.AllIngredQuantitiesException;
 import exceptionPackage.AllIngredientsException;
 import exceptionPackage.ConnectionException;
 import modelPackage.Ingredient;
@@ -16,7 +17,7 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
-public class AddIngredientsPanel extends JPanel {
+public class UpdateIngredientsPanel extends JPanel {
     private ApplicationController controller;
     private static int NB_INGREDIENTS = 68;
     private String[] ingredientsValues = new String[NB_INGREDIENTS];
@@ -29,18 +30,17 @@ public class AddIngredientsPanel extends JPanel {
     private JButton addIngredientBtn, removeIngredBtn;
     private JList selectedIngredList;
     private ArrayList<IngredientQuantity> ingredientQuantities;
-    private RecipeCreationForm parentPanel;
+    private ArrayList<Ingredient> ingredList;
+    private RecipeUpdateForm parentPanel;
+    private String recipeName;
 
-    public AddIngredientsPanel(RecipeCreationForm parentPanel) throws ConnectionException {
+    public UpdateIngredientsPanel(RecipeUpdateForm parentPanel, String recipeName) throws ConnectionException {
         this.parentPanel = parentPanel;
-        ingredientQuantities = new ArrayList<>();
+        this.recipeName = recipeName;
         controller = new ApplicationController();
 
-        selectedIngredients = new Object[NB_INGREDIENTS];
-        nbSelectedIngred = 0;
-
         try {
-            ArrayList<Ingredient> ingredList = controller.getAllIngredients();
+            ingredList = controller.getAllIngredients();
 
             int iIngred = 0;
             for(Ingredient ingredient : ingredList) {
@@ -85,13 +85,33 @@ public class AddIngredientsPanel extends JPanel {
         selectedIngredList.setVisibleRowCount(8);
         selectedIngredList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
+        selectedIngredients = new Object[NB_INGREDIENTS];
+        nbSelectedIngred = 0;
+        try {
+            ingredientQuantities = controller.getAllIngredientsOfRecipe(recipeName);
+
+            for(IngredientQuantity ingredientQuantity : ingredientQuantities) {
+                double convertedQuantity = ingredientQuantity.getQuantity();
+                DecimalFormat df = new DecimalFormat("###.#");
+                String unit = ingredList.stream().filter(
+                        i -> i.getName().equals(ingredientQuantity.getIngredient())).findFirst().orElse(null).getUnit();
+                selectedIngredients[nbSelectedIngred] = df.format(convertedQuantity) + " " + (unit.equals("unite")?"":unit+" ") + ingredientQuantity.getIngredient();
+                nbSelectedIngred++;
+            }
+            selectedIngredList.setListData(selectedIngredients);
+            UpdateIngredientsPanel.this.repaint();
+
+        } catch (AllIngredQuantitiesException exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage());
+        }
+
         this.add(ingredPanel);
         this.add(btnPanel);
         this.add(new JScrollPane(selectedIngredList));
     }
 
     public ArrayList<IngredientQuantity> getIngredientQuantities() {
-            return ingredientQuantities;
+        return ingredientQuantities;
     }
 
     private class AddButtonListener implements ActionListener {
@@ -116,7 +136,7 @@ public class AddIngredientsPanel extends JPanel {
                 nbSelectedIngred++;
 
                 selectedIngredList.setListData(selectedIngredients);
-                AddIngredientsPanel.this.repaint();
+                UpdateIngredientsPanel.this.repaint();
             } else {
                 JOptionPane.showMessageDialog(null, "Cet ingrédient est déjà dans la liste !");
             }
@@ -131,13 +151,10 @@ public class AddIngredientsPanel extends JPanel {
                 JOptionPane.showMessageDialog(null, "Sélectionne un ingrédient !");
             } else {
                 int iSelectIngred = selectedIngredList.getSelectedIndex();
-                System.out.println(selectedIngredList.getSelectedValue().toString());
-                System.out.println(selectedIngredList.getSelectedIndex());
 
                 ingredientQuantities.remove(iSelectIngred);
                 for (int i = iSelectIngred; i < nbSelectedIngred; i++) {
                     selectedIngredients[i] = selectedIngredients[i+1];
-                    System.out.println(selectedIngredients[i+1]);
                 }
                 nbSelectedIngred--;
                 selectedIngredList.setListData(selectedIngredients);

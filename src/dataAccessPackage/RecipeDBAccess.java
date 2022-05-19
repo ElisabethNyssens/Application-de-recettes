@@ -56,14 +56,35 @@ public class RecipeDBAccess implements RecipeDataAccess {
         }
 
     }
+
     @Override
     public void addStep(Step step) throws AddStepException {
-
-
+        String sql = "insert into steps (order_number,recipe_id,description) values (?,?,?)";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, step.getOrderNumber());
+            preparedStatement.setString(2, step.getRecipeName());
+            preparedStatement.setString(3, step.getDescription());
+            preparedStatement.executeUpdate();
+        }
+        catch(SQLException exception) {
+            throw new AddStepException();
+        }
     }
+
     @Override
     public void addIngredientQuantity(IngredientQuantity ingredientQuantity) throws AddIngredQuantException {
-
+        String sql = "insert into ingredient_quantities (ingredient_id,recipe_id,quantity) values (?,?,?)";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, ingredientQuantity.getIngredient());
+            preparedStatement.setString(2, ingredientQuantity.getRecipe());
+            preparedStatement.setDouble(3, ingredientQuantity.getQuantity());
+            preparedStatement.executeUpdate();
+        }
+        catch(SQLException exception) {
+            throw new AddIngredQuantException();
+        }
     }
 
     @Override
@@ -202,6 +223,58 @@ public class RecipeDBAccess implements RecipeDataAccess {
     }
 
     @Override
+    public ArrayList<IngredientQuantity> getAllIngredientsOfRecipe(String recipeName) throws AllIngredQuantitiesException {
+        ArrayList <IngredientQuantity> allIngredQuant = new ArrayList <>();
+        String sql = "select * from ingredient_quantities where recipe_id = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, recipeName);
+            ResultSet data = preparedStatement.executeQuery();
+            IngredientQuantity ingredQuant;
+
+            while(data.next()) {
+                ingredQuant = new IngredientQuantity(
+                        data.getString("ingredient_id"),
+                        data.getString("recipe_id"),
+                        data.getDouble("quantity")
+                );
+                allIngredQuant.add(ingredQuant);
+            }
+            return allIngredQuant;
+        }
+        catch (SQLException exception) {
+            throw new AllIngredQuantitiesException();
+        }
+    }
+
+    @Override
+    public ArrayList<Step> getAllStepsOfRecipe(String recipeName) throws AllStepsException {
+        ArrayList <Step> allSteps = new ArrayList <>();
+        String sql = "select * from steps where recipe_id = ? order by order_number";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, recipeName);
+            ResultSet data = preparedStatement.executeQuery();
+            Step step;
+
+            while(data.next()) {
+                step = new Step(
+                        data.getInt("order_number"),
+                        data.getString("recipe_id"),
+                        data.getString("description")
+                );
+                allSteps.add(step);
+            }
+            return allSteps;
+        }
+        catch (SQLException exception) {
+            throw new AllStepsException();
+        }
+    }
+
+    @Override
     public ArrayList<DieteryRegime> getAllRegimes() throws AllRegimesException {
         ArrayList <DieteryRegime> allRegimes = new ArrayList <>();
         String sql = "select * from dietery_regimes";
@@ -277,8 +350,102 @@ public class RecipeDBAccess implements RecipeDataAccess {
             throw new AllMenusException();
         }
     }
+
+
     // Update
+    @Override
+    public void updateRecipe(Recipe recipe) throws UpdateRecipeException {
+        String sql = "update recipes set " +
+                "creation_date = ?, " +
+                "is_hot = ?, " +
+                "is_sweet = ?, " +
+                "is_salty = ?, " +
+                "budget = ?, " +
+                "preparation_time = ?, " +
+                "nb_persons = ?, " +
+                "author = ?, " +
+                "category = ? " +
+                "where title = ?";
+
+        GregorianCalendar calendar = recipe.getCreationDate();
+        java.sql.Date sqlDate = new Date(calendar.getTimeInMillis());
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setDate(1, sqlDate);
+            preparedStatement.setBoolean(2, recipe.isHot());
+            preparedStatement.setBoolean(3, recipe.isSweet());
+            preparedStatement.setBoolean(4, recipe.isSalty());
+            preparedStatement.setString(5, recipe.getBudget());
+            preparedStatement.setString(6, recipe.getPreparationTime());
+            preparedStatement.setInt(7, recipe.getNbPersons());
+            preparedStatement.setString(8, recipe.getAuthor());
+            preparedStatement.setString(9, recipe.getCategory());
+            preparedStatement.setString(10, recipe.getTitle());
+            preparedStatement.executeUpdate();
+
+            if(recipe.getSeason() != null) {
+                sql = "update recipes set season = ? where title = ?";
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, recipe.getSeason());
+                preparedStatement.setString(2, recipe.getTitle());
+                preparedStatement.executeUpdate();
+            }
+
+            if(recipe.getRegime() != null) {
+                sql = "update recipes set dietery_regime = ? where title = ?";
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, recipe.getRegime());
+                preparedStatement.setString(2, recipe.getTitle());
+                preparedStatement.executeUpdate();
+            }
+        }
+        catch(SQLException exception) {
+            throw new UpdateRecipeException();
+        }
+    }
+
 
     // Delete
+    @Override
+    public void deleteRecipe(String recipeTitle) throws DeleteRecipeException, DeleteStepException, DeleteIngredQuantException {
+        deleteSteps(recipeTitle);
+        deleteIngredQuants(recipeTitle);
 
+        String sql = "delete from recipes where title = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, recipeTitle);
+            preparedStatement.executeUpdate();
+        }
+        catch(SQLException exception) {
+            throw new DeleteRecipeException();
+        }
+    }
+
+    @Override
+    public void deleteSteps(String recipeTitle) throws DeleteStepException {
+        String sql = "delete from steps where recipe_id = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, recipeTitle);
+            preparedStatement.executeUpdate();
+        }
+        catch(SQLException exception) {
+            throw new DeleteStepException();
+        }
+    }
+
+    @Override
+    public void deleteIngredQuants(String recipeTitle) throws DeleteIngredQuantException {
+        String sql = "delete from ingredient_quantities where recipe_id = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, recipeTitle);
+            preparedStatement.executeUpdate();
+        }
+        catch(SQLException exception) {
+            throw new DeleteIngredQuantException();
+        }
+    }
 }
