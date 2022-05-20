@@ -81,4 +81,10 @@ public class RecipeManager {
         return dao.searchByIngredRecipes(ingredients, with);
     }
 
+    public void deleteMenu(String menuTitle) throws DeleteMenuException, DeleteMenuComponentException {
+        dao.deleteMenu(menuTitle);
+    }
+    public void deleteMenuComponents(String menuTitle) throws DeleteMenuComponentException {
+        dao.deleteMenuComponents(menuTitle);
+    }
 }

@@ -76,4 +76,10 @@ public class ApplicationController {
     public ArrayList<RecipeWithIngred> searchByIngredRecipes(String ingredients, Boolean with) throws SearchException {
         return recipeManager.searchByIngredRecipes(ingredients, with);
     }
+    public void deleteMenu(String menuTitle) throws DeleteMenuException, DeleteMenuComponentException {
+        recipeManager.deleteMenu(menuTitle);
+    }
+    public void deleteMenuComponents(String menuTitle) throws DeleteMenuComponentException {
+        recipeManager.deleteMenuComponents(menuTitle);
+    }
 }

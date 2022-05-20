@@ -11,6 +11,10 @@ public class MenuComponent {
         this.recipeId = recipeId;
     }
 
+    public void setOrderNumber(Integer orderNumber) {
+        this.orderNumber = orderNumber;
+    }
+
     public Integer getOrderNumber() {
         return orderNumber;
     }
