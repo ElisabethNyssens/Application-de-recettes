@@ -127,7 +127,7 @@ public class RecipeDBAccess implements RecipeDataAccess {
 
     // Read
     @Override
-    public ArrayList <Recipe> getAllRecipes() throws AllRecipesException {
+    public ArrayList<Recipe> getAllRecipes() throws AllRecipesException {
         ArrayList <Recipe> allRecipes = new ArrayList <>();
         String sql = "select * from recipes";
 
@@ -170,6 +170,7 @@ public class RecipeDBAccess implements RecipeDataAccess {
             return allRecipes;
         }
         catch (SQLException exception) {
+            exception.printStackTrace();
             throw new AllRecipesException();
         }
     }
@@ -448,4 +449,45 @@ public class RecipeDBAccess implements RecipeDataAccess {
             throw new DeleteIngredQuantException();
         }
     }
+
+    // Researches
+    @Override
+    public ArrayList<RecipeWithIngred> searchByIngredRecipes(String ingredients, Boolean with) throws SearchException {
+        ArrayList <RecipeWithIngred> recipes = new ArrayList <>();
+        String sql =  "select distinct r.title 'Titre', CONCAT(a.first_name,' ',a.last_name) 'Auteur', c.cat_name 'Categorie', r.budget, r.preparation_time " +
+                "from recipes r, ingredient_quantities i, authors a, categories c " +
+                "where a.pseudo = r.author " +
+                "and c.id = r.category " +
+                "and i.recipe_id = r.title " +
+                "and title "+(with?"in":"not in")+" (" +
+                "    select distinct recipe_id " +
+                "    from ingredient_quantities " +
+                "    where ingredient_id in ("+ingredients+"));";;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet data = preparedStatement.executeQuery();
+
+            RecipeWithIngred recipe;
+
+            while(data.next()) {
+                System.out.println(data.getString("Titre"));
+                recipe = new RecipeWithIngred(
+                        data.getString("Titre"),
+                        data.getString("Auteur"),
+                        data.getString("Categorie"),
+                        data.getString("budget"),
+                        data.getString("preparation_time")
+                );
+                recipes.add(recipe);
+            }
+
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            throw new SearchException();
+        }
+
+        return recipes;
+    }
+
 }

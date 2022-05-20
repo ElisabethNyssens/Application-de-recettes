@@ -30,7 +30,7 @@ public class ConnectionPanel extends JPanel {
         setLayout(new BorderLayout());
 
         // Titre
-        title = new JLabel("<html><h1 style='margin:50px 0 30px 0'>S'identifier</h1></html>", SwingConstants.CENTER);
+        title = new JLabel("<html><h1 style='margin:50px 0 30px 0; font-size: 24px;'>S'identifier</h1></html>", SwingConstants.CENTER);
         add(title, BorderLayout.NORTH);
 
         // Form
@@ -57,7 +57,7 @@ public class ConnectionPanel extends JPanel {
         // Bouton
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout());
-        buttonPanel.setBorder(new EmptyBorder(150, 0, 50, 0));
+        buttonPanel.setBorder(new EmptyBorder(150, 0, 70, 0));
 
         validation = new JButton("C'est parti !");
         ValidationListener validationListener = new ValidationListener();

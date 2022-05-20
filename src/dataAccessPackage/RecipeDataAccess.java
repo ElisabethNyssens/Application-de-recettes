@@ -23,10 +23,10 @@ public interface RecipeDataAccess {
      ArrayList<Menu> getAllMenus() throws AllMenusException;
      // Update
      void updateRecipe(Recipe recipe) throws UpdateRecipeException;
-  /*   void updateIngredientQuantity(IngredientQuantity ingredientQuantity) throws UpdateRecipeException;
-     void updateStep(Step step) throws UpdateRecipeException;*/
      // Delete
      void deleteRecipe(String recipeTitle) throws DeleteRecipeException, DeleteStepException, DeleteIngredQuantException;
      void deleteSteps(String recipeTitle) throws DeleteStepException;
      void deleteIngredQuants(String recipeTitle) throws DeleteIngredQuantException;
+     // Searches
+     ArrayList<RecipeWithIngred> searchByIngredRecipes(String ingredients, Boolean with) throws SearchException;
 }

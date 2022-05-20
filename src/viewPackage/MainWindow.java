@@ -63,9 +63,9 @@ public class MainWindow extends JFrame {
         menus.add(displayMenus);
         shopList.add(createShopList);
 
-        ingredientResearch = new JMenuItem("Recettes selon ingrédients");
-        menuResearch = new JMenuItem("Menus de régime alimentaire");
-        seasonResearch = new JMenuItem("Recettes de saison");
+        ingredientResearch = new JMenuItem("Rechercher des recettes selon les ingrédients");
+        menuResearch = new JMenuItem("Rechercher des menus de régime alimentaire");
+        seasonResearch = new JMenuItem("Rechercher des recettes de saison");
         reseach.add(ingredientResearch);
         reseach.add(menuResearch);
         reseach.add(seasonResearch);
@@ -81,6 +81,9 @@ public class MainWindow extends JFrame {
         // Afficher recettes
         displayRecipes.addActionListener(new DisplayRecipesListener());
         // Afficher menus
+
+        // Rechercher
+        ingredientResearch.addActionListener(new SearchByIngredListener());
 
 
         /*
@@ -135,7 +138,19 @@ public class MainWindow extends JFrame {
             try {
                 mainContainer.add(new AllRecipesPanel(mainContainer));
             } catch (ConnectionException exception) {
-                System.out.println(exception.getMessage());
+                exception.printStackTrace();
+            }
+            setVisible(true);
+        }
+    }
+
+    private class SearchByIngredListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            mainContainer.removeAll();
+            try {
+                mainContainer.add(new SearchByIngredientsPanel());
+            } catch (ConnectionException exception) {
+                exception.printStackTrace();
             }
             setVisible(true);
         }
