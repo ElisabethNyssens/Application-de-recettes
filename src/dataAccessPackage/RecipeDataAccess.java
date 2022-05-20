@@ -27,6 +27,8 @@ public interface RecipeDataAccess {
      void deleteRecipe(String recipeTitle) throws DeleteRecipeException, DeleteStepException, DeleteIngredQuantException;
      void deleteSteps(String recipeTitle) throws DeleteStepException;
      void deleteIngredQuants(String recipeTitle) throws DeleteIngredQuantException;
+     void deleteMenu(String menuTitle) throws DeleteMenuException, DeleteMenuComponentException;
+     void deleteMenuComponents(String menuTitle) throws DeleteMenuComponentException;
      // Searches
      ArrayList<RecipeWithIngred> searchByIngredRecipes(String ingredients, Boolean with) throws SearchException;
 }

@@ -81,7 +81,7 @@ public class MainWindow extends JFrame {
         // Afficher recettes
         displayRecipes.addActionListener(new DisplayRecipesListener());
         // Afficher menus
-
+        displayMenus.addActionListener(new DisplayMenusListener());
         // Rechercher
         ingredientResearch.addActionListener(new SearchByIngredListener());
 
@@ -180,4 +180,17 @@ public class MainWindow extends JFrame {
         }
     }*/
 
+    private class DisplayMenusListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            mainContainer.removeAll();
+            try {
+                mainContainer.add(new AllMenusPanel(mainContainer));
+            }
+            catch (ConnectionException exception) {
+                System.out.println(exception.getMessage());
+            }
+            setVisible(true);
+        }
+    }
 }

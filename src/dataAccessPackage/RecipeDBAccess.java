@@ -450,6 +450,34 @@ public class RecipeDBAccess implements RecipeDataAccess {
         }
     }
 
+    @Override
+    public void deleteMenu(String menuTitle) throws DeleteMenuException, DeleteMenuComponentException {
+        deleteMenuComponents(menuTitle);
+
+        String sql = "delete from menus where menu_id = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, menuTitle);
+            preparedStatement.executeUpdate();
+        }
+        catch (SQLException exception) {
+            throw new DeleteMenuException();
+        }
+    }
+
+    @Override
+    public void deleteMenuComponents(String menuTitle) throws DeleteMenuComponentException {
+        String sql = "delete from menu_components where menu_id = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, menuTitle);
+            preparedStatement.executeUpdate();
+        }
+        catch (SQLException exception) {
+            throw new DeleteMenuComponentException();
+        }
+    }
+
     // Researches
     @Override
     public ArrayList<RecipeWithIngred> searchByIngredRecipes(String ingredients, Boolean with) throws SearchException {

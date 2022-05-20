@@ -23,6 +23,12 @@ public class ApplicationController {
     public void addIngredientQuantity(IngredientQuantity ingredientQuantity) throws AddIngredQuantException {
         recipeManager.addIngredientQuantity(ingredientQuantity);
     }
+    public void addMenu(Menu menu) throws AddMenuException {
+        recipeManager.addMenu(menu);
+    }
+    public void addMenuComponent(MenuComponent menuComponent) throws AddMenuComponentException {
+        recipeManager.addMenuComponents(menuComponent);
+    }
 
     // Read
     public ArrayList<Recipe> getAllRecipes() throws AllRecipesException {
@@ -46,6 +52,9 @@ public class ApplicationController {
     public ArrayList<Author> getAllAuthors() throws AllAuthorsException {
         return recipeManager.getAllAuthors();
     }
+    public ArrayList<Menu> getAllMenus() throws AllMenusException {
+        return recipeManager.getAllMenus();
+    }
 
     // Update
     public void updateRecipe(Recipe recipe) throws UpdateRecipeException {
@@ -66,5 +75,11 @@ public class ApplicationController {
     // Searches
     public ArrayList<RecipeWithIngred> searchByIngredRecipes(String ingredients, Boolean with) throws SearchException {
         return recipeManager.searchByIngredRecipes(ingredients, with);
+    }
+    public void deleteMenu(String menuTitle) throws DeleteMenuException, DeleteMenuComponentException {
+        recipeManager.deleteMenu(menuTitle);
+    }
+    public void deleteMenuComponents(String menuTitle) throws DeleteMenuComponentException {
+        recipeManager.deleteMenuComponents(menuTitle);
     }
 }
