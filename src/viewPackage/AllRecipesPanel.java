@@ -68,7 +68,6 @@ public class AllRecipesPanel extends JPanel {
     private class NewRecipeListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             try {
-                System.out.println("yep");
                 title = new JLabel("<html><h1 style='margin: 30px 0 15px 0; font-size: 24px;'>Création d'une recette</h1></html>");
                 title.setHorizontalAlignment(SwingConstants.CENTER);
                 AllRecipesPanel.this.removeAll();
