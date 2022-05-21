@@ -281,7 +281,6 @@ public class RecipeUpdateForm extends JPanel {
                             }
                         });
                         steps.forEach(step -> {
-                            System.out.println(step.getOrderNumber() + " " + step.getDescription());
                             try {
                                 controller.addStep(step);
                             } catch (AddStepException e) {

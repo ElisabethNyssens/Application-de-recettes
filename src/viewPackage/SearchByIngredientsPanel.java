@@ -19,14 +19,15 @@ import java.util.List;
 public class SearchByIngredientsPanel extends JPanel {
     private ApplicationController controller;
     private JLabel title, formLabel;
-    private JButton searchBtn, addBtn, removeBtn;
+    private JButton searchBtn, addBtn, removeBtn, preparationBtn;
     private JRadioButton with, without;
     private ButtonGroup btnGroup;
-    private JPanel btnSearchPanel, ingredListsPanel, ingredBtnPanel, radioPanel, formPanel;
+    private JPanel btnSearchPanel, ingredListsPanel, ingredBtnPanel, radioPanel, formPanel, preparationBtnPanel;
     private JList<String> ingredList, selectIngredList;
+    private ListSelectionModel listSelect;
     private ArrayList<String> selectedIngredients = new ArrayList<>();
     private ArrayList<Ingredient> ingredients;
-    private static int NB_INGREDIENTS = 68;
+    private static int NB_INGREDIENTS = 83;
     private static int MAX_SELECT_INGRED = 5;
     private String[] ingredientsValues = new String[NB_INGREDIENTS];
     private String[] ingredientsSelectValues = new String[MAX_SELECT_INGRED+1];
@@ -101,6 +102,10 @@ public class SearchByIngredientsPanel extends JPanel {
         formPanel.add(ingredListsPanel, BorderLayout.CENTER);
         formPanel.add(radioPanel, BorderLayout.SOUTH);
 
+        preparationBtnPanel = new JPanel();
+        preparationBtn = new JButton("Préparation");
+        preparationBtnPanel.add(preparationBtn);
+
         this.add(title, BorderLayout.NORTH);
         this.add(formPanel, BorderLayout.CENTER);
         this.add(btnSearchPanel, BorderLayout.SOUTH);
@@ -109,6 +114,7 @@ public class SearchByIngredientsPanel extends JPanel {
         addBtn.addActionListener(new AddButtonListener());
         removeBtn.addActionListener(new RemoveButtonListener());
         searchBtn.addActionListener(new SearchButtonListener());
+        //preparationBtn.addActionListener(new PreparationButtonListener());
     }
 
     private class AddButtonListener implements ActionListener {
@@ -160,7 +166,6 @@ public class SearchByIngredientsPanel extends JPanel {
                 }
                 try {
                     ArrayList<RecipeWithIngred> recipes = controller.searchByIngredRecipes(ingredients,with.isSelected());
-                    System.out.println(recipes.get(0).getTitle());
                     SearchByIngredModel model = new SearchByIngredModel(recipes);
                     /*
                     System.out.println(model.getValueAt(1,0));
@@ -170,11 +175,27 @@ public class SearchByIngredientsPanel extends JPanel {
 
                     JTable list = new JTable(model);
                     list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                    listSelect = list.getSelectionModel();
                     JScrollPane scrollPane = new JScrollPane(list);
 
                     SearchByIngredientsPanel.this.remove(formPanel);
                     SearchByIngredientsPanel.this.remove(btnSearchPanel);
                     SearchByIngredientsPanel.this.add(scrollPane, BorderLayout.CENTER);
+                    SearchByIngredientsPanel.this.add(preparationBtnPanel, BorderLayout.SOUTH);
+                    preparationBtn.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            int iRowSelect = listSelect.getMinSelectionIndex();
+
+                            if(iRowSelect != -1) {
+                                String recipeTitle = list.getValueAt(iRowSelect, 0).toString();
+                                RecipePreparationWindow preparationWindow = new RecipePreparationWindow(recipeTitle);
+                            }  else {
+                                JOptionPane.showMessageDialog(null, "Clique sur une des recettes");
+                            }
+                        }
+                    });
+
                     SearchByIngredientsPanel.this.revalidate();
                     SearchByIngredientsPanel.this.repaint();
                 } catch (SearchException exception) {

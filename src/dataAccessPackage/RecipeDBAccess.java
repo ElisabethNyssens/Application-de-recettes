@@ -499,7 +499,6 @@ public class RecipeDBAccess implements RecipeDataAccess {
             RecipeWithIngred recipe;
 
             while(data.next()) {
-                System.out.println(data.getString("Titre"));
                 recipe = new RecipeWithIngred(
                         data.getString("Titre"),
                         data.getString("Auteur"),

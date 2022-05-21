@@ -193,7 +193,7 @@ insert into ingredients values ('sel','c.a.c');
 insert into ingredients values ('sesame','c.a.c');
 insert into ingredients values ('sucre','g');
 insert into ingredients values ('sucre roux','g');
-insert into ingredients values ('sucre vanile','sachet');
+insert into ingredients values ('sucre vanille','sachet');
 insert into ingredients values ('tofu','g');
 insert into ingredients values ('tomate','unite');
 insert into ingredients values ("vinaigre a l'estragon",'c.a.s');
@@ -278,7 +278,7 @@ insert into ingredient_quantities
 values ('poivre','Salade fraise menthe',1);
 
 insert into steps
-values (1,'Salade fraise menthe',"Lavez et egouttez les épinards.");
+values (1,'Salade fraise menthe',"Lavez et egouttez les epinards.");
 insert into steps
 values (2,'Salade fraise menthe',"Lavez et equeutez les fraises. Coupez-les en quartiers.");
 insert into steps
@@ -286,7 +286,7 @@ values (3,'Salade fraise menthe',"Faites revenir les noix 2 min dans une poele a
 insert into steps
 values (4,'Salade fraise menthe',"Preparez la vinaigrette : dans un bol, melangez le miel et le vinaigre. Emulsionnez avec l'huile d’olive, du sel et du poivre. Lavez et effeuillez la menthe.");
 insert into steps
-values (5,'Salade fraise menthe',"Disposez les épinards dans un large saladier avec les morceaux de fraises, la feta emiettee grossièrement, les noix et la menthe. Arrosez de sauce, saupoudrez de graines de pavot et servez frais avec des tranches de baguette toastees.");
+values (5,'Salade fraise menthe',"Disposez les epinards dans un large saladier avec les morceaux de fraises, la feta emiettee grossièrement, les noix et la menthe. Arrosez de sauce, saupoudrez de graines de pavot et servez frais avec des tranches de baguette toastees.");
 
 
 insert into recipes
@@ -354,7 +354,7 @@ values (4,"Oeufs cocottes","Separer les blancs et les battre fermement (avec une
 insert into steps
 values (5,"Oeufs cocottes","Dans la casserole refroidie, ajouter les jaunes d'oeufs un a un, puis le fromage rape. Mettre une pincee de muscade, poivrer. Saler peu car le fromage contient deja du sel.");
 insert into steps
-values (6,"Oeufs cocottes","Incorporer les blancs d'oeufs battus en melangeant délicatement.");
+values (6,"Oeufs cocottes","Incorporer les blancs d'oeufs battus en melangeant delicatement.");
 insert into steps
 values (7,"Oeufs cocottes","Verser dans le moule, au maximum jusqu'a 4 cm du bord.");
 insert into steps
@@ -514,7 +514,7 @@ values (4,"Gateau au yaourt de soja et pommes","Ajoutez les pommes a la pate, me
 insert into steps
 values (5,"Gateau au yaourt de soja et pommes","Graissez le moule, versez la preparation puis saupoudrez le tout de sucre roux.");
 insert into steps
-values (6,"Gateau au yaourt de soja et pommes","Enfournez pour environ 50 minutes et laissez refroidir avant de démouler le gateau au yaourt de soja et pommes.");
+values (6,"Gateau au yaourt de soja et pommes","Enfournez pour environ 50 minutes et laissez refroidir avant de demouler le gateau au yaourt de soja et pommes.");
 
 
 insert into recipes
@@ -540,13 +540,13 @@ values ('pave de saumon',"Paves de saumon au four",2);
 insert into steps
 values (1,"Paves de saumon au four","Mettre les paves de saumon dans un plat allant au four.");
 insert into steps
-values (1,"Paves de saumon au four","Couper un citron en 2 et le presser sur les paves. Couper le demi-citron restant en rondelles et les deposer directement sur le saumon.");
+values (2,"Paves de saumon au four","Couper un citron en 2 et le presser sur les paves. Couper le demi-citron restant en rondelles et les deposer directement sur le saumon.");
 insert into steps
-values (1,"Paves de saumon au four","Ciseler les petits oignons ainsi que le 'vert' puis les mettre sur les paves.");
+values (3,"Paves de saumon au four","Ciseler les petits oignons ainsi que le 'vert' puis les mettre sur les paves.");
 insert into steps
-values (1,"Paves de saumon au four","Ecraser les capres et les poser sur le saumon (facultatif).");
+values (4,"Paves de saumon au four","Ecraser les capres et les poser sur le saumon (facultatif).");
 insert into steps
-values (1,"Paves de saumon au four","Verser le vin blanc et un filet d'huile d'olive sur les saumons, saler (tres peu), poivrer et faire cuire à 180°, thermostat 6, pendant environ 25 min.");
+values (5,"Paves de saumon au four","Verser le vin blanc et un filet d'huile d'olive sur les saumons, saler (tres peu), poivrer et faire cuire à 180°, thermostat 6, pendant environ 25 min.");
 
 
 insert into menus
@@ -611,7 +611,7 @@ insert into menu_components
 values (2, "Menu sans-gluten", "Smoothie nectarine");
 
 
-insert into menu
+insert into menus
 values ("Menu sans etiquette de regime", null);
 
 insert into menu_components
