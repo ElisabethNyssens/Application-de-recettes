@@ -6,6 +6,7 @@ import exceptionPackage.ConnectionException;
 import modelPackage.Category;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,18 +34,19 @@ public class SearchBySeasonPanel extends JPanel {
         add(headerPanel, BorderLayout.NORTH);
 
         // Title panel
-        titlePanel = new JPanel(new GridLayout(2,1));
+        titlePanel = new JPanel(new BorderLayout());
+        titlePanel.setBorder(new EmptyBorder(0, 0, 20, 0));
         headerPanel.add(titlePanel, BorderLayout.NORTH);
 
         // Title
         title = new JLabel("<html><h1 style='margin: 30px 0; font-size: 24px;'>Recherche de recettes selon la saison</h1></html>");
         title.setHorizontalAlignment(SwingConstants.CENTER);
-        titlePanel.add(title);
+        titlePanel.add(title, BorderLayout.NORTH);
 
         // Infos
         infos = new JLabel("Recherche de recettes selon une catégorie et une saison, entrez la date à laquelle vous souhaitez réaliser la recette");
         infos.setHorizontalAlignment(SwingConstants.CENTER);
-        titlePanel.add(infos);
+        titlePanel.add(infos, BorderLayout.CENTER);
 
         // Form panel
         formPanel = new JPanel(new FlowLayout());
