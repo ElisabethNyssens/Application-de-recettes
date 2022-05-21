@@ -522,16 +522,17 @@ public class RecipeDBAccess implements RecipeDataAccess {
     public ArrayList<Menu> searchMenuByDieteryRegime(String regime) throws SearchException {
         ArrayList<Menu> menus = new ArrayList<>();
         String sql = "select distinct menu_id 'Titre'" +
-                "from menu_components" +
-                "group by menu_id" +
+                "from menu_components " +
+                "group by menu_id, recipe_id " +
                 "having recipe_id in " +
-                    "(select r.title" +
-                    "from recipes r, dietery_regimes dr" +
-                    "where r.dietery_regime = dr.id" +
-                    "and dr.dr_name = "+regime+");";
+                    "(select r.title " +
+                    "from recipes r, dietery_regimes dr " +
+                    "where r.dietery_regime = dr.id " +
+                    "and dr.dr_name = (?));";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, regime);
             ResultSet data = preparedStatement.executeQuery();
 
             Menu menu;

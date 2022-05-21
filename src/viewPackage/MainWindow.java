@@ -85,14 +85,9 @@ public class MainWindow extends JFrame {
         // Rechercher
         ingredientResearch.addActionListener(new SearchByIngredListener());
         menuResearch.addActionListener(new SearchMenusByDieteryRegimeListener());
+        // Liste de courses
+        createShopList.addActionListener(new ShoppingListListener());
 
-
-        /*
-        createRecipe.addActionListener(new NewRecipeListener());
-        editRecipe.addActionListener(new EditRecipeListener());
-        deleteRecipe.addActionListener(new DeleteRecipeListener());
-        createMenu.addActionListener(new NewMenuListener());
-        */
 
 
         setVisible(true);
@@ -105,33 +100,6 @@ public class MainWindow extends JFrame {
             setVisible(true);
         }
     }
-
-   /* private class NewRecipeListener implements ActionListener {
-        public void actionPerformed(ActionEvent event) {
-            mainContainer.removeAll();
-            try {
-                mainContainer.add(new RecipeCreationPanel());
-            } catch (ConnectionException exception) {
-                exception.printStackTrace();
-                System.out.println(exception.getMessage());
-            }
-            setVisible(true);
-        }
-    }*/
-
-   /* private class NewMenuListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            mainContainer.removeAll();
-            try {
-                mainContainer.add(new MenuCreationPanel());
-            } catch (ConnectionException exception) {
-                exception.printStackTrace();
-                System.out.println(exception.getMessage());
-            }
-            setVisible(true);
-        }
-    }*/
 
     private class DisplayRecipesListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
@@ -201,6 +169,19 @@ public class MainWindow extends JFrame {
             mainContainer.removeAll();
             try {
                 mainContainer.add(new SearchMenusByDieteryRegimePanel());
+            } catch (ConnectionException exception) {
+                exception.printStackTrace();
+            }
+            setVisible(true);
+        }
+    }
+
+    private class ShoppingListListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            mainContainer.removeAll();
+            try {
+                mainContainer.add(new ShoppingListPanel());
             } catch (ConnectionException exception) {
                 exception.printStackTrace();
             }
