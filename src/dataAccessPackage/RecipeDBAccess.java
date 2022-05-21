@@ -491,7 +491,7 @@ public class RecipeDBAccess implements RecipeDataAccess {
                 "and title "+(with?"in":"not in")+" (" +
                 "    select distinct recipe_id " +
                 "    from ingredient_quantities " +
-                "    where ingredient_id in ("+ingredients+"));";;
+                "    where ingredient_id in ("+ingredients+"));";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -518,4 +518,34 @@ public class RecipeDBAccess implements RecipeDataAccess {
         return recipes;
     }
 
+    @Override
+    public ArrayList<Menu> searchMenuByDieteryRegime(String regime) throws SearchException {
+        ArrayList<Menu> menus = new ArrayList<>();
+        String sql = "select distinct menu_id 'Titre'" +
+                "from menu_components" +
+                "group by menu_id" +
+                "having recipe_id in " +
+                    "(select r.title" +
+                    "from recipes r, dietery_regimes dr" +
+                    "where r.dietery_regime = dr.id" +
+                    "and dr.dr_name = "+regime+");";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet data = preparedStatement.executeQuery();
+
+            Menu menu;
+
+            while (data.next()) {
+                System.out.println(data.getString("Titre"));
+                menu = new Menu(data.getString("Titre"));
+                menus.add(menu);
+            }
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            throw new SearchException();
+        }
+
+        return menus;
+    }
 }

@@ -84,6 +84,7 @@ public class MainWindow extends JFrame {
         displayMenus.addActionListener(new DisplayMenusListener());
         // Rechercher
         ingredientResearch.addActionListener(new SearchByIngredListener());
+        menuResearch.addActionListener(new SearchMenusByDieteryRegimeListener());
 
 
         /*
@@ -189,6 +190,19 @@ public class MainWindow extends JFrame {
             }
             catch (ConnectionException exception) {
                 System.out.println(exception.getMessage());
+            }
+            setVisible(true);
+        }
+    }
+
+    private class SearchMenusByDieteryRegimeListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            mainContainer.removeAll();
+            try {
+                mainContainer.add(new SearchMenusByDieteryRegimePanel());
+            } catch (ConnectionException exception) {
+                exception.printStackTrace();
             }
             setVisible(true);
         }

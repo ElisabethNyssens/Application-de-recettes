@@ -31,4 +31,5 @@ public interface RecipeDataAccess {
      void deleteMenuComponents(String menuTitle) throws DeleteMenuComponentException;
      // Searches
      ArrayList<RecipeWithIngred> searchByIngredRecipes(String ingredients, Boolean with) throws SearchException;
+     ArrayList<Menu> searchMenuByDieteryRegime(String regime) throws SearchException;
 }

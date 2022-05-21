@@ -71,15 +71,18 @@ public class ApplicationController {
     public void deleteIngredQuants(String recipeTitle) throws DeleteIngredQuantException {
         recipeManager.deleteIngredQuants(recipeTitle);
     }
-
-    // Searches
-    public ArrayList<RecipeWithIngred> searchByIngredRecipes(String ingredients, Boolean with) throws SearchException {
-        return recipeManager.searchByIngredRecipes(ingredients, with);
-    }
     public void deleteMenu(String menuTitle) throws DeleteMenuException, DeleteMenuComponentException {
         recipeManager.deleteMenu(menuTitle);
     }
     public void deleteMenuComponents(String menuTitle) throws DeleteMenuComponentException {
         recipeManager.deleteMenuComponents(menuTitle);
+    }
+
+    // Searches
+    public ArrayList<RecipeWithIngred> searchByIngredRecipes(String ingredients, Boolean with) throws SearchException {
+        return recipeManager.searchByIngredRecipes(ingredients, with);
+    }
+    public ArrayList<Menu> searchMenuByDieteryRegime(String regime) throws SearchException {
+        return recipeManager.searchMenuByDieteryRegime(regime);
     }
 }
