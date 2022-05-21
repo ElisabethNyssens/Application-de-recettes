@@ -75,16 +75,18 @@ public class RecipeManager {
     public void deleteIngredQuants(String recipeTitle) throws DeleteIngredQuantException {
         dao.deleteIngredQuants(recipeTitle);
     }
-
-    // Searches
-    public ArrayList<RecipeWithIngred> searchByIngredRecipes(String ingredients, Boolean with) throws SearchException {
-        return dao.searchByIngredRecipes(ingredients, with);
-    }
-
     public void deleteMenu(String menuTitle) throws DeleteMenuException, DeleteMenuComponentException {
         dao.deleteMenu(menuTitle);
     }
     public void deleteMenuComponents(String menuTitle) throws DeleteMenuComponentException {
         dao.deleteMenuComponents(menuTitle);
+    }
+
+    // Searches
+    public ArrayList<RecipeWithIngred> searchByIngredRecipes(String ingredients, Boolean with) throws SearchException {
+        return dao.searchByIngredRecipes(ingredients, with);
+    }
+    public ArrayList<Menu> searchMenuByDieteryRegime(String regime) throws SearchException {
+        return dao.searchMenuByDieteryRegime(regime);
     }
 }

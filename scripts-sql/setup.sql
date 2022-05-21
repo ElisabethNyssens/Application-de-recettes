@@ -81,6 +81,19 @@ CREATE TABLE menu_components
     PRIMARY KEY(order_number, menu_id)
 );
 
+select distinct m.title 'Titre'
+from menu m, menu_components mc
+where m.title = mc.menu_id
+and mc.recipe_id in 
+	(select r.title
+    from recipes r, dietery_regimes dr
+    where r.dietery_regime = dr.id
+    and dr.dr_name = regime);
+
+select r.title
+from recipes r, dietery_regimes dr
+where r.dietery_regime = dr.id
+and dr.dr_name = regime;
 
 insert into authors values ('bichon','Elisabeth','Nyssens');
 insert into authors values ('marvin','Julien','Hanquet');
