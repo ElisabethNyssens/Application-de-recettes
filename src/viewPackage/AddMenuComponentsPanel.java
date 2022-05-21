@@ -83,9 +83,9 @@ public class AddMenuComponentsPanel extends JPanel {
             List<MenuComponent> duplicate = recipes.stream().filter(x -> x.getRecipeId().equals(recipe.getSelectedItem().toString())).collect(toList());
 
             if (recipe.getSelectedItem() == null) {
-                JOptionPane.showMessageDialog(null, "Sélectionne une recette");
+                JOptionPane.showMessageDialog(null, "Sélectionne une recette","Message",JOptionPane.WARNING_MESSAGE);
             } else if (!duplicate.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Cette recette a déjà été choisie");
+                JOptionPane.showMessageDialog(null, "Cette recette a déjà été choisie","Attention",JOptionPane.WARNING_MESSAGE);
             } else {
                 recipes.add(new MenuComponent(nbRecipes + 1, parentPanel.getMenuTitle(), recipe.getSelectedItem().toString()));
 
@@ -100,7 +100,7 @@ public class AddMenuComponentsPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (chosenRecipesList.getSelectedValue() == null) {
-                JOptionPane.showMessageDialog(null, "Sélectionnez une recette !");
+                JOptionPane.showMessageDialog(null, "Sélectionne une recette");
             } else {
                 int iSelectedRecipe = chosenRecipesList.getSelectedIndex();
                 recipes.remove(iSelectedRecipe);
