@@ -28,7 +28,6 @@ public class SearchMenusByDieteryRegimePanel extends JPanel {
     public SearchMenusByDieteryRegimePanel() throws ConnectionException {
         controller = new ApplicationController();
         setLayout(new BorderLayout());
-        setBorder(new EmptyBorder(0, 150, 50, 150));
 
         // Header panel
         headerPanel = new JPanel(new BorderLayout());
