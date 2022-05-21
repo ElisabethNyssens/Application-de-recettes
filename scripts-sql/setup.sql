@@ -133,6 +133,8 @@ insert into ingredients values ('cacao','c.a.c');
 insert into ingredients values ('cafe','cl');
 insert into ingredients values ('capres','g');
 insert into ingredients values ('carotte','unite');
+insert into ingredients values ('champignons','g');
+insert into ingredients values ('chocolat','g');
 insert into ingredients values ('chou-fleur','unite');
 insert into ingredients values ('ciboulette','c.a.s');
 insert into ingredients values ('citron jaune','unite');
@@ -169,7 +171,6 @@ insert into ingredients values ('menthe','feuilles');
 insert into ingredients values ('miel','c.a.c');
 insert into ingredients values ('mascarpone','g');
 insert into ingredients values ('moutarde','c.a.c');
-insert into ingredients values ("moutarde a l'ancienne",'c.a.c');
 insert into ingredients values ('muscade','c.a.c');
 insert into ingredients values ('nectarine','unite');
 insert into ingredients values ('noix','g');
@@ -192,7 +193,6 @@ insert into ingredients values ('saucisse de Strasbourg','unite');
 insert into ingredients values ('sel','c.a.c');
 insert into ingredients values ('sesame','c.a.c');
 insert into ingredients values ('sucre','g');
-insert into ingredients values ('sucre roux','g');
 insert into ingredients values ('sucre vanille','sachet');
 insert into ingredients values ('tofu','g');
 insert into ingredients values ('tomate','unite');
@@ -497,7 +497,7 @@ values ('huile de tournesol',"Gateau au yaourt de soja et pommes",2);
 insert into ingredient_quantities
 values ('jus de citron',"Gateau au yaourt de soja et pommes",1.5);
 insert into ingredient_quantities
-values ('sucre roux',"Gateau au yaourt de soja et pommes",80);
+values ('sucre',"Gateau au yaourt de soja et pommes",80);
 insert into ingredient_quantities
 values ('sucre vanille',"Gateau au yaourt de soja et pommes",1);
 insert into ingredient_quantities
@@ -506,13 +506,13 @@ values ('levure chimique',"Gateau au yaourt de soja et pommes",0.5);
 insert into steps
 values (1,"Gateau au yaourt de soja et pommes","Prechauffez votre four a 180°C.");
 insert into steps
-values (2,"Gateau au yaourt de soja et pommes","Epluchez les pommes, coupez-les en des et faites-les cuire a la poele avec une cuillere à soupe de sucre roux et une autre d’eau. Laissez carameliser pendant 5 a 10 minutes. Reservez.");
+values (2,"Gateau au yaourt de soja et pommes","Epluchez les pommes, coupez-les en des et faites-les cuire a la poele avec une cuillere à soupe de sucre et une autre d’eau. Laissez carameliser pendant 5 a 10 minutes. Reservez.");
 insert into steps
-values (3,"Gateau au yaourt de soja et pommes","Dans un saladier, melangez les yaourts de soja, le sucre roux, l’huile, le jus de citron et une cuillere a soupe d'eau. Puis, ajoutez progressivement la farine et la levure chimique.");
+values (3,"Gateau au yaourt de soja et pommes","Dans un saladier, melangez les yaourts de soja, le sucre, l’huile, le jus de citron et une cuillere a soupe d'eau. Puis, ajoutez progressivement la farine et la levure chimique.");
 insert into steps
 values (4,"Gateau au yaourt de soja et pommes","Ajoutez les pommes a la pate, melangez bien l’ensemble.");
 insert into steps
-values (5,"Gateau au yaourt de soja et pommes","Graissez le moule, versez la preparation puis saupoudrez le tout de sucre roux.");
+values (5,"Gateau au yaourt de soja et pommes","Graissez le moule, versez la preparation puis saupoudrez le tout de sucre.");
 insert into steps
 values (6,"Gateau au yaourt de soja et pommes","Enfournez pour environ 50 minutes et laissez refroidir avant de demouler le gateau au yaourt de soja et pommes.");
 

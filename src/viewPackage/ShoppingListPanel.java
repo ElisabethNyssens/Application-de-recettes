@@ -1,6 +1,7 @@
 package viewPackage;
 
 import controllerPackage.ApplicationController;
+import exceptionPackage.AllIngredQuantitiesException;
 import exceptionPackage.AllIngredientsException;
 import exceptionPackage.AllRecipesException;
 import exceptionPackage.ConnectionException;
@@ -20,18 +21,19 @@ import static java.util.stream.Collectors.toList;
 public class ShoppingListPanel extends JPanel {
     private ApplicationController controller;
     private JLabel title;
-    private JPanel form;
+    private JPanel form, centerPanel, shopListPanel;
     private JButton addIngredientBtn, removeIngredBtn, submitBtn;
 
     private static int NB_MAX_RECIPES = 50;
+    private static int NB_MAX_INGRED = 83;
     private String[] recipesValues; // pour dans JComboBox
-    private String[] selectedRecipes; // pour dans JList
+    private String[] selectedRecipes, ingredList; // pour dans JList
     private int nbSelectedRecipes;
 
     private JLabel recipeLabel, NbPersLabel;
     private JComboBox recipes;
     private JSpinner nbPersons;
-    private JList<String> selectedRecipesList;
+    private JList<String> selectedRecipesList, shopList;
     private ArrayList<ShopListRecipe> shopListRecipes;
 
     public ShoppingListPanel() throws ConnectionException {
@@ -88,18 +90,30 @@ public class ShoppingListPanel extends JPanel {
         btnPanel.add(removeIngredBtn);
 
         selectedRecipesList = new JList();
-        selectedRecipesList.setFixedCellWidth(250);
+        selectedRecipesList.setFixedCellWidth(300);
         selectedRecipesList.setFixedCellHeight(20);
         selectedRecipesList.setVisibleRowCount(8);
         selectedRecipesList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+
+        submitBtn = new JButton("Valider");
+        submitBtn.addActionListener(new SubmitListener());
 
         form = new JPanel();
         form.add(recipePanel);
         form.add(btnPanel);
         form.add(new JScrollPane(selectedRecipesList));
+        form.add(submitBtn);
+
+        shopListPanel = new JPanel();
+        shopListPanel.setLayout(new BorderLayout());
+        centerPanel = new JPanel();
+        centerPanel.setLayout(new GridLayout(2,1));
+        centerPanel.add(form);
+        centerPanel.add(shopListPanel);
 
         this.add(title, BorderLayout.NORTH);
-        this.add(form, BorderLayout.CENTER);
+        this.add(centerPanel, BorderLayout.CENTER);
+        //this.add(submitBtn, BorderLayout.SOUTH);
     }
 
     private class AddButtonListener implements ActionListener {
@@ -135,6 +149,40 @@ public class ShoppingListPanel extends JPanel {
                 }
                 nbSelectedRecipes--;
                 selectedRecipesList.setListData(selectedRecipes);
+            }
+        }
+    }
+
+    private class SubmitListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            if (!shopListRecipes.isEmpty()) {
+                try {
+                    ArrayList<ShopListIngred> shopListIngreds = controller.shoppingList(shopListRecipes);
+                    DecimalFormat df = new DecimalFormat("###.#");
+
+                    shopListPanel.removeAll();
+                    shopList = new JList();
+                    shopList.setFixedCellWidth(400);
+                    shopList.setFixedCellHeight(20);
+                    shopList.setVisibleRowCount(12);
+                    ingredList = new String[NB_MAX_INGRED];
+
+                    int nbIngred = 0;
+                    for (ShopListIngred shopListIngred : shopListIngreds) {
+                        String unit = shopListIngred.getUnit();
+                        ingredList[nbIngred] = " - " + df.format(shopListIngred.getQuantity()) + " " + (unit.equals("unite")?"":unit+" ") + shopListIngred.getIngred();
+                        nbIngred++;
+                    }
+                    shopList.setListData(ingredList);
+                    shopListPanel.add(new JLabel("<html><p style='font-size:16px; margin-bottom: 5px'>Liste de courses :</p></html>"), BorderLayout.NORTH);
+                    shopListPanel.add(new JScrollPane(shopList), BorderLayout.CENTER);
+                    shopListPanel.revalidate();
+                    shopListPanel.repaint();
+                } catch (AllIngredientsException | AllRecipesException | AllIngredQuantitiesException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Sélectionne au moins une recette !","Attention",JOptionPane.WARNING_MESSAGE);
             }
         }
     }

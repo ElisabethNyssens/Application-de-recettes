@@ -85,4 +85,9 @@ public class ApplicationController {
     public ArrayList<Menu> searchMenuByDieteryRegime(String regime) throws SearchException {
         return recipeManager.searchMenuByDieteryRegime(regime);
     }
+
+    // Shopping list
+    public ArrayList<ShopListIngred> shoppingList(ArrayList<ShopListRecipe> shopListRecipes) throws AllIngredientsException, AllRecipesException, AllIngredQuantitiesException {
+        return recipeManager.shoppingList(shopListRecipes);
+    }
 }
