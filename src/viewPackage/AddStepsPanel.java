@@ -1,5 +1,6 @@
 package viewPackage;
 
+import modelPackage.MenuComponent;
 import modelPackage.Step;
 
 import javax.swing.*;
@@ -111,6 +112,9 @@ public class AddStepsPanel extends JPanel {
                     }
                 }
                 steps.remove(iSelectStep);
+                for (int i = 0; i < steps.size(); i++) {
+                    steps.get(i).setOrderNumber(i+1);
+                }
                 nbSteps--;
                 stepsList.setListData(stepsObj);
                 AddStepsPanel.this.repaint();
