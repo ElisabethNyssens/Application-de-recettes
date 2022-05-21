@@ -22,6 +22,7 @@ public class SearchMenusByDieteryRegimePanel extends JPanel {
     private JPanel formPanel, headerPanel, displayPanel;
     private JButton searchBtn;
     private JComboBox regimesCB;
+    private ListSelectionModel listSelect;
     private ArrayList<DieteryRegime> regimesList;
     private String[] regimes = new String[NB_REGIMES];
 
@@ -86,9 +87,11 @@ public class SearchMenusByDieteryRegimePanel extends JPanel {
 
                     JTable list = new JTable(model);
                     list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                    listSelect = list.getSelectionModel();
+                    JScrollPane scrollPane = new JScrollPane(list);
 
                     displayPanel.removeAll();
-                    displayPanel.add(list);
+                    displayPanel.add(scrollPane);
                     revalidate();
                     repaint();
                 } catch (SearchException exception) {

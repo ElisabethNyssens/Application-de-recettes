@@ -131,13 +131,9 @@ public class AddIngredientsPanel extends JPanel {
                 JOptionPane.showMessageDialog(null, "Sélectionne un ingrédient !");
             } else {
                 int iSelectIngred = selectedIngredList.getSelectedIndex();
-                System.out.println(selectedIngredList.getSelectedValue().toString());
-                System.out.println(selectedIngredList.getSelectedIndex());
-
                 ingredientQuantities.remove(iSelectIngred);
                 for (int i = iSelectIngred; i < nbSelectedIngred; i++) {
                     selectedIngredients[i] = selectedIngredients[i+1];
-                    System.out.println(selectedIngredients[i+1]);
                 }
                 nbSelectedIngred--;
                 selectedIngredList.setListData(selectedIngredients);
