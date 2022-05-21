@@ -56,15 +56,15 @@ public class AddMenuComponentsPanel extends JPanel {
         recipe.setSelectedItem(null);
         recipe.setMaximumRowCount(6);
         recipePanel.add(recipeLabel);
-        recipePanel.add(new JScrollPane(recipe));
+        recipePanel.add(recipe);
 
         btnPanel = new JPanel(new GridLayout(2,1));
         addRecipeButton = new JButton("Ajouter la recette >>");
         addRecipeButton.addActionListener(new AddRecipeListener());
-        //removeRecipeButton = new JButton("<< Retirer la recette");
-        //removeRecipeButton.addActionListener(new RemoveRecipeListener());
+        removeRecipeButton = new JButton("<< Retirer la recette");
+        removeRecipeButton.addActionListener(new RemoveRecipeListener());
         btnPanel.add(addRecipeButton);
-        //btnPanel.add(removeRecipeButton);
+        btnPanel.add(removeRecipeButton);
 
         chosenRecipesList = new JList();
         chosenRecipesList.setFixedCellWidth(250);
@@ -96,7 +96,6 @@ public class AddMenuComponentsPanel extends JPanel {
             }
         }
     }
-    /*
     private class RemoveRecipeListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -104,20 +103,24 @@ public class AddMenuComponentsPanel extends JPanel {
                 JOptionPane.showMessageDialog(null, "Sélectionnez une recette !");
             } else {
                 int iSelectedRecipe = chosenRecipesList.getSelectedIndex();
-
                 recipes.remove(iSelectedRecipe);
                 for (int i = iSelectedRecipe; i < nbRecipes; i++) {
-                    selectedRecipes[i] = selectedRecipes[i+1];
-                    recipes.get(i).setOrderNumber(i+1);
+                    if (i == nbRecipes-1) {
+                        selectedRecipes[i] = null;
+                    } else {
+                        selectedRecipes[i] = selectedRecipes[i+1];
+                        recipes.get(i).setOrderNumber(i+1);
+                    }
                 }
-
+                /*for (int i = 0; i < recipes.size(); i++) {
+                    recipes.get(i).setOrderNumber(i+1);
+                }*/
                 nbRecipes--;
                 chosenRecipesList.setListData(selectedRecipes);
                 AddMenuComponentsPanel.this.repaint();
             }
         }
     }
-    */
 
     public ArrayList<MenuComponent> getMenuComponents() {
         return recipes;

@@ -18,18 +18,19 @@ import java.util.ArrayList;
 public class MenuCreationForm extends JPanel {
     private ApplicationController controller;
     private JPanel formPanel, titlePanel, recipesPanel, commentPanel;
-    private JList recipesList, chosenRecipesList;
     private JLabel titleLabel, commentLabel, recipesLabel;
     private JTextField menuTitle;
     private JTextArea menuComment;
     private JButton validateBtn;
+    private Container parentContainer;
     ArrayList<Menu> allMenus = new ArrayList<>();
     private AddMenuComponentsPanel addRecipesPanel;
 
-    public MenuCreationForm() throws ConnectionException {
+    public MenuCreationForm(Container parentContainer) throws ConnectionException {
         setLayout(new BorderLayout());
-        setBorder(new EmptyBorder(0, 150, 0, 150));
+        setBorder(new EmptyBorder(0, 50, 0, 50));
         controller = new ApplicationController();
+        this.parentContainer = parentContainer;
 
         // Récupération liste menus pour pouvoir tester que le titre n'est pas déjà pris
         try {
@@ -47,11 +48,10 @@ public class MenuCreationForm extends JPanel {
         titlePanel = new JPanel(new GridLayout(1, 2));
 
         titleLabel = new JLabel("Titre du menu :");
-        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        titleLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         titlePanel.add(titleLabel);
         menuTitle = new JTextField();
         titlePanel.add(menuTitle);
-
 
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 1;
@@ -64,7 +64,7 @@ public class MenuCreationForm extends JPanel {
         // ----------- RecipesPanel ------------
         recipesPanel = new JPanel(new BorderLayout());
 
-        recipesLabel = new JLabel("Ajoutez les recettes une par une dans l'ordre", SwingConstants.CENTER);
+        recipesLabel = new JLabel("<html><p style='margin: 10px 0; font-size: 15px;'>Ajoute les recettes une par une dans l'ordre :</p></html>", SwingConstants.CENTER);
         recipesPanel.add(recipesLabel, BorderLayout.NORTH);
 
         // ------ addRecipesPanel -------
@@ -80,10 +80,10 @@ public class MenuCreationForm extends JPanel {
         commentPanel = new JPanel(new GridLayout(1,2));
 
         commentLabel = new JLabel("Commentaires :");
-        commentLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        commentLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         commentPanel.add(commentLabel);
-        menuComment = new JTextArea();
-        commentPanel.add(menuComment);
+        menuComment = new JTextArea(4,24);
+        commentPanel.add(new JScrollPane(menuComment));
 
         c.fill = GridBagConstraints.HORIZONTAL;
         c.ipady = 150;
@@ -100,17 +100,17 @@ public class MenuCreationForm extends JPanel {
         @Override
         public void actionPerformed(ActionEvent event) {
             // Validation
+            ArrayList<MenuComponent> menuComponents = addRecipesPanel.getMenuComponents();
             boolean duplicateTitle = allMenus.stream().anyMatch(menu -> menu.getTitle().equals(menuTitle.getText()));
 
             if (menuTitle.getText().isBlank()) {
                 JOptionPane.showMessageDialog(null, "Ton menu a besoins d'un petit nom");
-            } else if (recipesList.getSelectedValuesList().isEmpty()) {
+            } else if (menuComponents.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Il faut sélectionner au moins une recette !");
+            } else if (duplicateTitle) {
+                JOptionPane.showMessageDialog(null, "Un menu portant ce nom existe déjà... Choisis-en un autre !");
             } else {
-                ArrayList<MenuComponent> menuComponents = addRecipesPanel.getMenuComponents();
-
                 Menu menu = new Menu(menuTitle.getText(), menuComment.getText());
-
                 try {
                     controller.addMenu(menu);
                     menuComponents.forEach(menuC -> {
@@ -120,8 +120,18 @@ public class MenuCreationForm extends JPanel {
                             e.printStackTrace();
                         }
                     });
+                    JOptionPane.showMessageDialog(null, "Ton menu a bien été ajouté !");
+                    parentContainer.removeAll();
+                    try {
+                        parentContainer.add(new AllMenusPanel(parentContainer));
+                    } catch (ConnectionException exception) {
+                        exception.printStackTrace();
+                    }
+                    parentContainer.revalidate();
+                    parentContainer.repaint();
                 }
                 catch (AddMenuException exception) {
+                    exception.printStackTrace();
                     JOptionPane.showMessageDialog(null, exception.getMessage());
                 }
             }

@@ -66,11 +66,11 @@ public class AllMenusPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                title = new JLabel("<html><h1 style='margin: 30px 0 15px 0'>Création d'un Menu</h1></html>");
+                title = new JLabel("<html><h1 style='margin: 30px 0 15px 0; font-size: 24px;'>Création d'un Menu</h1></html>");
                 title.setHorizontalAlignment(SwingConstants.CENTER);
                 removeAll();
                 add(title, BorderLayout.NORTH);
-                add(new MenuCreationForm(), BorderLayout.CENTER);
+                add(new MenuCreationForm(mainContainer), BorderLayout.CENTER);
                 revalidate();
                 repaint();
             }

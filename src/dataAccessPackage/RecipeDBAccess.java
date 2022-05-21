@@ -89,10 +89,11 @@ public class RecipeDBAccess implements RecipeDataAccess {
 
     @Override
     public void addMenu(Menu menu) throws AddMenuException {
-        String sql = "insert into menus (title) values (?,?)";
+        String sql = "insert into menus (title) value (?)";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            System.out.println("ici "+menu.getTitle());
             preparedStatement.setString(1, menu.getTitle());
             preparedStatement.executeUpdate();
 
@@ -454,7 +455,7 @@ public class RecipeDBAccess implements RecipeDataAccess {
     public void deleteMenu(String menuTitle) throws DeleteMenuException, DeleteMenuComponentException {
         deleteMenuComponents(menuTitle);
 
-        String sql = "delete from menus where menu_id = ?";
+        String sql = "delete from menus where title = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, menuTitle);
