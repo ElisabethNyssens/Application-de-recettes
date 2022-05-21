@@ -6,6 +6,8 @@ import exceptionPackage.*;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import modelPackage.*;
 
@@ -89,10 +91,11 @@ public class RecipeManager {
     public ArrayList<Menu> searchMenuByDieteryRegime(String regime) throws SearchException {
         return dao.searchMenuByDieteryRegime(regime);
     }
-
+    public ArrayList<String> searchBySeason(String category, GregorianCalendar date) throws SearchException {
+        return dao.searchBySeason(category, date);
+    }
 
     // Tache metier
-
     public ArrayList<ShopListIngred> shoppingList(ArrayList<ShopListRecipe> shopListRecipes) throws AllIngredientsException, AllRecipesException, AllIngredQuantitiesException {
 
         ArrayList<ShopListIngred> shopListIngreds = new ArrayList<>();
@@ -128,6 +131,5 @@ public class RecipeManager {
         }
         return shopListIngreds;
     }
-
 
 }

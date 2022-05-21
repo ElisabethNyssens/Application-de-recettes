@@ -85,9 +85,9 @@ public class MainWindow extends JFrame {
         // Rechercher
         ingredientResearch.addActionListener(new SearchByIngredListener());
         menuResearch.addActionListener(new SearchMenusByDieteryRegimeListener());
+        seasonResearch.addActionListener(new SearchBySeasonListener());
         // Liste de courses
         createShopList.addActionListener(new ShoppingListListener());
-
 
 
         setVisible(true);
@@ -169,6 +169,19 @@ public class MainWindow extends JFrame {
             mainContainer.removeAll();
             try {
                 mainContainer.add(new SearchMenusByDieteryRegimePanel());
+            } catch (ConnectionException exception) {
+                exception.printStackTrace();
+            }
+            setVisible(true);
+        }
+    }
+
+    private class SearchBySeasonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            mainContainer.removeAll();
+            try {
+                mainContainer.add(new SearchBySeasonPanel());
             } catch (ConnectionException exception) {
                 exception.printStackTrace();
             }

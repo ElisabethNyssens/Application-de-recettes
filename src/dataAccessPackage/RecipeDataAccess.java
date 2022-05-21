@@ -4,6 +4,8 @@ import exceptionPackage.*;
 import modelPackage.*;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public interface RecipeDataAccess {
      // Create
@@ -32,4 +34,5 @@ public interface RecipeDataAccess {
      // Searches
      ArrayList<RecipeWithIngred> searchByIngredRecipes(String ingredients, Boolean with) throws SearchException;
      ArrayList<Menu> searchMenuByDieteryRegime(String regime) throws SearchException;
+     ArrayList<String> searchBySeason(String category, GregorianCalendar date) throws SearchException;
 }

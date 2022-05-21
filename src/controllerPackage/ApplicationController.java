@@ -5,6 +5,8 @@ import exceptionPackage.*;
 import modelPackage.*;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class ApplicationController {
     private RecipeManager recipeManager;
@@ -85,9 +87,13 @@ public class ApplicationController {
     public ArrayList<Menu> searchMenuByDieteryRegime(String regime) throws SearchException {
         return recipeManager.searchMenuByDieteryRegime(regime);
     }
+    public ArrayList<String> searchBySeason(String category, GregorianCalendar date) throws SearchException {
+        return recipeManager.searchBySeason(category, date);
+    }
 
     // Shopping list
     public ArrayList<ShopListIngred> shoppingList(ArrayList<ShopListRecipe> shopListRecipes) throws AllIngredientsException, AllRecipesException, AllIngredQuantitiesException {
         return recipeManager.shoppingList(shopListRecipes);
     }
+
 }

@@ -549,4 +549,13 @@ public class RecipeDBAccess implements RecipeDataAccess {
 
         return menus;
     }
+
+    @Override
+    public ArrayList<String> searchBySeason(String category, GregorianCalendar date) throws SearchException {
+        ArrayList<String> recipesTitle = new ArrayList<>();
+        GregorianCalendar calendar = date;
+        String season;
+
+        return null;
+    }
 }
