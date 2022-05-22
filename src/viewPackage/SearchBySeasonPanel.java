@@ -24,7 +24,7 @@ public class SearchBySeasonPanel extends JPanel {
     private JPanel headerPanel, titlePanel, formPanel, entriesPanel, displayPanel;
     private JComboBox recipeCategory;
     private JSpinner date;
-    private JButton searchBtn;
+    private JButton searchBtn, ingredientsBtn;
     private ArrayList<Category> categList;
     private String[] categories = new String[NB_CATEGORIES];
     private Date today;
@@ -95,13 +95,16 @@ public class SearchBySeasonPanel extends JPanel {
         formPanel.add(searchBtn);
 
         // Diplay panel
-        displayPanel = new JPanel();
+        displayPanel = new JPanel(new BorderLayout());
         add(displayPanel, BorderLayout.CENTER);
+
+        // Bouton Ingrédients
+        ingredientsBtn = new JButton("Ingrédients");
     }
 
     private class SearchBtnListener implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent e) {
+        public void actionPerformed(ActionEvent event) {
             if (recipeCategory.getSelectedItem() == null) {
                 JOptionPane.showMessageDialog(null, "Sélectionne une catégorie");
             } else {
@@ -118,7 +121,26 @@ public class SearchBySeasonPanel extends JPanel {
                     JScrollPane scrollPane = new JScrollPane(list);
 
                     displayPanel.removeAll();
-                    displayPanel.add(scrollPane);
+                    displayPanel.add(scrollPane, BorderLayout.CENTER);
+                    displayPanel.add(ingredientsBtn, BorderLayout.SOUTH);
+                    revalidate();
+                    repaint();
+
+                    ingredientsBtn.addActionListener(e -> {
+                        int iRowSelect = listSelect.getMinSelectionIndex();
+
+                        if (iRowSelect == -1) {
+                            JOptionPane.showMessageDialog(null, "Clique sur une recette");
+                        } else {
+                            String recipeTitle = list.getValueAt(iRowSelect, 0).toString();
+                            try {
+                                RecipePreparationWindow preparationWindow = new RecipePreparationWindow(recipeTitle);
+                            } catch (ConnectionException exception) {
+                                exception.printStackTrace();
+                            }
+                        }
+                    });
+
                     revalidate();
                     repaint();
                 } catch (SearchException exception) {
