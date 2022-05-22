@@ -561,19 +561,14 @@ public class RecipeDBAccess implements RecipeDataAccess {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, regime);
             preparedStatement.executeUpdate();
-        } catch (SQLException exception) {
-            exception.printStackTrace();
-            throw new SearchException();
-        }
 
-        sql = "select distinct title 'Titre' " +
-                "from menus " +
-                "where title not in " +
+            sql = "select distinct title 'Titre' " +
+                    "from menus " +
+                    "where title not in " +
                     "(select title" +
                     "from wrong_menus);";
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement = connection.prepareStatement(sql);
             ResultSet data = preparedStatement.executeQuery();
 
             Menu menu;
