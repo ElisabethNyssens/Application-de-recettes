@@ -81,20 +81,6 @@ CREATE TABLE menu_components
     PRIMARY KEY(order_number, menu_id)
 );
 
-select distinct m.title 'Titre'
-from menu m, menu_components mc
-where m.title = mc.menu_id
-and mc.recipe_id in 
-	(select r.title
-    from recipes r, dietery_regimes dr
-    where r.dietery_regime = dr.id
-    and dr.dr_name = regime);
-
-select r.title
-from recipes r, dietery_regimes dr
-where r.dietery_regime = dr.id
-and dr.dr_name = regime;
-
 insert into authors values ('bichon','Elisabeth','Nyssens');
 insert into authors values ('marvin','Julien','Hanquet');
 insert into authors values ('anonyme','Ano','Nyme');
@@ -133,6 +119,8 @@ insert into ingredients values ('cacao','c.a.c');
 insert into ingredients values ('cafe','cl');
 insert into ingredients values ('capres','g');
 insert into ingredients values ('carotte','unite');
+insert into ingredients values ('champignons','g');
+insert into ingredients values ('chocolat','g');
 insert into ingredients values ('chou-fleur','unite');
 insert into ingredients values ('ciboulette','c.a.s');
 insert into ingredients values ('citron jaune','unite');
@@ -169,7 +157,6 @@ insert into ingredients values ('menthe','feuilles');
 insert into ingredients values ('miel','c.a.c');
 insert into ingredients values ('mascarpone','g');
 insert into ingredients values ('moutarde','c.a.c');
-insert into ingredients values ("moutarde a l'ancienne",'c.a.c');
 insert into ingredients values ('muscade','c.a.c');
 insert into ingredients values ('nectarine','unite');
 insert into ingredients values ('noix','g');
@@ -192,7 +179,6 @@ insert into ingredients values ('saucisse de Strasbourg','unite');
 insert into ingredients values ('sel','c.a.c');
 insert into ingredients values ('sesame','c.a.c');
 insert into ingredients values ('sucre','g');
-insert into ingredients values ('sucre roux','g');
 insert into ingredients values ('sucre vanille','sachet');
 insert into ingredients values ('tofu','g');
 insert into ingredients values ('tomate','unite');
@@ -239,7 +225,7 @@ values ('riz','Curry au tofu',500);
 insert into steps
 values (1,'Curry au tofu',"Egoutter les poids chiches, emincer les oignons et l'ail, hacher le persil et couper le chou-fleur en petits morceaux");
 insert into steps
-values (2,'Curry au tofu',"Verser l'huile dans une sauteuse. Lorsqu'elle est chaude, y ajouter les oignons et les laisser revenir à feu moyen jusqu'a ce qu'ils commencent à colorer.");
+values (2,'Curry au tofu',"Verser l'huile dans une sauteuse. Lorsqu'elle est chaude, y ajouter les oignons et les laisser revenir a feu moyen jusqu'a ce qu'ils commencent a colorer.");
 insert into steps
 values (3,'Curry au tofu',"Ajouter les graines de cumin, melanger aux oignons et laisser cuire une minute.");
 insert into steps
@@ -284,9 +270,9 @@ values (2,'Salade fraise menthe',"Lavez et equeutez les fraises. Coupez-les en q
 insert into steps
 values (3,'Salade fraise menthe',"Faites revenir les noix 2 min dans une poele antiadhesive.");
 insert into steps
-values (4,'Salade fraise menthe',"Preparez la vinaigrette : dans un bol, melangez le miel et le vinaigre. Emulsionnez avec l'huile d’olive, du sel et du poivre. Lavez et effeuillez la menthe.");
+values (4,'Salade fraise menthe',"Preparez la vinaigrette : dans un bol, melangez le miel et le vinaigre. Emulsionnez avec l'huile d'olive, du sel et du poivre. Lavez et effeuillez la menthe.");
 insert into steps
-values (5,'Salade fraise menthe',"Disposez les epinards dans un large saladier avec les morceaux de fraises, la feta emiettee grossièrement, les noix et la menthe. Arrosez de sauce, saupoudrez de graines de pavot et servez frais avec des tranches de baguette toastees.");
+values (5,'Salade fraise menthe',"Disposez les epinards dans un large saladier avec les morceaux de fraises, la feta emiettee grossierement, les noix et la menthe. Arrosez de sauce, saupoudrez de graines de pavot et servez frais avec des tranches de baguette toastees.");
 
 
 insert into recipes
@@ -390,7 +376,7 @@ values (4,"Pate a crepes","Melanger delicatement avec un fouet en ajoutant au fu
 insert into steps
 values (5,"Pate a crepes","Parfumer de rhum.");
 insert into steps
-values (6,"Pate a crepes","Faire chauffer une poele antiadhesive et la huiler tres legerement à l'aide d'un papier Essuie-tout. Y verser une louche de pate, la repartir dans la poele puis attendre qu'elle soit cuite d'un cote avant de la retourner. Cuire ainsi toutes les crepes a feu doux.");
+values (6,"Pate a crepes","Faire chauffer une poele antiadhesive et la huiler tres legerement a l'aide d'un papier Essuie-tout. Y verser une louche de pate, la repartir dans la poele puis attendre qu'elle soit cuite d'un cote avant de la retourner. Cuire ainsi toutes les crepes a feu doux.");
 
 
 insert into recipes
@@ -416,7 +402,7 @@ values (2,"Amuse-bouches de Gambas","Roulez les queues de gambas dans les graine
 insert into steps
 values (3,"Amuse-bouches de Gambas","Melangez le melange 5 baies au fromage frais.");
 insert into steps
-values (4,"Amuse-bouches de Gambas","Dans des petits verres, versez une cuillere à soupe du melange fromage frais - cinq baies, deposez une gambas aux graines de sesame cuite et finissez par un filet de miel.");
+values (4,"Amuse-bouches de Gambas","Dans des petits verres, versez une cuillere a soupe du melange fromage frais - cinq baies, deposez une gambas aux graines de sesame cuite et finissez par un filet de miel.");
 
 
 insert into recipes
@@ -464,7 +450,7 @@ values ("jaune d'oeuf","Mayonnaise maison",1);
 insert into steps
 values (1,"Mayonnaise maison","Les ingredients doivent etre a temperature ambiante. Melangez le jaune d'oeuf, un peu de sel, poivre, la moutarde et le vinaigre.");
 insert into steps
-values (2,"Mayonnaise maison","Fouetter en versant peu a peu l'huile, la mayonnaise doit peu à peu epaissir.");
+values (2,"Mayonnaise maison","Fouetter en versant peu a peu l'huile, la mayonnaise doit peu a peu epaissir.");
 insert into steps
 values (3,"Mayonnaise maison","On peut y ajouter des herbes ou du citron pour la parfumer.");
 
@@ -497,7 +483,7 @@ values ('huile de tournesol',"Gateau au yaourt de soja et pommes",2);
 insert into ingredient_quantities
 values ('jus de citron',"Gateau au yaourt de soja et pommes",1.5);
 insert into ingredient_quantities
-values ('sucre roux',"Gateau au yaourt de soja et pommes",80);
+values ('sucre',"Gateau au yaourt de soja et pommes",80);
 insert into ingredient_quantities
 values ('sucre vanille',"Gateau au yaourt de soja et pommes",1);
 insert into ingredient_quantities
@@ -506,13 +492,13 @@ values ('levure chimique',"Gateau au yaourt de soja et pommes",0.5);
 insert into steps
 values (1,"Gateau au yaourt de soja et pommes","Prechauffez votre four a 180°C.");
 insert into steps
-values (2,"Gateau au yaourt de soja et pommes","Epluchez les pommes, coupez-les en des et faites-les cuire a la poele avec une cuillere à soupe de sucre roux et une autre d’eau. Laissez carameliser pendant 5 a 10 minutes. Reservez.");
+values (2,"Gateau au yaourt de soja et pommes","Epluchez les pommes, coupez-les en des et faites-les cuire a la poele avec une cuillere a soupe de sucre et une autre d'eau. Laissez carameliser pendant 5 a 10 minutes. Reservez.");
 insert into steps
-values (3,"Gateau au yaourt de soja et pommes","Dans un saladier, melangez les yaourts de soja, le sucre roux, l’huile, le jus de citron et une cuillere a soupe d'eau. Puis, ajoutez progressivement la farine et la levure chimique.");
+values (3,"Gateau au yaourt de soja et pommes","Dans un saladier, melangez les yaourts de soja, le sucre, l'huile, le jus de citron et une cuillere a soupe d'eau. Puis, ajoutez progressivement la farine et la levure chimique.");
 insert into steps
-values (4,"Gateau au yaourt de soja et pommes","Ajoutez les pommes a la pate, melangez bien l’ensemble.");
+values (4,"Gateau au yaourt de soja et pommes","Ajoutez les pommes a la pate, melangez bien l'ensemble.");
 insert into steps
-values (5,"Gateau au yaourt de soja et pommes","Graissez le moule, versez la preparation puis saupoudrez le tout de sucre roux.");
+values (5,"Gateau au yaourt de soja et pommes","Graissez le moule, versez la preparation puis saupoudrez le tout de sucre.");
 insert into steps
 values (6,"Gateau au yaourt de soja et pommes","Enfournez pour environ 50 minutes et laissez refroidir avant de demouler le gateau au yaourt de soja et pommes.");
 
@@ -546,7 +532,7 @@ values (3,"Paves de saumon au four","Ciseler les petits oignons ainsi que le 've
 insert into steps
 values (4,"Paves de saumon au four","Ecraser les capres et les poser sur le saumon (facultatif).");
 insert into steps
-values (5,"Paves de saumon au four","Verser le vin blanc et un filet d'huile d'olive sur les saumons, saler (tres peu), poivrer et faire cuire à 180°, thermostat 6, pendant environ 25 min.");
+values (5,"Paves de saumon au four","Verser le vin blanc et un filet d'huile d'olive sur les saumons, saler (tres peu), poivrer et faire cuire a 180°, thermostat 6, pendant environ 25 min.");
 
 
 insert into menus

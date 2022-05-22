@@ -39,6 +39,9 @@ public class ApplicationController {
     public ArrayList<Ingredient> getAllIngredients() throws AllIngredientsException {
         return recipeManager.getAllIngredients();
     }
+    public ArrayList<IngredientQuantity> getAllIngredQuantities() throws AllIngredientsException {
+        return recipeManager.getAllIngredQuantities();
+    }
     public ArrayList<IngredientQuantity> getAllIngredientsOfRecipe(String recipeName) throws AllIngredQuantitiesException {
         return recipeManager.getAllIngredientsOfRecipe(recipeName);
     }
@@ -90,4 +93,10 @@ public class ApplicationController {
     public ArrayList<String> searchBySeason(String category, GregorianCalendar date) throws SearchException {
         return recipeManager.searchBySeason(category, date);
     }
+
+    // Shopping list
+    public ArrayList<ShopListIngred> shoppingList(ArrayList<ShopListRecipe> shopListRecipes) throws AllIngredientsException, AllRecipesException, AllIngredQuantitiesException {
+        return recipeManager.shoppingList(shopListRecipes);
+    }
+
 }

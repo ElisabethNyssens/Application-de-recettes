@@ -118,7 +118,7 @@ public class AddIngredientsPanel extends JPanel {
                 selectedIngredList.setListData(selectedIngredients);
                 AddIngredientsPanel.this.repaint();
             } else {
-                JOptionPane.showMessageDialog(null, "Cet ingrédient est déjà dans la liste !");
+                JOptionPane.showMessageDialog(null, "Cet ingrédient est déjà dans la liste !","Attention",JOptionPane.WARNING_MESSAGE);
             }
 
 
@@ -128,7 +128,7 @@ public class AddIngredientsPanel extends JPanel {
     private class RemoveButtonListener implements ActionListener {
         public void actionPerformed( ActionEvent event) {
             if (selectedIngredList.getSelectedValue() == null) {
-                JOptionPane.showMessageDialog(null, "Sélectionne un ingrédient !");
+                JOptionPane.showMessageDialog(null, "Sélectionne un ingrédient !","Message",JOptionPane.INFORMATION_MESSAGE);
             } else {
                 int iSelectIngred = selectedIngredList.getSelectedIndex();
                 ingredientQuantities.remove(iSelectIngred);

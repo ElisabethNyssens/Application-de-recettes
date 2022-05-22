@@ -3,13 +3,10 @@ package businessPackage;
 import dataAccessPackage.RecipeDBAccess;
 import dataAccessPackage.RecipeDataAccess;
 import exceptionPackage.*;
-
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
-
 import modelPackage.*;
+
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 public class RecipeManager {
     private RecipeDataAccess dao;
@@ -42,6 +39,9 @@ public class RecipeManager {
     }
     public ArrayList<Ingredient> getAllIngredients() throws AllIngredientsException {
         return dao.getAllIngredients();
+    }
+    public ArrayList<IngredientQuantity> getAllIngredQuantities() throws AllIngredientsException {
+        return dao.getAllIngredQuantities();
     }
     public ArrayList<IngredientQuantity> getAllIngredientsOfRecipe(String recipeName) throws AllIngredQuantitiesException {
         return dao.getAllIngredientsOfRecipe(recipeName);
@@ -94,4 +94,42 @@ public class RecipeManager {
     public ArrayList<String> searchBySeason(String category, GregorianCalendar date) throws SearchException {
         return dao.searchBySeason(category, date);
     }
+
+    // Tache metier
+    public ArrayList<ShopListIngred> shoppingList(ArrayList<ShopListRecipe> shopListRecipes) throws AllIngredientsException, AllRecipesException, AllIngredQuantitiesException {
+
+        ArrayList<ShopListIngred> shopListIngreds = new ArrayList<>();
+        ArrayList<Ingredient> ingredients = dao.getAllIngredients();
+        ArrayList<Recipe> recipes = dao.getAllRecipes();
+
+        for (ShopListRecipe shopListRecipe : shopListRecipes) {
+            String recipeTitle = shopListRecipe.getRecipe();
+
+            Recipe correspRecipe = recipes.stream().filter(recipe ->
+                    recipe.getTitle().equals(recipeTitle)).findFirst().orElse(null);
+            int initNbPersons = correspRecipe.getNbPersons();
+            double x = shopListRecipe.getNbPersons() / (double) initNbPersons;
+
+            ArrayList<IngredientQuantity> ingredientQuantities = dao.getAllIngredientsOfRecipe(recipeTitle);
+
+            for (IngredientQuantity ingredientQuantity : ingredientQuantities) {
+                String ingredient = ingredientQuantity.getIngredient();
+                double newQuantity = ingredientQuantity.getQuantity() * x;
+
+                boolean ingredExists = shopListIngreds.stream().anyMatch(i -> i.getIngred().equals(ingredient));
+                if (!ingredExists) {
+                    String unit = ingredients.stream().filter(i ->
+                            i.getName().equals(ingredient)).findFirst().orElse(null).getUnit();
+                    shopListIngreds.add(new ShopListIngred(ingredient,newQuantity,unit));
+
+                } else {
+                    int iIngred = shopListIngreds.indexOf(shopListIngreds.stream().filter(i ->
+                            i.getIngred().equals(ingredient)).findFirst().orElse(null));
+                    shopListIngreds.get(iIngred).addQuantity(newQuantity);
+                }
+            }
+        }
+        return shopListIngreds;
+    }
+
 }
