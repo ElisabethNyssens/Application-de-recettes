@@ -15,7 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class SearchMenusByDieteryRegimePanel extends JPanel {
+public class SearchMenusByRegimePanel extends JPanel {
     private static int NB_REGIMES = 4;
     private ApplicationController controller;
     private JLabel title, regimeLabel;
@@ -26,12 +26,14 @@ public class SearchMenusByDieteryRegimePanel extends JPanel {
     private ArrayList<DieteryRegime> regimesList;
     private String[] regimes = new String[NB_REGIMES];
 
-    public SearchMenusByDieteryRegimePanel() throws ConnectionException {
+    public SearchMenusByRegimePanel() throws ConnectionException {
         controller = new ApplicationController();
         setLayout(new BorderLayout());
+        setBorder(new EmptyBorder(0, 150, 50, 150));
 
         // Header panel
         headerPanel = new JPanel(new BorderLayout());
+        headerPanel.setBorder(new EmptyBorder(0,0,50,0));
         add(headerPanel, BorderLayout.NORTH);
 
         // Title
@@ -69,6 +71,7 @@ public class SearchMenusByDieteryRegimePanel extends JPanel {
 
         // Display panel
         displayPanel = new JPanel();
+        displayPanel.setLayout(new BorderLayout());
         add(displayPanel, BorderLayout.CENTER);
     }
 
@@ -86,12 +89,12 @@ public class SearchMenusByDieteryRegimePanel extends JPanel {
                     SearchOnMenuModel model = new SearchOnMenuModel(menus);
 
                     JTable list = new JTable(model);
+                    list.setRowHeight(20);
                     list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                     listSelect = list.getSelectionModel();
-                    JScrollPane scrollPane = new JScrollPane(list);
 
                     displayPanel.removeAll();
-                    displayPanel.add(scrollPane);
+                    displayPanel.add(new JScrollPane(list), BorderLayout.CENTER);
                     revalidate();
                     repaint();
                 } catch (SearchException exception) {

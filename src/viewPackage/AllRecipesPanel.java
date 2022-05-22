@@ -8,6 +8,7 @@ import modelPackage.User;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -40,6 +41,14 @@ public class AllRecipesPanel extends JPanel {
             AllRecipesModel model = new AllRecipesModel(recipes);
 
             list = new JTable(model);
+            list.setRowHeight(20);
+            list.getColumnModel().getColumn(0).setPreferredWidth(130);
+            list.getColumnModel().getColumn(4).setPreferredWidth(30);
+            list.getColumnModel().getColumn(5).setPreferredWidth(30);
+            list.getColumnModel().getColumn(6).setPreferredWidth(30);
+            DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+            centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+            list.setDefaultRenderer(Integer.class, centerRenderer);
             list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             listSelect = list.getSelectionModel();
             scrollPane = new JScrollPane(list);

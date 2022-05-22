@@ -25,7 +25,7 @@ public class ShoppingListPanel extends JPanel {
     private JButton addIngredientBtn, removeIngredBtn, submitBtn;
 
     private static int NB_MAX_RECIPES = 50;
-    private static int NB_MAX_INGRED = 83;
+    private static int NB_MAX_INGRED = 85;
     private String[] recipesValues; // pour dans JComboBox
     private String[] selectedRecipes, ingredList; // pour dans JList
     private int nbSelectedRecipes;
