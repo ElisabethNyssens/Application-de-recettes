@@ -24,7 +24,7 @@ public class AllRecipesPanel extends JPanel {
     private ListSelectionModel listSelect;
     private JLabel title;
     private JPanel buttonPanel;
-    private JButton createBtn, updateBtn, deleteBtn;
+    private JButton createBtn, updateBtn, deleteBtn, preparationBtn;
 
     public AllRecipesPanel(Container mainContainer) throws ConnectionException {
         this.mainContainer =  mainContainer;
@@ -53,13 +53,16 @@ public class AllRecipesPanel extends JPanel {
         createBtn = new JButton("Ajouter");
         updateBtn = new JButton("Modifier");
         deleteBtn = new JButton("Supprimer");
+        preparationBtn = new JButton("Préparation");
         buttonPanel.add(createBtn);
         buttonPanel.add(updateBtn);
         buttonPanel.add(deleteBtn);
+        buttonPanel.add(preparationBtn);
 
         deleteBtn.addActionListener(new DeleteListener());
         updateBtn.addActionListener(new UpdateListener());
         createBtn.addActionListener(new NewRecipeListener());
+        preparationBtn.addActionListener(new PreparationListener());
 
         this.add(title, BorderLayout.NORTH);
         this.add(buttonPanel, BorderLayout.SOUTH);
@@ -137,13 +140,13 @@ public class AllRecipesPanel extends JPanel {
 
     private class DeleteListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            int iLigneSelect = listSelect.getMinSelectionIndex();
+            int iRowSelect = listSelect.getMinSelectionIndex();
 
-            if (iLigneSelect != -1) {
+            if (iRowSelect != -1) {
 
                 int answer = JOptionPane.showConfirmDialog(null, "Es-tu sûr de vouloir supprimer cette recette ?", "Suppression", JOptionPane.YES_NO_OPTION);
                 if (answer == 0) {
-                    String recipeTitle = list.getValueAt(iLigneSelect, 0).toString();
+                    String recipeTitle = list.getValueAt(iRowSelect, 0).toString();
 
                     try {
                         controller.deleteRecipe(recipeTitle);
@@ -158,6 +161,23 @@ public class AllRecipesPanel extends JPanel {
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Clique sur la ligne que tu souhaites supprimer");
+            }
+        }
+    }
+
+    private class PreparationListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            int iRowSelect = listSelect.getMinSelectionIndex();
+
+            if(iRowSelect != -1) {
+                try {
+                    RecipePreparationWindow recipePreparationWindow = new RecipePreparationWindow(list.getValueAt(iRowSelect, 0).toString());
+                } catch (ConnectionException exception) {
+                    exception.printStackTrace();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Clique sur une recette pour afficher sa préparation");
             }
         }
     }

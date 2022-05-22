@@ -18,6 +18,7 @@ public interface RecipeDataAccess {
      ArrayList<Recipe> getAllRecipes() throws AllRecipesException;
      ArrayList<Category> getAllCategories() throws AllCategoriesException;
      ArrayList<Ingredient> getAllIngredients() throws AllIngredientsException;
+     ArrayList<IngredientQuantity> getAllIngredQuantities() throws AllIngredientsException;
      ArrayList<IngredientQuantity> getAllIngredientsOfRecipe(String recipeName) throws AllIngredQuantitiesException;
      ArrayList<Step> getAllStepsOfRecipe(String recipeName) throws AllStepsException;
      ArrayList<DieteryRegime> getAllRegimes() throws AllRegimesException;

@@ -39,6 +39,9 @@ public class ApplicationController {
     public ArrayList<Ingredient> getAllIngredients() throws AllIngredientsException {
         return recipeManager.getAllIngredients();
     }
+    public ArrayList<IngredientQuantity> getAllIngredQuantities() throws AllIngredientsException {
+        return recipeManager.getAllIngredQuantities();
+    }
     public ArrayList<IngredientQuantity> getAllIngredientsOfRecipe(String recipeName) throws AllIngredQuantitiesException {
         return recipeManager.getAllIngredientsOfRecipe(recipeName);
     }

@@ -5,6 +5,7 @@ import exceptionPackage.AllIngredientsException;
 import exceptionPackage.ConnectionException;
 import exceptionPackage.SearchException;
 import modelPackage.Ingredient;
+import modelPackage.IngredientQuantity;
 import modelPackage.RecipeWithIngred;
 import modelPackage.SearchByIngredModel;
 
@@ -14,6 +15,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SearchByIngredientsPanel extends JPanel {
@@ -22,12 +24,13 @@ public class SearchByIngredientsPanel extends JPanel {
     private JButton searchBtn, addBtn, removeBtn, preparationBtn;
     private JRadioButton with, without;
     private ButtonGroup btnGroup;
-    private JPanel btnSearchPanel, ingredListsPanel, ingredBtnPanel, radioPanel, formPanel, preparationBtnPanel;
+    private JPanel btnSearchPanel, ingredListsPanel, ingredBtnPanel, btnPanel, radioPanel, formPanel,
+            preparationBtnPanel, gridPanel, resultPanel;
     private JList<String> ingredList, selectIngredList;
     private ListSelectionModel listSelect;
     private ArrayList<String> selectedIngredients = new ArrayList<>();
-    private ArrayList<Ingredient> ingredients;
-    private static int NB_INGREDIENTS = 83;
+    private ArrayList<IngredientQuantity> ingredients;
+    private static int NB_INGREDIENTS = 85;
     private static int MAX_SELECT_INGRED = 5;
     private String[] ingredientsValues = new String[NB_INGREDIENTS];
     private String[] ingredientsSelectValues = new String[MAX_SELECT_INGRED+1];
@@ -38,6 +41,9 @@ public class SearchByIngredientsPanel extends JPanel {
         this.setLayout(new BorderLayout());
         this.setBorder(new EmptyBorder(0, 150, 50, 150));
         nbSelectIngred = 0;
+
+        gridPanel = new JPanel();
+        gridPanel.setLayout(new GridLayout(2,1,0,50));
 
         // Title
         title = new JLabel("<html><h1 style='margin: 30px 0; font-size: 24px;'>Recherche de recettes selon les ingrédients</h1></html>");
@@ -52,15 +58,16 @@ public class SearchByIngredientsPanel extends JPanel {
         ingredList = new JList<>();
         ingredList.setFixedCellWidth(150);
         ingredList.setFixedCellHeight(20);
-        ingredList.setVisibleRowCount(8);
+        ingredList.setVisibleRowCount(5);
         ingredList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         try {
-            ingredients = controller.getAllIngredients();
+            ingredients = controller.getAllIngredQuantities();
             int iIngred = 0;
-            for (Ingredient ingred : ingredients) {
-                ingredientsValues[iIngred] = ingred.getName();
+            for (IngredientQuantity ingred : ingredients) {
+                ingredientsValues[iIngred] = ingred.getIngredient();
                 iIngred++;
             }
+            ingredientsValues = Arrays.stream(ingredientsValues).distinct().toArray(String[]::new);
             ingredList.setListData(ingredientsValues);
         } catch (AllIngredientsException e) {
             e.printStackTrace();
@@ -75,7 +82,7 @@ public class SearchByIngredientsPanel extends JPanel {
         selectIngredList = new JList<>();
         selectIngredList.setFixedCellWidth(150);
         selectIngredList.setFixedCellHeight(20);
-        selectIngredList.setVisibleRowCount(8);
+        selectIngredList.setVisibleRowCount(5);
         selectIngredList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         ingredListsPanel = new JPanel();
@@ -91,30 +98,39 @@ public class SearchByIngredientsPanel extends JPanel {
         without = new JRadioButton("Sans");
         btnGroup.add(with);
         btnGroup.add(without);
+
         radioPanel = new JPanel();
-        radioPanel.setBorder(new EmptyBorder(30, 0, 200, 0));
+        radioPanel.setBorder(new EmptyBorder(10, 0, 20, 0));
         radioPanel.add(formLabel);
         radioPanel.add(with);
         radioPanel.add(without);
 
+        btnPanel = new JPanel();
+        btnPanel.setLayout(new BorderLayout());
+        btnPanel.add(radioPanel, BorderLayout.NORTH);
+        btnPanel.add(btnSearchPanel, BorderLayout.SOUTH);
+
         formPanel = new JPanel();
         formPanel.setLayout(new BorderLayout());
         formPanel.add(ingredListsPanel, BorderLayout.CENTER);
-        formPanel.add(radioPanel, BorderLayout.SOUTH);
+        formPanel.add(btnPanel, BorderLayout.SOUTH);
+        gridPanel.add(formPanel);
 
         preparationBtnPanel = new JPanel();
         preparationBtn = new JButton("Préparation");
         preparationBtnPanel.add(preparationBtn);
 
+        resultPanel = new JPanel();
+        resultPanel.setLayout(new BorderLayout());
+        gridPanel.add(resultPanel);
+
         this.add(title, BorderLayout.NORTH);
-        this.add(formPanel, BorderLayout.CENTER);
-        this.add(btnSearchPanel, BorderLayout.SOUTH);
+        this.add(gridPanel, BorderLayout.CENTER);
 
         // Listeners
         addBtn.addActionListener(new AddButtonListener());
         removeBtn.addActionListener(new RemoveButtonListener());
         searchBtn.addActionListener(new SearchButtonListener());
-        //preparationBtn.addActionListener(new PreparationButtonListener());
     }
 
     private class AddButtonListener implements ActionListener {
@@ -167,32 +183,30 @@ public class SearchByIngredientsPanel extends JPanel {
                 try {
                     ArrayList<RecipeWithIngred> recipes = controller.searchByIngredRecipes(ingredients,with.isSelected());
                     SearchByIngredModel model = new SearchByIngredModel(recipes);
-                    /*
-                    System.out.println(model.getValueAt(1,0));
-                    System.out.println(model.getValueAt(1,1));
-                    System.out.println(model.getValueAt(1,2));
-                    System.out.println(model.getValueAt(1,3));*/
 
                     JTable list = new JTable(model);
                     list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                     listSelect = list.getSelectionModel();
                     JScrollPane scrollPane = new JScrollPane(list);
 
-                    SearchByIngredientsPanel.this.remove(formPanel);
-                    SearchByIngredientsPanel.this.remove(btnSearchPanel);
-                    SearchByIngredientsPanel.this.add(scrollPane, BorderLayout.CENTER);
-                    SearchByIngredientsPanel.this.add(preparationBtnPanel, BorderLayout.SOUTH);
-                    preparationBtn.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            int iRowSelect = listSelect.getMinSelectionIndex();
+                    resultPanel.removeAll();
+                    resultPanel.add(scrollPane, BorderLayout.CENTER);
+                    resultPanel.add(preparationBtnPanel, BorderLayout.SOUTH);
+                    resultPanel.revalidate();
+                    resultPanel.repaint();
 
-                            if(iRowSelect != -1) {
-                                String recipeTitle = list.getValueAt(iRowSelect, 0).toString();
+                    preparationBtn.addActionListener(e -> {
+                        int iRowSelect = listSelect.getMinSelectionIndex();
+
+                        if(iRowSelect != -1) {
+                            String recipeTitle = list.getValueAt(iRowSelect, 0).toString();
+                            try {
                                 RecipePreparationWindow preparationWindow = new RecipePreparationWindow(recipeTitle);
-                            }  else {
-                                JOptionPane.showMessageDialog(null, "Clique sur une des recettes");
+                            } catch (ConnectionException exception) {
+                                exception.printStackTrace();
                             }
+                        }  else {
+                            JOptionPane.showMessageDialog(null, "Clique sur une des recettes");
                         }
                     });
 

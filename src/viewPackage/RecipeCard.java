@@ -1,9 +1,13 @@
 package viewPackage;
 
+import exceptionPackage.ConnectionException;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +19,7 @@ public class RecipeCard extends JPanel {
     private String regime;
     private String path;
     private BufferedImage photo;
+    private JButton preparationBtn;
 
     public RecipeCard(String title, String author, String category, String regime ,String path) {
         this.title = title;
@@ -38,19 +43,16 @@ public class RecipeCard extends JPanel {
 
         try {
             photo = ImageIO.read(new File(path));
-
-           /* autre option pour les photos : en faire des JLabel, peut être mieux dans certains cas
-           mais ici, problème de positionement et difficile de régler la taille
-
-            JLabel photoLabel = new JLabel(new ImageIcon(photo));
-            this.add(photoLabel, BorderLayout.NORTH);*/
-
         } catch (IOException e) {
+            e.printStackTrace();
             System.out.println("L'image n'a pas été trouvée");
         }
 
-        this.add(titleLabel,BorderLayout.NORTH);
+        preparationBtn = new JButton("Préparation");
+        preparationBtn.addActionListener(new BtnListener());
 
+        this.add(titleLabel,BorderLayout.NORTH);
+        this.add(preparationBtn, BorderLayout.SOUTH);
     }
 
    protected void paintComponent(Graphics g)
@@ -59,4 +61,15 @@ public class RecipeCard extends JPanel {
        int photoBorderX = (photo.getWidth()-this.getWidth())/2;
        g.drawImage(photo, 0, 0, this.getWidth(),250,photoBorderX,photoBorderY,photo.getWidth()-photoBorderX,photo.getHeight()-photoBorderY,null);
    }
+
+    private class BtnListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                RecipePreparationWindow recipePreparationWindow = new RecipePreparationWindow(title);
+            } catch (ConnectionException exception) {
+                exception.printStackTrace();
+            }
+        }
+    }
 }

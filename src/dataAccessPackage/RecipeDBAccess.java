@@ -225,6 +225,31 @@ public class RecipeDBAccess implements RecipeDataAccess {
     }
 
     @Override
+    public ArrayList<IngredientQuantity> getAllIngredQuantities() throws AllIngredientsException {
+        ArrayList <IngredientQuantity> allIngredQuant = new ArrayList <>();
+        String sql = "select * from ingredient_quantities";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet data = preparedStatement.executeQuery();
+            IngredientQuantity ingredQuant;
+
+            while(data.next()) {
+                ingredQuant = new IngredientQuantity(
+                        data.getString("ingredient_id"),
+                        data.getString("recipe_id"),
+                        data.getDouble("quantity")
+                );
+                allIngredQuant.add(ingredQuant);
+            }
+            return allIngredQuant;
+        }
+        catch (SQLException exception) {
+            throw new AllIngredientsException();
+        }
+    }
+
+    @Override
     public ArrayList<IngredientQuantity> getAllIngredientsOfRecipe(String recipeName) throws AllIngredQuantitiesException {
         ArrayList <IngredientQuantity> allIngredQuant = new ArrayList <>();
         String sql = "select * from ingredient_quantities where recipe_id = ?";

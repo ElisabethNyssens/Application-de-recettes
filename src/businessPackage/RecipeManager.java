@@ -40,6 +40,9 @@ public class RecipeManager {
     public ArrayList<Ingredient> getAllIngredients() throws AllIngredientsException {
         return dao.getAllIngredients();
     }
+    public ArrayList<IngredientQuantity> getAllIngredQuantities() throws AllIngredientsException {
+        return dao.getAllIngredQuantities();
+    }
     public ArrayList<IngredientQuantity> getAllIngredientsOfRecipe(String recipeName) throws AllIngredQuantitiesException {
         return dao.getAllIngredientsOfRecipe(recipeName);
     }
