@@ -3,7 +3,9 @@ package viewPackage;
 import controllerPackage.ApplicationController;
 import exceptionPackage.AllCategoriesException;
 import exceptionPackage.ConnectionException;
+import exceptionPackage.SearchException;
 import modelPackage.Category;
+import modelPackage.SearchBySeasonModel;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -13,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class SearchBySeasonPanel extends JPanel {
     ApplicationController controller;
@@ -25,8 +28,10 @@ public class SearchBySeasonPanel extends JPanel {
     private ArrayList<Category> categList;
     private String[] categories = new String[NB_CATEGORIES];
     private Date today;
+    private ListSelectionModel listSelect;
 
     public SearchBySeasonPanel() throws ConnectionException {
+        controller = new ApplicationController();
         setLayout(new BorderLayout());
 
         // Header Panel
@@ -59,11 +64,7 @@ public class SearchBySeasonPanel extends JPanel {
         // Categorie
         categoryLabel = new JLabel("Catégorie :");
         entriesPanel.add(categoryLabel);
-        categories[0] = "Entree";
-        categories[1] = "Plat";
-        categories[2] = "Dessert";
 
-        /*
         int iCateg = 0;
         try {
             categList = controller.getAllCategories();
@@ -74,7 +75,7 @@ public class SearchBySeasonPanel extends JPanel {
         } catch (AllCategoriesException exception) {
             JOptionPane.showMessageDialog(null, exception.getMessage());
         }
-        */
+
         recipeCategory = new JComboBox(categories);
         recipeCategory.setSelectedItem(null);
         entriesPanel.add(recipeCategory);
@@ -103,6 +104,26 @@ public class SearchBySeasonPanel extends JPanel {
         public void actionPerformed(ActionEvent e) {
             if (recipeCategory.getSelectedItem() == null) {
                 JOptionPane.showMessageDialog(null, "Sélectionne une catégorie");
+            } else {
+                GregorianCalendar searchDate = new GregorianCalendar();
+                searchDate.setTime((Date) date.getValue());
+
+                try {
+                    ArrayList<String> recipesTitle = controller.searchBySeason(recipeCategory.getSelectedItem().toString(), searchDate);
+                    SearchBySeasonModel model = new SearchBySeasonModel(recipesTitle);
+
+                    JTable list = new JTable();
+                    list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                    listSelect = list.getSelectionModel();
+                    JScrollPane scrollPane = new JScrollPane(list);
+
+                    displayPanel.removeAll();
+                    displayPanel.add(scrollPane);
+                    revalidate();
+                    repaint();
+                } catch (SearchException exception) {
+                    exception.printStackTrace();
+                }
             }
         }
     }

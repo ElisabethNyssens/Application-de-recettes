@@ -5,6 +5,7 @@ import modelPackage.*;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class RecipeDBAccess implements RecipeDataAccess {
@@ -553,9 +554,43 @@ public class RecipeDBAccess implements RecipeDataAccess {
     @Override
     public ArrayList<String> searchBySeason(String category, GregorianCalendar date) throws SearchException {
         ArrayList<String> recipesTitle = new ArrayList<>();
-        GregorianCalendar calendar = date;
         String season;
+        int mois = date.get(Calendar.MONTH) + 1;
+        int jour = date.get(Calendar.DAY_OF_MONTH);
 
-        return null;
+        if (mois == 12 && jour >= 21 || mois <= 2 || mois == 3 && jour < 21) {
+            season = "Hiver";
+        } else if (mois <= 5 || mois == 6 && jour < 21) {
+            season = "Printemps";
+        } else if (mois <= 8 || mois == 9 && jour < 21) {
+            season = "Ete";
+        } else {
+            season = "Automne";
+        }
+
+        String sql = "select title 'Titre' " +
+                "from recipes r, categories c " +
+                "where r.category = c.id " +
+                "and c.cat_name = ? " +
+                "and r.season = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, category);
+            preparedStatement.setString(2, season);
+            ResultSet data = preparedStatement.executeQuery();
+
+            String recipeTitle;
+
+            while(data.next()) {
+                recipeTitle = data.getString("Titre");
+                recipesTitle.add(recipeTitle);
+            }
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            throw new SearchException();
+        }
+
+        return recipesTitle;
     }
 }
