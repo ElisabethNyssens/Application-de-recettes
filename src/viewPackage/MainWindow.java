@@ -168,7 +168,7 @@ public class MainWindow extends JFrame {
         public void actionPerformed(ActionEvent e) {
             mainContainer.removeAll();
             try {
-                mainContainer.add(new SearchMenusByDieteryRegimePanel());
+                mainContainer.add(new SearchMenusByRegimePanel());
             } catch (ConnectionException exception) {
                 exception.printStackTrace();
             }

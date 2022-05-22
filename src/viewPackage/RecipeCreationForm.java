@@ -107,7 +107,7 @@ public class RecipeCreationForm extends JPanel {
         step1Panel.add(recipeCategoryLabel);
         step1Panel.add(recipeCategory);
         // ------ Cost -------
-        costLabel = new JLabel("Prix* :");
+        costLabel = new JLabel("Budget* :");
         costLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         cost = new JComboBox(costs);
         step1Panel.add(costLabel);

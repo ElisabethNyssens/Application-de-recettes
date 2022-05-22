@@ -19,7 +19,7 @@ import static java.util.stream.Collectors.toList;
 
 public class UpdateIngredientsPanel extends JPanel {
     private ApplicationController controller;
-    private static int NB_INGREDIENTS = 83;
+    private static int NB_INGREDIENTS = 85;
     private String[] ingredientsValues = new String[NB_INGREDIENTS];
     private Object[] selectedIngredients;
     private int nbSelectedIngred;

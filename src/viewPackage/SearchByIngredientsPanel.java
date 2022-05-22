@@ -30,7 +30,7 @@ public class SearchByIngredientsPanel extends JPanel {
     private ListSelectionModel listSelect;
     private ArrayList<String> selectedIngredients = new ArrayList<>();
     private ArrayList<IngredientQuantity> ingredients;
-    private static int NB_INGREDIENTS = 85;
+    private static int NB_INGREDIENTS = 91;
     private static int MAX_SELECT_INGRED = 5;
     private String[] ingredientsValues = new String[NB_INGREDIENTS];
     private String[] ingredientsSelectValues = new String[MAX_SELECT_INGRED+1];
@@ -38,8 +38,8 @@ public class SearchByIngredientsPanel extends JPanel {
 
     public SearchByIngredientsPanel() throws ConnectionException {
         controller = new ApplicationController();
-        this.setLayout(new BorderLayout());
-        this.setBorder(new EmptyBorder(0, 150, 50, 150));
+        setLayout(new BorderLayout());
+        setBorder(new EmptyBorder(0, 150, 50, 150));
         nbSelectIngred = 0;
 
         gridPanel = new JPanel();
@@ -99,16 +99,12 @@ public class SearchByIngredientsPanel extends JPanel {
         btnGroup.add(with);
         btnGroup.add(without);
 
-        radioPanel = new JPanel();
-        radioPanel.setBorder(new EmptyBorder(10, 0, 20, 0));
-        radioPanel.add(formLabel);
-        radioPanel.add(with);
-        radioPanel.add(without);
-
         btnPanel = new JPanel();
-        btnPanel.setLayout(new BorderLayout());
-        btnPanel.add(radioPanel, BorderLayout.NORTH);
-        btnPanel.add(btnSearchPanel, BorderLayout.SOUTH);
+        btnPanel.setBorder(new EmptyBorder(10, 0, 0, 0));
+        btnPanel.add(formLabel);
+        btnPanel.add(with);
+        btnPanel.add(without);
+        btnPanel.add(btnSearchPanel);
 
         formPanel = new JPanel();
         formPanel.setLayout(new BorderLayout());
@@ -185,6 +181,8 @@ public class SearchByIngredientsPanel extends JPanel {
                     SearchByIngredModel model = new SearchByIngredModel(recipes);
 
                     JTable list = new JTable(model);
+                    list.setRowHeight(20);
+                    list.getColumnModel().getColumn(0).setPreferredWidth(140);
                     list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                     listSelect = list.getSelectionModel();
                     JScrollPane scrollPane = new JScrollPane(list);

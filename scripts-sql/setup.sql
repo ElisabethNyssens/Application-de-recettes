@@ -119,6 +119,7 @@ insert into ingredients values ('cacao','c.a.c');
 insert into ingredients values ('cafe','cl');
 insert into ingredients values ('capres','g');
 insert into ingredients values ('carotte','unite');
+insert into ingredients values ('chapelure','c.a.s');
 insert into ingredients values ('champignons','g');
 insert into ingredients values ('chocolat','g');
 insert into ingredients values ('chou-fleur','unite');
@@ -157,6 +158,7 @@ insert into ingredients values ('menthe','feuilles');
 insert into ingredients values ('miel','c.a.c');
 insert into ingredients values ('mascarpone','g');
 insert into ingredients values ('moutarde','c.a.c');
+insert into ingredients values ('mozzarella','g');
 insert into ingredients values ('muscade','c.a.c');
 insert into ingredients values ('nectarine','unite');
 insert into ingredients values ('noix','g');
@@ -164,7 +166,7 @@ insert into ingredients values ('oeuf','unite');
 insert into ingredients values ('oignon jaune','unite');
 insert into ingredients values ('oignon nouveau','unite');
 insert into ingredients values ('orange','unite');
-insert into ingredients values ('parmesan','g');
+insert into ingredients values ('parmesan','c.a.s');
 insert into ingredients values ('pates','g');
 insert into ingredients values ('persil','c.a.s');
 insert into ingredients values ('pave de saumon','unite');
@@ -314,7 +316,7 @@ values (5,'Soupe carotte gingembre',"Mixer la soupe et assaisonner le tout de ju
 
 
 insert into recipes
-values ("Oeufs cocottes", "2022-05-13", true, false, true, "Bon marche", "30min >< 1h", 4, "Toute saison", "bichon", "D_VEGE", "RC_ENT");
+values ("Oeufs cocottes", "2022-05-13", true, false, true, "Bon marche", "30min >< 1h", 4, "toute saison", "bichon", "D_VEGE", "RC_ENT");
 
 insert into ingredient_quantities
 values ('gruyere rape',"Oeufs cocottes",150);
@@ -330,7 +332,7 @@ insert into ingredient_quantities
 values ('oeuf',"Oeufs cocottes",4);
 
 insert into steps
-values (1,"Oeufs cocottes","Prechauffer le four a 180°C (thermostat 6). Beurrer le moule.");
+values (1,"Oeufs cocottes","Prechauffer le four a 180 degres (thermostat 6). Beurrer le moule.");
 insert into steps
 values (2,"Oeufs cocottes","Chauffer le beurre dans une casserole, ajouter la farine et remuer rapidement pendant 1 min. Ajouter le lait tiedi, remuer au fouet pendant quelques minutes a feu doux.");
 insert into steps
@@ -348,7 +350,7 @@ values (8,"Oeufs cocottes","Enfourner pendant 35 minutes en position chaleur tou
 
 
 insert into recipes
-values ("Pate a crepes", "2022-05-13", true, true, false, "Bon marche", "< 30min", 4, null, "abdobeir", null, "RC_DESS");
+values ("Pate a crepes", "2022-05-13", true, true, false, "Bon marche", "< 30min", 4, "toute saison", "abdobeir", null, "RC_DESS");
 
 insert into ingredient_quantities
 values ('farine',"Pate a crepes",300);
@@ -406,7 +408,7 @@ values (4,"Amuse-bouches de Gambas","Dans des petits verres, versez une cuillere
 
 
 insert into recipes
-values ("Hot-dog flemmard du dimanche soir", "2022-05-14", true, false, true, "Bon marche", "< 30min", 2, null, "bichon", null, "RC_SNA");
+values ("Hot-dog flemmard du dimanche soir", "2022-05-14", true, false, true, "Bon marche", "< 30min", 2, "toute saison", "bichon", null, "RC_SNA");
 
 insert into ingredient_quantities
 values ('gruyere rape',"Hot-dog flemmard du dimanche soir",100);
@@ -432,7 +434,7 @@ values (5,"Hot-dog flemmard du dimanche soir","Servir accompagne d'une salade.")
 
 
 insert into recipes
-values ("Mayonnaise maison", "2022-05-14", false, false, true, "Bon marche", "< 30min", 4, null, "marvin", "D_SG", "RC_SAU");
+values ("Mayonnaise maison", "2022-05-14", false, false, true, "Bon marche", "< 30min", 4, "toute saison", "marvin", "D_SG", "RC_SAU");
 
 insert into ingredient_quantities
 values ('moutarde',"Mayonnaise maison",2);
@@ -470,7 +472,7 @@ values (1,"Smoothie nectarine","Mettre le yaourt, le lait et la nectarine lavee 
 
 
 insert into recipes
-values ("Gateau au yaourt de soja et pommes", "2022-05-15", false, true, false, "Bon marche", "> 1h", 8, null, "anonyme", "D_VEGA", "RC_DESS");
+values ("Gateau au yaourt de soja et pommes", "2022-05-15", false, true, false, "Bon marche", "> 1h", 8, "automne", "anonyme", "D_VEGA", "RC_DESS");
 
 insert into ingredient_quantities
 values ('pomme',"Gateau au yaourt de soja et pommes",2);
@@ -490,7 +492,7 @@ insert into ingredient_quantities
 values ('levure chimique',"Gateau au yaourt de soja et pommes",0.5);
 
 insert into steps
-values (1,"Gateau au yaourt de soja et pommes","Prechauffez votre four a 180°C.");
+values (1,"Gateau au yaourt de soja et pommes","Prechauffez votre four a 180 degres.");
 insert into steps
 values (2,"Gateau au yaourt de soja et pommes","Epluchez les pommes, coupez-les en des et faites-les cuire a la poele avec une cuillere a soupe de sucre et une autre d'eau. Laissez carameliser pendant 5 a 10 minutes. Reservez.");
 insert into steps
@@ -504,7 +506,7 @@ values (6,"Gateau au yaourt de soja et pommes","Enfournez pour environ 50 minute
 
 
 insert into recipes
-values ("Paves de saumon au four", "2022-05-15", true, false, true, "Moyen", "30min >< 1h", 2, "printemps", "abdobeir", "D_PESC", "RC_PLAT");
+values ("Paves de saumon au four", "2022-05-15", true, false, true, "Moyen", "30min >< 1h", 2, "printemps", "marvin", "D_PESC", "RC_PLAT");
 
 insert into ingredient_quantities
 values ('citron jaune',"Paves de saumon au four",1);
@@ -532,7 +534,33 @@ values (3,"Paves de saumon au four","Ciseler les petits oignons ainsi que le 've
 insert into steps
 values (4,"Paves de saumon au four","Ecraser les capres et les poser sur le saumon (facultatif).");
 insert into steps
-values (5,"Paves de saumon au four","Verser le vin blanc et un filet d'huile d'olive sur les saumons, saler (tres peu), poivrer et faire cuire a 180°, thermostat 6, pendant environ 25 min.");
+values (5,"Paves de saumon au four","Verser le vin blanc et un filet d'huile d'olive sur les saumons, saler (tres peu), poivrer et faire cuire a 180 degres, thermostat 6, pendant environ 25 min.");
+
+insert into recipes
+values ("Flan de courgettes", "2022-05-22", true, false, true, "Moyen", "30min >< 1h", 4, "ete", "marvin", "D_VEGE", "RC_ACC");
+
+insert into ingredient_quantities
+values ('courgette',"Flan de courgettes",1);
+insert into ingredient_quantities
+values ('oignon jaune',"Flan de courgettes",1);
+insert into ingredient_quantities
+values ('oeuf',"Flan de courgettes",3);
+insert into ingredient_quantities
+values ('chapelure',"Flan de courgettes",1);
+insert into ingredient_quantities
+values ('parmesan',"Flan de courgettes",1);
+insert into ingredient_quantities
+values ('mozzarella',"Flan de courgettes",30);
+
+insert into steps
+values (1,"Flan de courgettes","Laver et couper en fines tranches les courgettes. Emincer l'oignon.");
+insert into steps
+values (2,"Flan de courgettes","Mettre le tout dans un plat a four pendant 15min a 180 degres.");
+insert into steps
+values (3,"Flan de courgettes","Melanger les oeufs, la chapelure et le parmesan dans un saladier. Rajouter la preparation aux courgettes precuites.");
+insert into steps
+values (4,"Flan de courgettes","Mettre la mozza (rapee ou en morceaux) sur le dessus. Remettre au four 20 minutes a 180 degres.");
+
 
 
 insert into menus

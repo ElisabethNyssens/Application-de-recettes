@@ -577,8 +577,8 @@ public class RecipeDBAccess implements RecipeDataAccess {
     }
 
     @Override
-    public ArrayList<String> searchBySeason(String category, GregorianCalendar date) throws SearchException {
-        ArrayList<String> recipesTitle = new ArrayList<>();
+    public ArrayList<SeasonRecipe> searchBySeason(String category, GregorianCalendar date) throws SearchException {
+        ArrayList<SeasonRecipe> seasonRecipes = new ArrayList<>();
         String season;
         int mois = date.get(Calendar.MONTH) + 1;
         int jour = date.get(Calendar.DAY_OF_MONTH);
@@ -593,29 +593,40 @@ public class RecipeDBAccess implements RecipeDataAccess {
             season = "Automne";
         }
 
-        String sql = "select title 'Titre' " +
-                "from recipes r, categories c " +
-                "where r.category = c.id " +
-                "and c.cat_name = ? " +
-                "and r.season = ?";
+        String sql = "select distinct r.title 'Titre', CONCAT(a.first_name,' ',a.last_name) 'Auteur', c.cat_name 'Categorie', r.season 'Saison' " +
+                "from recipes r " +
+                "inner join categories c on (r.category = c.id) " +
+                "inner join authors a on (r.author = a.pseudo) " +
+                "where c.cat_name = ? " +
+                "and r.season in (?,?)";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, category);
             preparedStatement.setString(2, season);
+            preparedStatement.setString(3, "Toute saison");
             ResultSet data = preparedStatement.executeQuery();
 
-            String recipeTitle;
+            SeasonRecipe seasonRecipe;
 
             while(data.next()) {
-                recipeTitle = data.getString("Titre");
-                recipesTitle.add(recipeTitle);
+                seasonRecipe = new SeasonRecipe(
+                        data.getString("Titre"),
+                        data.getString("Auteur"),
+                        data.getString("Categorie")
+                );
+                seasonRecipes.add(seasonRecipe);
+
+                season = data.getString("Saison");
+                if(!data.wasNull()) {
+                    seasonRecipe.setSeason(season);
+                }
             }
         } catch (SQLException exception) {
             exception.printStackTrace();
             throw new SearchException();
         }
 
-        return recipesTitle;
+        return seasonRecipes;
     }
 }

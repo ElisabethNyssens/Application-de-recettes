@@ -6,6 +6,7 @@ import exceptionPackage.ConnectionException;
 import exceptionPackage.SearchException;
 import modelPackage.Category;
 import modelPackage.SearchBySeasonModel;
+import modelPackage.SeasonRecipe;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -21,7 +22,7 @@ public class SearchBySeasonPanel extends JPanel {
     ApplicationController controller;
     private final int NB_CATEGORIES = 9;
     private JLabel title, infos, categoryLabel, dateLabel;
-    private JPanel headerPanel, titlePanel, formPanel, entriesPanel, displayPanel;
+    private JPanel headerPanel, titlePanel, formPanel, entriesPanel, displayPanel, btnPanel;
     private JComboBox recipeCategory;
     private JSpinner date;
     private JButton searchBtn, ingredientsBtn;
@@ -33,6 +34,7 @@ public class SearchBySeasonPanel extends JPanel {
     public SearchBySeasonPanel() throws ConnectionException {
         controller = new ApplicationController();
         setLayout(new BorderLayout());
+        setBorder(new EmptyBorder(0, 150, 50, 150));
 
         // Header Panel
         headerPanel = new JPanel(new BorderLayout());
@@ -49,7 +51,7 @@ public class SearchBySeasonPanel extends JPanel {
         titlePanel.add(title, BorderLayout.NORTH);
 
         // Infos
-        infos = new JLabel("Recherche de recettes selon une catégorie et une saison, entrez la date à laquelle vous souhaitez réaliser la recette");
+        infos = new JLabel("Recherche de recettes selon une catégorie et une saison, entre la date à laquelle tu souhaites réaliser la recette");
         infos.setHorizontalAlignment(SwingConstants.CENTER);
         titlePanel.add(infos, BorderLayout.CENTER);
 
@@ -92,14 +94,18 @@ public class SearchBySeasonPanel extends JPanel {
 
         // Bouton recherche
         searchBtn = new JButton("Rechercher");
+        searchBtn.addActionListener(new SearchBtnListener());
         formPanel.add(searchBtn);
 
         // Diplay panel
         displayPanel = new JPanel(new BorderLayout());
+        displayPanel.setBorder(new EmptyBorder(50, 0, 0, 0));
         add(displayPanel, BorderLayout.CENTER);
 
         // Bouton Ingrédients
-        ingredientsBtn = new JButton("Ingrédients");
+        btnPanel = new JPanel();
+        ingredientsBtn = new JButton("Préparation");
+        btnPanel.add(ingredientsBtn);
     }
 
     private class SearchBtnListener implements ActionListener {
@@ -112,17 +118,18 @@ public class SearchBySeasonPanel extends JPanel {
                 searchDate.setTime((Date) date.getValue());
 
                 try {
-                    ArrayList<String> recipesTitle = controller.searchBySeason(recipeCategory.getSelectedItem().toString(), searchDate);
-                    SearchBySeasonModel model = new SearchBySeasonModel(recipesTitle);
+                    ArrayList<SeasonRecipe> seasonRecipes = controller.searchBySeason(recipeCategory.getSelectedItem().toString(), searchDate);
+                    SearchBySeasonModel model = new SearchBySeasonModel(seasonRecipes);
 
-                    JTable list = new JTable();
+                    JTable list = new JTable(model);
+                    list.setRowHeight(20);
                     list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                     listSelect = list.getSelectionModel();
                     JScrollPane scrollPane = new JScrollPane(list);
 
                     displayPanel.removeAll();
                     displayPanel.add(scrollPane, BorderLayout.CENTER);
-                    displayPanel.add(ingredientsBtn, BorderLayout.SOUTH);
+                    displayPanel.add(btnPanel, BorderLayout.SOUTH);
                     revalidate();
                     repaint();
 

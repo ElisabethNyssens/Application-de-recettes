@@ -91,7 +91,7 @@ public class RecipeManager {
     public ArrayList<Menu> searchMenuByDieteryRegime(String regime) throws SearchException {
         return dao.searchMenuByDieteryRegime(regime);
     }
-    public ArrayList<String> searchBySeason(String category, GregorianCalendar date) throws SearchException {
+    public ArrayList<SeasonRecipe> searchBySeason(String category, GregorianCalendar date) throws SearchException {
         return dao.searchBySeason(category, date);
     }
 

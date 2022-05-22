@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class AddStepsPanel extends JPanel {
-    private static int NB_MAX_STEPS = 55;
+    private static int NB_MAX_STEPS = 59;
     private Object[] stepsObj;
     private int nbSteps;
 

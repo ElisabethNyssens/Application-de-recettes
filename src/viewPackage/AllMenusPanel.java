@@ -39,6 +39,7 @@ public class AllMenusPanel extends JPanel {
             AllMenusModel model = new AllMenusModel(menus);
 
             list = new JTable(model);
+            list.setRowHeight(20);
             list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             listSelect = list.getSelectionModel();
             scrollPane = new JScrollPane(list);

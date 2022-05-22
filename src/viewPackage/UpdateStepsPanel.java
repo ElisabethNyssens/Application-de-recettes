@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class UpdateStepsPanel extends JPanel {
     private ApplicationController controller;
-    private static int NB_MAX_STEPS = 55;
+    private static int NB_MAX_STEPS = 59;
     private Object[] stepsObj;
     private int nbSteps;
 

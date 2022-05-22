@@ -105,7 +105,7 @@ public class RecipeUpdateForm extends JPanel {
         step1Panel.add(recipeCategory);
 
         // ------ Cost -------
-        costLabel = new JLabel("Prix* :");
+        costLabel = new JLabel("Budget* :");
         costLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         cost = new JComboBox(costs);
         cost.setSelectedItem(initRecipe.getBudget());
