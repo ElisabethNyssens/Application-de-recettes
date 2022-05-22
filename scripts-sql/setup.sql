@@ -81,6 +81,10 @@ CREATE TABLE menu_components
     PRIMARY KEY(order_number, menu_id)
 );
 
+CREATE VIEW wrong_menus
+as select title, comment
+from menus;
+
 insert into authors values ('bichon','Elisabeth','Nyssens');
 insert into authors values ('marvin','Julien','Hanquet');
 insert into authors values ('anonyme','Ano','Nyme');

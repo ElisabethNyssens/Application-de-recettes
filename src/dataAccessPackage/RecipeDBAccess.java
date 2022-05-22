@@ -547,10 +547,11 @@ public class RecipeDBAccess implements RecipeDataAccess {
     @Override
     public ArrayList<Menu> searchMenuByDieteryRegime(String regime) throws SearchException {
         ArrayList<Menu> menus = new ArrayList<>();
-        String sql = "select distinct menu_id 'Titre'" +
-                "from menu_components " +
-                "group by menu_id, recipe_id " +
-                "having recipe_id in " +
+        String sql = "alter view wrong_menus " +
+                "as select distinct m.title, m.comment " +
+                "from menus m, menu_components mc " +
+                "where m.title = mc.menu_id " +
+                "and recipe_id not in " +
                     "(select r.title " +
                     "from recipes r, dietery_regimes dr " +
                     "where r.dietery_regime = dr.id " +
@@ -559,6 +560,20 @@ public class RecipeDBAccess implements RecipeDataAccess {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, regime);
+            preparedStatement.executeUpdate();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            throw new SearchException();
+        }
+
+        sql = "select distinct title 'Titre' " +
+                "from menus " +
+                "where title not in " +
+                    "(select title" +
+                    "from wrong_menus);";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet data = preparedStatement.executeQuery();
 
             Menu menu;
