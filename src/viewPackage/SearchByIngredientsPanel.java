@@ -3,8 +3,8 @@ package viewPackage;
 import controllerPackage.ApplicationController;
 import exceptionPackage.AllIngredientsException;
 import exceptionPackage.ConnectionException;
+import exceptionPackage.CountException;
 import exceptionPackage.SearchException;
-import modelPackage.Ingredient;
 import modelPackage.IngredientQuantity;
 import modelPackage.RecipeWithIngred;
 import modelPackage.SearchByIngredModel;
@@ -30,9 +30,9 @@ public class SearchByIngredientsPanel extends JPanel {
     private ListSelectionModel listSelect;
     private ArrayList<String> selectedIngredients = new ArrayList<>();
     private ArrayList<IngredientQuantity> ingredients;
-    private static int NB_INGREDIENTS = 91;
+    private int nbIngredients;
     private static int MAX_SELECT_INGRED = 5;
-    private String[] ingredientsValues = new String[NB_INGREDIENTS];
+    private String[] ingredientsValues = new String[nbIngredients];
     private String[] ingredientsSelectValues = new String[MAX_SELECT_INGRED+1];
     private int nbSelectIngred;
 
@@ -41,6 +41,13 @@ public class SearchByIngredientsPanel extends JPanel {
         setLayout(new BorderLayout());
         setBorder(new EmptyBorder(0, 150, 50, 150));
         nbSelectIngred = 0;
+
+        // Récupération du nombre d'ingrédients
+        try {
+            nbIngredients = controller.getElementNumber("ingredient_quantities");
+        } catch (CountException exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage());
+        }
 
         gridPanel = new JPanel();
         gridPanel.setLayout(new GridLayout(2,1,0,50));

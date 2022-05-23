@@ -62,6 +62,11 @@ public class RecipeManager {
         return dao.getAllMenus();
     }
 
+    // Count
+    public int getElementNumber(String table) throws CountException {
+        return dao.getElementNumber(table);
+    }
+
     // Update
     public void updateRecipe(Recipe recipe) throws UpdateRecipeException {
         dao.updateRecipe(recipe);
@@ -110,14 +115,13 @@ public class RecipeManager {
 
             Recipe correspRecipe = recipes.stream().filter(recipe ->
                     recipe.getTitle().equals(recipeTitle)).findFirst().orElse(null);
-            int initNbPersons = correspRecipe.getNbPersons();
-            double x = shopListRecipe.getNbPersons() / (double) initNbPersons;
+            double ingredMultiplier = ingredientMultiplier(shopListRecipe.getNbPersons(), correspRecipe.getNbPersons());
 
             ArrayList<IngredientQuantity> ingredientQuantities = dao.getAllIngredientsOfRecipe(recipeTitle);
 
             for (IngredientQuantity ingredientQuantity : ingredientQuantities) {
                 String ingredient = ingredientQuantity.getIngredient();
-                double newQuantity = ingredientQuantity.getQuantity() * x;
+                double newQuantity = newIngredQuantity(ingredientQuantity.getQuantity(), ingredMultiplier);
 
                 boolean ingredExists = shopListIngreds.stream().anyMatch(i -> i.getIngred().equals(ingredient));
                 if (!ingredExists) {
@@ -135,4 +139,11 @@ public class RecipeManager {
         return shopListIngreds;
     }
 
+    public static double ingredientMultiplier(int newNbPersons, int initNbPersons) {
+        return newNbPersons / (double) initNbPersons;
+    }
+
+    public static double newIngredQuantity(double ingredientQuantity, double ingredMultiplier) {
+        return ingredientQuantity * ingredMultiplier;
+    }
 }

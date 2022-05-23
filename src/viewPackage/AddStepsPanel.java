@@ -1,6 +1,8 @@
 package viewPackage;
 
-import modelPackage.MenuComponent;
+import controllerPackage.ApplicationController;
+import exceptionPackage.ConnectionException;
+import exceptionPackage.CountException;
 import modelPackage.Step;
 
 import javax.swing.*;
@@ -12,10 +14,10 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class AddStepsPanel extends JPanel {
-    private static int NB_MAX_STEPS = 59;
+    private ApplicationController controller;
+    private int nbMaxSteps;
     private Object[] stepsObj;
     private int nbSteps;
-
     private JLabel stepLabel, numberLabel;
     private JTextArea step;
     private JPanel numberContainer, stepContainer;
@@ -25,11 +27,18 @@ public class AddStepsPanel extends JPanel {
     private ArrayList<Step> steps;
     private RecipeCreationForm parentPanel;
 
-    public AddStepsPanel(RecipeCreationForm parentPanel) {
+    public AddStepsPanel(RecipeCreationForm parentPanel) throws ConnectionException {
         this.parentPanel = parentPanel;
-        stepsObj = new Object[NB_MAX_STEPS];
+        stepsObj = new Object[nbMaxSteps];
         steps = new ArrayList<>();
         nbSteps = 0;
+
+        controller = new ApplicationController();
+        try {
+            nbMaxSteps = controller.getElementNumber("steps");
+        } catch (CountException exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage());
+        }
 
         JPanel stepPanel = new JPanel();
         stepPanel.setLayout(new BorderLayout());

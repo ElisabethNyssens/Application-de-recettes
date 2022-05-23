@@ -1,13 +1,9 @@
 package viewPackage;
 
 import controllerPackage.ApplicationController;
-import exceptionPackage.AllIngredQuantitiesException;
-import exceptionPackage.AllIngredientsException;
-import exceptionPackage.AllStepsException;
-import exceptionPackage.ConnectionException;
+import exceptionPackage.*;
 import modelPackage.Ingredient;
 import modelPackage.IngredientQuantity;
-import modelPackage.Recipe;
 import modelPackage.Step;
 
 import javax.swing.*;
@@ -20,7 +16,6 @@ import java.util.ArrayList;
 
 public class RecipePreparationWindow extends JFrame {
     private ApplicationController controller;
-    private static int NB_INGREDIENTS = 83;
     private Container mainContainer;
     private JLabel title;
     private JPanel panel, resultPanel, ingredPanel, stepsPanel;

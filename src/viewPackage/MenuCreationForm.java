@@ -109,6 +109,10 @@ public class MenuCreationForm extends JPanel {
                 JOptionPane.showMessageDialog(null, "Il faut sélectionner au moins une recette !");
             } else if (duplicateTitle) {
                 JOptionPane.showMessageDialog(null, "Un menu portant ce nom existe déjà... Choisis-en un autre !");
+            } else if (menuTitle.getText().length() > 100) {
+                JOptionPane.showMessageDialog(null, "Le titre du menu est trop long");
+            } else if (menuComment.getText().length() > 200) {
+                JOptionPane.showMessageDialog(null, "Le commentaire est trop long");
             } else {
                 Menu menu = new Menu(menuTitle.getText(), menuComment.getText());
                 try {

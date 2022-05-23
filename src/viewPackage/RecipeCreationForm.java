@@ -25,8 +25,8 @@ public class RecipeCreationForm extends JPanel {
     private Date today;
 
     private int activeFormStep;
-    private static int NB_CATEGORIES = 9;
-    public static int NB_REGIMES = 4;
+    private int nbCategories;
+    public int nbRegimes;
 
     private JButton prevStepBtn, nextStepBtn;
     private JPanel step1Panel, step2Panel, bottomPanel;
@@ -36,8 +36,8 @@ public class RecipeCreationForm extends JPanel {
     private ArrayList<Category> categList = new ArrayList<>();
     private ArrayList<DieteryRegime> regimesList = new ArrayList<>();
     ArrayList<Recipe> allRecipes = new ArrayList<>();
-    private String[] recipeCategories = new String[NB_CATEGORIES];
-    private String[] regimes = new String[NB_REGIMES];
+    private String[] recipeCategories = new String[nbCategories];
+    private String[] regimes = new String[nbRegimes];
     private final String[] costs = {"Bon marché", "Coût moyen", "Assez cher"};
     private final String[] preparationTimes = {"< 30min", "30min >< 1h", "1h >< 2h", "2h >< 1j", "> 1j"};
     private final String[] seasons = {"Printemps", "Ete", "Automne", "Hiver", "Toute saison"};
@@ -55,7 +55,9 @@ public class RecipeCreationForm extends JPanel {
         // Récupération liste recettes pour tester que le titre n'est pas déjà pris
         try {
             allRecipes = controller.getAllRecipes();
-        } catch (AllRecipesException exception) {
+            nbCategories = controller.getElementNumber("categories");
+            nbRegimes = controller.getElementNumber("dietery_regimes");
+        } catch (AllRecipesException | CountException exception) {
             JOptionPane.showMessageDialog(null, exception.getMessage());
         }
 
