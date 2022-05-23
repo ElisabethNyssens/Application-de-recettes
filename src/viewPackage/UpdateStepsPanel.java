@@ -3,6 +3,7 @@ package viewPackage;
 import controllerPackage.ApplicationController;
 import exceptionPackage.AllStepsException;
 import exceptionPackage.ConnectionException;
+import exceptionPackage.CountException;
 import modelPackage.Step;
 
 import javax.swing.*;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 
 public class UpdateStepsPanel extends JPanel {
     private ApplicationController controller;
-    private static int NB_MAX_STEPS = 59;
+    private int nbMaxSteps;
     private Object[] stepsObj;
     private int nbSteps;
 
@@ -33,7 +34,7 @@ public class UpdateStepsPanel extends JPanel {
         controller = new ApplicationController();
         this.recipeName = recipeName;
         this.parentPanel = parentPanel;
-        stepsObj = new Object[NB_MAX_STEPS];
+        stepsObj = new Object[nbMaxSteps];
         steps = new ArrayList<>();
 
         JPanel btnPanel = new JPanel();
@@ -53,6 +54,7 @@ public class UpdateStepsPanel extends JPanel {
 
         try {
             steps = controller.getAllStepsOfRecipe(recipeName);
+            nbMaxSteps = controller.getElementNumber("steps");
 
             for (Step step : steps) {
                 stepsObj[nbSteps] = (nbSteps+1) + ". " + step.getDescription();
@@ -60,7 +62,7 @@ public class UpdateStepsPanel extends JPanel {
             }
             stepsList.setListData(stepsObj);
 
-        } catch (AllStepsException e) {
+        } catch (AllStepsException | CountException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur",JOptionPane.ERROR_MESSAGE);
         }

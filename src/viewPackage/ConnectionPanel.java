@@ -2,10 +2,9 @@ package viewPackage;
 
 import controllerPackage.ApplicationController;
 import exceptionPackage.AllAuthorsException;
-import exceptionPackage.AllCategoriesException;
 import exceptionPackage.ConnectionException;
+import exceptionPackage.CountException;
 import modelPackage.Author;
-import modelPackage.Category;
 import modelPackage.User;
 
 import javax.swing.*;
@@ -22,12 +21,19 @@ public class ConnectionPanel extends JPanel {
     private JComboBox pseudo;
     private JButton validation;
 
-    public static int NB_PSEUDOS = 5;
-    private final String[] pseudos = new String[NB_PSEUDOS];
+    public int nbPseudos;
+    private final String[] pseudos = new String[nbPseudos];
 
     public ConnectionPanel() throws ConnectionException {
         controller = new ApplicationController();
         setLayout(new BorderLayout());
+
+        // Récolte du nombre de pseudos
+        try {
+            nbPseudos = controller.getElementNumber("authors");
+        } catch (CountException exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage());
+        }
 
         // Titre
         title = new JLabel("<html><h1 style='margin:50px 0 30px 0; font-size: 24px;'>S'identifier</h1></html>", SwingConstants.CENTER);

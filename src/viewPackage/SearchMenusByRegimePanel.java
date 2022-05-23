@@ -3,6 +3,7 @@ package viewPackage;
 import controllerPackage.ApplicationController;
 import exceptionPackage.AllRegimesException;
 import exceptionPackage.ConnectionException;
+import exceptionPackage.CountException;
 import exceptionPackage.SearchException;
 import modelPackage.DieteryRegime;
 import modelPackage.Menu;
@@ -16,7 +17,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class SearchMenusByRegimePanel extends JPanel {
-    private static int NB_REGIMES = 4;
+    private int nbRegimes;
     private ApplicationController controller;
     private JLabel title, regimeLabel;
     private JPanel formPanel, headerPanel, displayPanel, btnPanel;
@@ -24,12 +25,19 @@ public class SearchMenusByRegimePanel extends JPanel {
     private JComboBox regimesCB;
     private ListSelectionModel listSelect;
     private ArrayList<DieteryRegime> regimesList;
-    private String[] regimes = new String[NB_REGIMES];
+    private String[] regimes = new String[nbRegimes];
 
     public SearchMenusByRegimePanel() throws ConnectionException {
         controller = new ApplicationController();
         setLayout(new BorderLayout());
         setBorder(new EmptyBorder(0, 150, 50, 150));
+
+        // Récupération du nombre de régimes alimentaires
+        try {
+            nbRegimes = controller.getElementNumber("dietery_regimes");
+        } catch (CountException exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage());
+        }
 
         // Header panel
         headerPanel = new JPanel(new BorderLayout());

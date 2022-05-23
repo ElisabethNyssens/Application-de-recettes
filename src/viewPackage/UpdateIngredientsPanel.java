@@ -4,6 +4,7 @@ import controllerPackage.ApplicationController;
 import exceptionPackage.AllIngredQuantitiesException;
 import exceptionPackage.AllIngredientsException;
 import exceptionPackage.ConnectionException;
+import exceptionPackage.CountException;
 import modelPackage.Ingredient;
 import modelPackage.IngredientQuantity;
 
@@ -19,8 +20,8 @@ import static java.util.stream.Collectors.toList;
 
 public class UpdateIngredientsPanel extends JPanel {
     private ApplicationController controller;
-    private static int NB_INGREDIENTS = 85;
-    private String[] ingredientsValues = new String[NB_INGREDIENTS];
+    private int nbIngredients;
+    private String[] ingredientsValues = new String[nbIngredients];
     private Object[] selectedIngredients;
     private int nbSelectedIngred;
 
@@ -41,14 +42,14 @@ public class UpdateIngredientsPanel extends JPanel {
 
         try {
             ingredList = controller.getAllIngredients();
+            nbIngredients = controller.getElementNumber("ingredients");
 
             int iIngred = 0;
             for(Ingredient ingredient : ingredList) {
                 ingredientsValues[iIngred] = ingredient.getName() + (ingredient.getUnit().equals("unite")?"":(" (" + ingredient.getUnit() + ")"));
                 iIngred++;
             }
-
-        } catch (AllIngredientsException exception) {
+        } catch (AllIngredientsException | CountException exception) {
             exception.printStackTrace();
             JOptionPane.showMessageDialog(null, exception.getMessage(),"Erreur",JOptionPane.ERROR_MESSAGE);
         }
@@ -86,7 +87,7 @@ public class UpdateIngredientsPanel extends JPanel {
         selectedIngredList.setVisibleRowCount(8);
         selectedIngredList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
-        selectedIngredients = new Object[NB_INGREDIENTS];
+        selectedIngredients = new Object[nbIngredients];
         nbSelectedIngred = 0;
         try {
             ingredientQuantities = controller.getAllIngredientsOfRecipe(recipeName);

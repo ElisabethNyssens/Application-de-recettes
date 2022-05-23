@@ -1,10 +1,7 @@
 package viewPackage;
 
 import controllerPackage.ApplicationController;
-import exceptionPackage.AllIngredQuantitiesException;
-import exceptionPackage.AllIngredientsException;
-import exceptionPackage.AllRecipesException;
-import exceptionPackage.ConnectionException;
+import exceptionPackage.*;
 import modelPackage.*;
 
 import javax.swing.*;
@@ -14,9 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.List;
-
-import static java.util.stream.Collectors.toList;
 
 public class ShoppingListPanel extends JPanel {
     private ApplicationController controller;
@@ -25,7 +19,7 @@ public class ShoppingListPanel extends JPanel {
     private JButton addIngredientBtn, removeIngredBtn, submitBtn;
 
     private static int NB_MAX_RECIPES = 50;
-    private static int NB_MAX_INGRED = 85;
+    private int nbMaxIngred;
     private String[] recipesValues; // pour dans JComboBox
     private String[] selectedRecipes, ingredList; // pour dans JList
     private int nbSelectedRecipes;
@@ -52,13 +46,14 @@ public class ShoppingListPanel extends JPanel {
 
         try {
             ArrayList<Recipe> recipes = controller.getAllRecipes();
+            nbMaxIngred = controller.getElementNumber("ingredients");
 
             int iRecipe = 0;
             for(Recipe recipe : recipes) {
                 recipesValues[iRecipe] = recipe.getTitle();
                 iRecipe++;
             }
-        } catch (AllRecipesException exception) {
+        } catch (AllRecipesException | CountException exception) {
             JOptionPane.showMessageDialog(null, exception.getMessage());
         }
 
@@ -165,7 +160,7 @@ public class ShoppingListPanel extends JPanel {
                     shopList.setFixedCellWidth(400);
                     shopList.setFixedCellHeight(20);
                     shopList.setVisibleRowCount(12);
-                    ingredList = new String[NB_MAX_INGRED];
+                    ingredList = new String[nbMaxIngred];
 
                     int nbIngred = 0;
                     for (ShopListIngred shopListIngred : shopListIngreds) {

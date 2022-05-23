@@ -3,6 +3,7 @@ package viewPackage;
 import controllerPackage.ApplicationController;
 import exceptionPackage.AllCategoriesException;
 import exceptionPackage.ConnectionException;
+import exceptionPackage.CountException;
 import exceptionPackage.SearchException;
 import modelPackage.Category;
 import modelPackage.SearchBySeasonModel;
@@ -20,14 +21,14 @@ import java.util.GregorianCalendar;
 
 public class SearchBySeasonPanel extends JPanel {
     ApplicationController controller;
-    private final int NB_CATEGORIES = 9;
+    private int nbCategories;
     private JLabel title, infos, categoryLabel, dateLabel;
     private JPanel headerPanel, titlePanel, formPanel, entriesPanel, displayPanel, btnPanel;
     private JComboBox recipeCategory;
     private JSpinner date;
     private JButton searchBtn, ingredientsBtn;
     private ArrayList<Category> categList;
-    private String[] categories = new String[NB_CATEGORIES];
+    private String[] categories = new String[nbCategories];
     private Date today;
     private ListSelectionModel listSelect;
 
@@ -35,6 +36,13 @@ public class SearchBySeasonPanel extends JPanel {
         controller = new ApplicationController();
         setLayout(new BorderLayout());
         setBorder(new EmptyBorder(0, 150, 50, 150));
+
+        // Récupération du nombre de catégories
+        try {
+            nbCategories = controller.getElementNumber("categories");
+        } catch (CountException exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage());
+        }
 
         // Header Panel
         headerPanel = new JPanel(new BorderLayout());
