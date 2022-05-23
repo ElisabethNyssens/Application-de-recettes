@@ -11,6 +11,7 @@ public class SearchOnMenuModel extends AbstractTableModel {
         this.menus = menus;
         columnNames = new ArrayList<>();
         columnNames.add("Titre");
+        columnNames.add("Commentaire");
     }
 
     @Override
@@ -33,6 +34,7 @@ public class SearchOnMenuModel extends AbstractTableModel {
 
         switch (columnIndex) {
             case 0 : return menu.getTitle();
+            case 1 : return menu.getComment();
             default: return null;
         }
     }

@@ -562,7 +562,7 @@ public class RecipeDBAccess implements RecipeDataAccess {
             preparedStatement.setString(1, regime);
             preparedStatement.executeUpdate();
 
-            sql = "select distinct title 'Titre' " +
+            sql = "select distinct title 'Titre', comment 'Commentaire' " +
                     "from menus " +
                     "where title not in " +
                     "(select title" +
@@ -575,7 +575,7 @@ public class RecipeDBAccess implements RecipeDataAccess {
 
             while (data.next()) {
                 System.out.println(data.getString("Titre"));
-                menu = new Menu(data.getString("Titre"));
+                menu = new Menu(data.getString("Titre"), data.getString("Commentaire"));
                 menus.add(menu);
             }
         } catch (SQLException exception) {
