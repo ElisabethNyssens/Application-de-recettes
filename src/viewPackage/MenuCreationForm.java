@@ -47,7 +47,7 @@ public class MenuCreationForm extends JPanel {
         // ----------- TitlePanel ------------
         titlePanel = new JPanel(new GridLayout(1, 2));
 
-        titleLabel = new JLabel("Titre du menu :");
+        titleLabel = new JLabel("Titre du menu* :");
         titleLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         titlePanel.add(titleLabel);
         menuTitle = new JTextField();

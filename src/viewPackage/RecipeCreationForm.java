@@ -294,7 +294,7 @@ public class RecipeCreationForm extends JPanel {
                 } else {
                     String missingInfo = (ingredientMissing? "les ingrédients\n":"") + (stepsMissing? "les étapes":"");
                     JOptionPane.showMessageDialog(null,
-                            "Il nous manque ces information pour créer ta recette :\n" + missingInfo,"Attention",JOptionPane.WARNING_MESSAGE);
+                            "Il nous manque ces information pour créer ta recette :\n" + missingInfo);
                 }
 
 

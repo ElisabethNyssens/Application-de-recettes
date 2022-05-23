@@ -41,20 +41,17 @@ public class MenuCompositionWindow extends JFrame {
         // Conteneur principal
         mainContainer = this.getContentPane();
         mainContainer.setLayout(new BorderLayout());
-        panel = new JPanel();
-        panel.setLayout(new BorderLayout());
-        panel.setBorder(new EmptyBorder(0, 30, 30, 30));
-        mainContainer.add(panel);
 
         // Titre
         title = new JLabel("<html><h1 style='margin: 20px 0 20px 0; font-size: 22px; color:#97002d; font-weight: normal'>"+menuTitle+"</h1></html>");
         title.setHorizontalAlignment(SwingConstants.CENTER);
-        panel.add(title, BorderLayout.NORTH);
 
         // Panel
         panel = new JPanel();
-        panel.setBorder(new EmptyBorder(0, 100, 0, 100));
-        mainContainer.add(panel, BorderLayout.CENTER);
+        panel.setLayout(new BorderLayout());
+        panel.setBorder(new EmptyBorder(0, 30, 30, 30));
+        panel.add(title, BorderLayout.NORTH);
+        mainContainer.add(panel);
 
         // Affichage des recettes
         try {
