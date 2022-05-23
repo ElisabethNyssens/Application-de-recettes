@@ -15,7 +15,7 @@ public class AllMenusModel extends AbstractTableModel {
         controller = new ApplicationController();
         columnNames = new ArrayList<>();
         columnNames.add("Titre");
-        columnNames.add("Comment");
+        columnNames.add("Commentaire");
         this.menus = menus;
     }
 

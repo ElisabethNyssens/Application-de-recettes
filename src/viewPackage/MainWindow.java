@@ -1,5 +1,6 @@
 package viewPackage;
 
+import controllerPackage.ApplicationController;
 import exceptionPackage.ConnectionException;
 
 import javax.swing.*;
@@ -10,19 +11,22 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class MainWindow extends JFrame {
+    private ApplicationController controller;
     private Container mainContainer;
     private JMenuBar menuBar;
     private JMenu app, recipes, menus, shopList, reseach;
     private JMenuItem home, exit, displayRecipes, displayMenus,
         ingredientResearch, menuResearch, seasonResearch, createShopList;
 
-    public MainWindow() {
+    public MainWindow() throws ConnectionException {
         super("TaCuisine");
         setSize(1200,800);
         setLocationRelativeTo(null);
         setIconImage(new ImageIcon("img/chef.png").getImage());
+        controller = new ApplicationController();
         addWindowListener (new WindowAdapter() {
             public void windowClosing (WindowEvent e) {
+                controller.closeConnection();
                 System.exit(0);
             }
         } );
@@ -74,7 +78,10 @@ public class MainWindow extends JFrame {
         // ----------- Menu Listeners ------------
 
         // Quitter
-        exit.addActionListener(event -> System.exit(0));
+        exit.addActionListener(event -> {
+            controller.closeConnection();
+            System.exit(0);
+        });
         // Accueil
         home.addActionListener(new HomeListener());
 
@@ -124,30 +131,6 @@ public class MainWindow extends JFrame {
             setVisible(true);
         }
     }
-
- /*   private class EditRecipeListener implements ActionListener {
-        public void actionPerformed(ActionEvent event) {
-            mainContainer.removeAll();
-            try {
-                mainContainer.add(new RecipeUpdatePanel());
-            } catch (ConnectionException exception) {
-                exception.printStackTrace();
-            }
-            setVisible(true);
-        }
-    }*/
-
-   /* private class DeleteRecipeListener implements ActionListener {
-        public void actionPerformed(ActionEvent event) {
-            mainContainer.removeAll();
-            try {
-                mainContainer.add(new RecipeDeletePanel(mainContainer));
-            } catch (ConnectionException exception) {
-                System.out.println(exception.getMessage());
-            }
-            setVisible(true);
-        }
-    }*/
 
     private class DisplayMenusListener implements ActionListener {
         @Override

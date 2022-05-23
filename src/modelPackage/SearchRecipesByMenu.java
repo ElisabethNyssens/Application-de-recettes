@@ -11,7 +11,7 @@ public class SearchRecipesByMenu extends AbstractTableModel {
         this.recipes = recipes;
         columnNames = new ArrayList<>();
         columnNames.add("Ordre");
-        columnNames.add("Titre");
+        columnNames.add("Recette");
         columnNames.add("Nombre de personnes");
         columnNames.add("Catégorie");
     }

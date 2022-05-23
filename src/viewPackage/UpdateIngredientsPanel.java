@@ -49,7 +49,8 @@ public class UpdateIngredientsPanel extends JPanel {
             }
 
         } catch (AllIngredientsException exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage());
+            exception.printStackTrace();
+            JOptionPane.showMessageDialog(null, exception.getMessage(),"Erreur",JOptionPane.ERROR_MESSAGE);
         }
 
         JPanel ingredPanel = new JPanel();

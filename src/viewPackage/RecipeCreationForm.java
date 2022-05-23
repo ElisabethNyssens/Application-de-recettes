@@ -56,7 +56,7 @@ public class RecipeCreationForm extends JPanel {
         try {
             allRecipes = controller.getAllRecipes();
         } catch (AllRecipesException exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage());
+            JOptionPane.showMessageDialog(null, exception.getMessage(),"Erreur",JOptionPane.ERROR_MESSAGE);
         }
 
         // --------------- Form step 1 ----------------
@@ -100,7 +100,7 @@ public class RecipeCreationForm extends JPanel {
                 iCateg++;
             }
         } catch (AllCategoriesException exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage());
+            JOptionPane.showMessageDialog(null, exception.getMessage(),"Erreur",JOptionPane.ERROR_MESSAGE);
         }
         recipeCategory = new JComboBox(recipeCategories);
         recipeCategory.setSelectedItem(recipeCategories[5]);
@@ -158,7 +158,7 @@ public class RecipeCreationForm extends JPanel {
                 iReg++;
             }
         } catch (AllRegimesException exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage());
+            JOptionPane.showMessageDialog(null, exception.getMessage(),"Erreur",JOptionPane.ERROR_MESSAGE);
         }
         regime = new JComboBox(regimes);
         regime.setSelectedItem(null);

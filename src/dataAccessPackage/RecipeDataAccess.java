@@ -37,4 +37,6 @@ public interface RecipeDataAccess {
      ArrayList<Menu> searchMenuByDieteryRegime(String regime) throws SearchException;
      ArrayList<SeasonRecipe> searchBySeason(String category, GregorianCalendar date) throws SearchException;
      ArrayList<RecipeInMenu> searchRecipesInMenu(String menuTitle) throws SearchException;
+     // Close connection
+     void closeConnection();
 }

@@ -110,11 +110,14 @@ insert into dietery_regimes values ('D_SG', 'Sans gluten');
 
 
 insert into ingredients values ('ail','gousse');
+insert into ingredients values ('amaretto','c.a.s');
+insert into ingredients values ('aneth','g');
 insert into ingredients values ('asperge verte','g');
 insert into ingredients values ('aubergine','unite');
 insert into ingredients values ('bacon','tranches');
 insert into ingredients values ('baguette','unite');
 insert into ingredients values ('basilic','feuilles');
+insert into ingredients values ('blanc de poulet','unite');
 insert into ingredients values ('boudoirs','g');
 insert into ingredients values ('beurre','g');
 insert into ingredients values ('bouillon de legumes','cubes');
@@ -135,13 +138,15 @@ insert into ingredients values ('concombre','unite');
 insert into ingredients values ('coriandre','feuilles');
 insert into ingredients values ('courgette','unite');
 insert into ingredients values ('creme','cl');
+insert into ingredients values ('creme vegetale','cl');
 insert into ingredients values ('cumin','c.a.c');
 insert into ingredients values ('curcuma','c.a.c');
 insert into ingredients values ('curry','c.a.c');
 insert into ingredients values ('epinard frais','g');
+insert into ingredients values ('epices pour poulet','c.a.c');
 insert into ingredients values ('farine','g');
 insert into ingredients values ('feta','g');
-insert into ingredients values ('fraise','g');
+insert into ingredients values ('fraises','g');
 insert into ingredients values ('fromage frais','g');
 insert into ingredients values ('gambas','unite');
 insert into ingredients values ('gingembre','g');
@@ -171,6 +176,7 @@ insert into ingredients values ('oignon jaune','unite');
 insert into ingredients values ('oignon nouveau','unite');
 insert into ingredients values ('orange','unite');
 insert into ingredients values ('parmesan','c.a.s');
+insert into ingredients values ('pasteque','unite');
 insert into ingredients values ('pates','g');
 insert into ingredients values ('persil','c.a.s');
 insert into ingredients values ('pave de saumon','unite');
@@ -179,6 +185,7 @@ insert into ingredients values ('pois chiches','g');
 insert into ingredients values ('poivre','c.a.c');
 insert into ingredients values ('poivron','unite');
 insert into ingredients values ('pomme','unite');
+insert into ingredients values ('quatre-epices','c.a.s');
 insert into ingredients values ('rhum','cl');
 insert into ingredients values ('riz','g');
 insert into ingredients values ('saucisse de Strasbourg','unite');
@@ -197,7 +204,7 @@ insert into ingredients values ('yaourt nature','unite');
 
 
 insert into recipes
-values ('Curry au tofu','2021-04-25',true,false,true,'Bon marche','30min >< 1h',4,'hiver','bichon','D_VEGA','RC_PLAT');
+values ('Curry au tofu','2021-04-25',true,false,true,'Bon marche','30min >< 1h',4,'Hiver','bichon','D_VEGA','RC_PLAT');
 
 insert into ingredient_quantities
 values ('pois chiches','Curry au tofu',250);
@@ -244,12 +251,12 @@ insert into steps
 values (7,'Curry au tofu',"Ajouter le persil avant de servir.");
 
 insert into recipes
-values ('Salade fraise menthe','2021-07-18',false,true,true,'Cout moyen','< 30min',4,'ete','bichon','D_VEGE','RC_ACC');
+values ('Salade fraise menthe','2021-07-18',false,true,true,'Cout moyen','< 30min',4,'Ete','bichon','D_VEGE','RC_ACC');
 
 insert into ingredient_quantities
 values ('epinard frais','Salade fraise menthe',600);
 insert into ingredient_quantities
-values ('fraise','Salade fraise menthe',400);
+values ('fraises','Salade fraise menthe',400);
 insert into ingredient_quantities
 values ('feta','Salade fraise menthe',250);
 insert into ingredient_quantities
@@ -282,7 +289,7 @@ values (5,'Salade fraise menthe',"Disposez les epinards dans un large saladier a
 
 
 insert into recipes
-values ('Soupe carotte gingembre','2022-01-13',true,false,true,'Bon marche','< 30min',4,'automne','anonyme','D_VEGE','RC_SOU');
+values ('Soupe carotte gingembre','2022-01-13',true,false,true,'Bon marche','< 30min',4,'Automne','anonyme','D_VEGE','RC_SOU');
 
 insert into ingredient_quantities
 values ('beurre','Soupe carotte gingembre',50);
@@ -320,7 +327,7 @@ values (5,'Soupe carotte gingembre',"Mixer la soupe et assaisonner le tout de ju
 
 
 insert into recipes
-values ("Oeufs cocottes", "2022-05-13", true, false, true, "Bon marche", "30min >< 1h", 4, "toute saison", "bichon", "D_VEGE", "RC_ENT");
+values ("Oeufs cocottes", "2022-05-13", true, false, true, "Bon marche", "30min >< 1h", 4, "Toute saison", "bichon", "D_VEGE", "RC_ENT");
 
 insert into ingredient_quantities
 values ('gruyere rape',"Oeufs cocottes",150);
@@ -354,7 +361,7 @@ values (8,"Oeufs cocottes","Enfourner pendant 35 minutes en position chaleur tou
 
 
 insert into recipes
-values ("Pate a crepes", "2022-05-13", true, true, false, "Bon marche", "< 30min", 4, "toute saison", "abdobeir", null, "RC_DESS");
+values ("Pate a crepes", "2022-05-13", true, true, false, "Bon marche", "< 30min", 4, "Toute saison", "abdobeir", null, "RC_DESS");
 
 insert into ingredient_quantities
 values ('farine',"Pate a crepes",300);
@@ -412,7 +419,7 @@ values (4,"Amuse-bouches de Gambas","Dans des petits verres, versez une cuillere
 
 
 insert into recipes
-values ("Hot-dog flemmard du dimanche soir", "2022-05-14", true, false, true, "Bon marche", "< 30min", 2, "toute saison", "bichon", null, "RC_SNA");
+values ("Hot-dog flemmard du dimanche soir", "2022-05-14", true, false, true, "Bon marche", "< 30min", 2, "Toute saison", "bichon", null, "RC_SNA");
 
 insert into ingredient_quantities
 values ('gruyere rape',"Hot-dog flemmard du dimanche soir",100);
@@ -438,7 +445,7 @@ values (5,"Hot-dog flemmard du dimanche soir","Servir accompagne d'une salade.")
 
 
 insert into recipes
-values ("Mayonnaise maison", "2022-05-14", false, false, true, "Bon marche", "< 30min", 4, "toute saison", "marvin", "D_SG", "RC_SAU");
+values ("Mayonnaise maison", "2022-05-14", false, false, true, "Bon marche", "< 30min", 4, "Toute saison", "marvin", "D_SG", "RC_SAU");
 
 insert into ingredient_quantities
 values ('moutarde',"Mayonnaise maison",2);
@@ -462,7 +469,7 @@ values (3,"Mayonnaise maison","On peut y ajouter des herbes ou du citron pour la
 
 
 insert into recipes
-values ("Smoothie nectarine","2022-05-14", false, true, false, "Bon marche", "< 30min", 1, "ete", "frandubi", "D_SG", "RC_BOI");
+values ("Smoothie nectarine","2022-05-14", false, true, false, "Bon marche", "< 30min", 1, "Ete", "frandubi", "D_SG", "RC_BOI");
 
 insert into ingredient_quantities
 values ('lait',"Smoothie nectarine",9);
@@ -476,7 +483,7 @@ values (1,"Smoothie nectarine","Mettre le yaourt, le lait et la nectarine lavee 
 
 
 insert into recipes
-values ("Gateau au yaourt de soja et pommes", "2022-05-15", false, true, false, "Bon marche", "> 1h", 8, "automne", "anonyme", "D_VEGA", "RC_DESS");
+values ("Gateau au yaourt de soja et pommes", "2022-05-15", false, true, false, "Bon marche", "> 1h", 8, "Automne", "anonyme", "D_VEGA", "RC_DESS");
 
 insert into ingredient_quantities
 values ('pomme',"Gateau au yaourt de soja et pommes",2);
@@ -510,7 +517,7 @@ values (6,"Gateau au yaourt de soja et pommes","Enfournez pour environ 50 minute
 
 
 insert into recipes
-values ("Paves de saumon au four", "2022-05-15", true, false, true, "Moyen", "30min >< 1h", 2, "printemps", "marvin", "D_PESC", "RC_PLAT");
+values ("Paves de saumon au four", "2022-05-15", true, false, true, "Moyen", "30min >< 1h", 2, "Printemps", "marvin", "D_PESC", "RC_PLAT");
 
 insert into ingredient_quantities
 values ('citron jaune',"Paves de saumon au four",1);
@@ -541,7 +548,7 @@ insert into steps
 values (5,"Paves de saumon au four","Verser le vin blanc et un filet d'huile d'olive sur les saumons, saler (tres peu), poivrer et faire cuire a 180 degres, thermostat 6, pendant environ 25 min.");
 
 insert into recipes
-values ("Flan de courgettes", "2022-05-22", true, false, true, "Moyen", "30min >< 1h", 4, "ete", "marvin", "D_VEGE", "RC_ACC");
+values ("Flan de courgettes", "2022-05-22", true, false, true, "Moyen", "30min >< 1h", 4, "Ete", "marvin", "D_VEGE", "RC_ACC");
 
 insert into ingredient_quantities
 values ('courgette',"Flan de courgettes",1);
@@ -565,6 +572,83 @@ values (3,"Flan de courgettes","Melanger les oeufs, la chapelure et le parmesan 
 insert into steps
 values (4,"Flan de courgettes","Mettre la mozza (rapee ou en morceaux) sur le dessus. Remettre au four 20 minutes a 180 degres.");
 
+
+insert into recipes
+values ("Fraises au mascarpone", "2022-05-23", false, true, false, "Bon marche", "< 30min", 4, "Printemps", "marvin", null, "RC_DESS");
+
+insert into ingredient_quantities
+values ('fraises',"Fraises au mascarpone",500);
+insert into ingredient_quantities
+values ('sucre vanille',"Fraises au mascarpone",2);
+insert into ingredient_quantities
+values ('mascarpone',"Fraises au mascarpone",250);
+insert into ingredient_quantities
+values ('creme',"Fraises au mascarpone",20);
+
+insert into steps
+values (1,"Fraises au mascarpone","Rincez les fraises a l'eau fraiche avant de les equeuter. Detaillez les en deux ou en quatre suivant leur grosseur. Mettez les dans un saladier et saupoudrez-les d'un sachet de sucre vanille. Reservez au frais.");
+insert into steps
+values (2,"Fraises au mascarpone","Montez la creme liquide en chantilly assez souple en y ayant incorpore le 2eme sachet de sucre vanille. Ajoutez-y le mascarpone que vous aurez detendu a la cuillere prealablement. L'ensemble doit etre souple mais assez epais.");
+insert into steps
+values (3,"Fraises au mascarpone","Disposez au fond de 4 quatre verres hauts une grosse cuilleree a soupe de melange chantilly mascarpone. Deeposez dessus une couche de fraises. Procedez ainsi par couches jusqu'a epuisement des ingredients. Finissez par une noix de creme surmontee joliment d'une fraise pour decorer.");
+insert into steps
+values (4,"Fraises au mascarpone","Mettez au frais pendant au moins une heure.");
+
+
+insert into recipes
+values ("Soupe de concombre au yaourt glace", "2022-05-23", false, false, true, "Bon marche", "< 30min", 4, "Ete", "bichon", "D_VEGA", "RC_SOU");
+
+insert into ingredient_quantities
+values ('bouillon de legumes',"Soupe de concombre au yaourt glace",1);
+insert into ingredient_quantities
+values ('ail',"Soupe de concombre au yaourt glace",2);
+insert into ingredient_quantities
+values ('aneth',"Soupe de concombre au yaourt glace",20);
+insert into ingredient_quantities
+values ('concombre',"Soupe de concombre au yaourt glace",1);
+insert into ingredient_quantities
+values ('yaourt de soja',"Soupe de concombre au yaourt glace",1);
+insert into ingredient_quantities
+values ('creme vegetale',"Soupe de concombre au yaourt glace",1);
+
+insert into steps
+values (1,"Soupe de concombre au yaourt glace","Peler et couper le concombre et le mettre dans un blender.");
+insert into steps
+values (2,"Soupe de concombre au yaourt glace","Y ajouter la creme, le yaourt, le bouillon, l'ail, l'aneth et puis mixer le tout.");
+insert into steps
+values (3,"Soupe de concombre au yaourt glace","Saler et poivrer.");
+insert into steps
+values (4,"Soupe de concombre au yaourt glace","Mettre au frigo minimum 45 min.");
+
+
+insert into recipes
+values ("Poulet a la pasteque", "2022-05-23", true, true , true, "Bon marche", "30min >< 1h", 4, "Ete", "bichon", null, "RC_PLAT");
+
+insert into ingredient_quantities
+values ("huile d'olive","Poulet a la pasteque",1);
+insert into ingredient_quantities
+values ("quatre-epices","Poulet a la pasteque",1);
+insert into ingredient_quantities
+values ("epices pour poulet","Poulet a la pasteque",1);
+insert into ingredient_quantities
+values ("creme","Poulet a la pasteque",20);
+insert into ingredient_quantities
+values ("pasteque","Poulet a la pasteque",1);
+insert into ingredient_quantities
+values ("blanc de poulet","Poulet a la pasteque",4);
+insert into ingredient_quantities
+values ("riz","Poulet a la pasteque",500);
+
+insert into steps
+values (1,"Poulet a la pasteque","Dans une cocotte, mettre la pasteque coupee en morceaux avec l'huile d'olive, du sel et du poivre. Laisser fondre la pasteque sur feu doux.");
+insert into steps
+values (2,"Poulet a la pasteque","Couper le poulet en morceaux et l'ajouter dans la cocotte. Saupoudrer d'epices et melanger.");
+insert into steps
+values (3,"Poulet a la pasteque","Couvrir et laisser cuire pendant 10 minutes a feu doux.");
+insert into steps
+values (4,"Poulet a la pasteque","Ajouter la creme fraiche et poursuivre la cuisson 2 minutes.");
+insert into steps
+values (5,"Poulet a la pasteque","Servir avec du riz.");
 
 
 insert into menus

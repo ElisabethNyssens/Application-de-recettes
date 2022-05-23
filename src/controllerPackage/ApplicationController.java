@@ -102,4 +102,8 @@ public class ApplicationController {
         return recipeManager.shoppingList(shopListRecipes);
     }
 
+    // Close connection
+    public void closeConnection() {
+        recipeManager.closeConnection();
+    }
 }

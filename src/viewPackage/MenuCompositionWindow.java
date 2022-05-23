@@ -59,7 +59,7 @@ public class MenuCompositionWindow extends JFrame {
             model = new SearchRecipesByMenu(recipes);
 
             list = new JTable(model);
-            list.setRowHeight(20);
+            list.setRowHeight(25);
 
             panel.add(new JScrollPane(list), BorderLayout.CENTER);
 

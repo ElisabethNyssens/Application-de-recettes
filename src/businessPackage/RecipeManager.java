@@ -135,4 +135,8 @@ public class RecipeManager {
         return shopListIngreds;
     }
 
+    // Close connection
+    public void closeConnection() {
+        dao.closeConnection();
+    }
 }

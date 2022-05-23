@@ -593,7 +593,7 @@ public class RecipeDBAccess implements RecipeDataAccess {
         int jour = date.get(Calendar.DAY_OF_MONTH);
 
         if (mois == 12 && jour >= 21 || mois <= 2 || mois == 3 && jour < 21) {
-            season = "Hiver";
+        season = "Hiver";
         } else if (mois <= 5 || mois == 6 && jour < 21) {
             season = "Printemps";
         } else if (mois <= 8 || mois == 9 && jour < 21) {
@@ -609,7 +609,7 @@ public class RecipeDBAccess implements RecipeDataAccess {
                 "where c.cat_name = ? " +
                 "and r.season in (?,?)";
 
-        try {
+            try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, category);
             preparedStatement.setString(2, season);
@@ -639,6 +639,7 @@ public class RecipeDBAccess implements RecipeDataAccess {
         return seasonRecipes;
     }
 
+    @Override
     public ArrayList<RecipeInMenu> searchRecipesInMenu(String menuTitle) throws SearchException {
         ArrayList<RecipeInMenu> recipes = new ArrayList<>();
         String sql = "select mc.order_number 'Ordre', r.title 'Titre', r.nb_persons 'Nombre de personnes', c.cat_name 'Catégorie' " +
@@ -670,5 +671,15 @@ public class RecipeDBAccess implements RecipeDataAccess {
         }
 
         return recipes;
+    }
+
+    // close connection
+    @Override
+    public void closeConnection() {
+        try {
+            connection.close();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
     }
 }

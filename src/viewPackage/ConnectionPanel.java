@@ -76,7 +76,12 @@ public class ConnectionPanel extends JPanel {
             String lastName = pseudo.getSelectedItem().toString().split("[ )(]",5)[3];
 
             User user = new User(selectPseudo,firstName,lastName);
-            MainWindow mainWindow = new MainWindow();
+            try {
+                MainWindow mainWindow = new MainWindow();
+            } catch (ConnectionException exception) {
+                exception.printStackTrace();
+                JOptionPane.showMessageDialog(null, exception.getMessage(),"Erreur",JOptionPane.ERROR_MESSAGE);
+            }
 
             frame.dispose();
         }

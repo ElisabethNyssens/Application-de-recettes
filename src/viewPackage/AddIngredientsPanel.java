@@ -49,7 +49,7 @@ public class AddIngredientsPanel extends JPanel {
             }
 
         } catch (AllIngredientsException exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage());
+            JOptionPane.showMessageDialog(null, exception.getMessage(),"Erreur",JOptionPane.ERROR_MESSAGE);
         }
 
         JPanel ingredPanel = new JPanel();

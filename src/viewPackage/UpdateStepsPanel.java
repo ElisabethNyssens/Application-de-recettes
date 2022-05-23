@@ -62,6 +62,7 @@ public class UpdateStepsPanel extends JPanel {
 
         } catch (AllStepsException e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur",JOptionPane.ERROR_MESSAGE);
         }
 
         JPanel stepPanel = new JPanel();

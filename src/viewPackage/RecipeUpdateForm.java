@@ -97,7 +97,7 @@ public class RecipeUpdateForm extends JPanel {
                 iCateg++;
             }
         } catch (AllCategoriesException exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage());
+            JOptionPane.showMessageDialog(null, exception.getMessage(),"Erreur",JOptionPane.ERROR_MESSAGE);
         }
         recipeCategory = new JComboBox(recipeCategories);
         recipeCategory.setSelectedItem(initRecipe.getCategory());
@@ -161,7 +161,7 @@ public class RecipeUpdateForm extends JPanel {
                 iReg++;
             }
         } catch (AllRegimesException exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage());
+            JOptionPane.showMessageDialog(null, exception.getMessage(),"Erreur",JOptionPane.ERROR_MESSAGE);
         }
         regime = new JComboBox(regimes);
         regime.setSelectedItem(initRecipe.getRegime());
