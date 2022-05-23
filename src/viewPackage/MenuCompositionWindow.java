@@ -51,6 +51,11 @@ public class MenuCompositionWindow extends JFrame {
         title.setHorizontalAlignment(SwingConstants.CENTER);
         panel.add(title, BorderLayout.NORTH);
 
+        // Panel
+        panel = new JPanel();
+        panel.setBorder(new EmptyBorder(0, 100, 0, 100));
+        mainContainer.add(panel, BorderLayout.CENTER);
+
         // Affichage des recettes
         try {
             recipes = controller.searchRecipesInMenu(menuTitle);
@@ -58,8 +63,9 @@ public class MenuCompositionWindow extends JFrame {
 
             list = new JTable(model);
             list.setRowHeight(20);
-
+            
             panel.add(new JScrollPane(list), BorderLayout.CENTER);
+
         } catch (SearchException exception) {
             exception.printStackTrace();
         }
