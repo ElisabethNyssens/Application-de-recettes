@@ -20,7 +20,6 @@ public class MenuCompositionWindow extends JFrame {
     private JPanel panel;
     private JLabel title;
     private JTable list;
-    private JScrollPane scrollPane;
     private SearchRecipesByMenu model;
     private ArrayList<RecipeInMenu> recipes;
     private String menuTitle;
@@ -46,12 +45,13 @@ public class MenuCompositionWindow extends JFrame {
         // Titre
         title = new JLabel("<html><h1 style='margin: 20px 0 20px 0; font-size: 22px; color:#97002d; font-weight: normal'>"+menuTitle+"</h1></html>");
         title.setHorizontalAlignment(SwingConstants.CENTER);
-        mainContainer.add(title, BorderLayout.NORTH);
 
         // Panel
         panel = new JPanel();
-        panel.setBorder(new EmptyBorder(0, 100, 0, 100));
-        mainContainer.add(panel, BorderLayout.CENTER);
+        panel.setLayout(new BorderLayout());
+        panel.setBorder(new EmptyBorder(0, 30, 30, 30));
+        panel.add(title, BorderLayout.NORTH);
+        mainContainer.add(panel);
 
         // Affichage des recettes
         try {
@@ -59,9 +59,10 @@ public class MenuCompositionWindow extends JFrame {
             model = new SearchRecipesByMenu(recipes);
 
             list = new JTable(model);
-            scrollPane = new JScrollPane(list);
+            list.setRowHeight(20);
 
-            panel.add(scrollPane);
+            panel.add(new JScrollPane(list), BorderLayout.CENTER);
+
         } catch (SearchException exception) {
             exception.printStackTrace();
         }

@@ -23,7 +23,7 @@ public class AllMenusPanel extends JPanel {
     private ListSelectionModel listSelect;
     private JLabel title;
     private JPanel buttonPanel;
-    private JButton createBtn, deleteBtn;
+    private JButton createBtn, deleteBtn, compositionBtn;
 
     public AllMenusPanel(Container mainContainer) throws ConnectionException {
         this.mainContainer = mainContainer;
@@ -53,11 +53,14 @@ public class AllMenusPanel extends JPanel {
         buttonPanel = new JPanel();
         createBtn = new JButton("Ajouter");
         deleteBtn = new JButton("Supprimer");
+        compositionBtn = new JButton("Composition");
         buttonPanel.add(createBtn);
         buttonPanel.add(deleteBtn);
+        buttonPanel.add(compositionBtn);
 
         deleteBtn.addActionListener(new DeleteMenuListener());
         createBtn.addActionListener(new NewMenuListener());
+        compositionBtn.addActionListener(new CompositionListener());
 
         this.add(title, BorderLayout.NORTH);
         this.add(buttonPanel, BorderLayout.SOUTH);
@@ -84,12 +87,12 @@ public class AllMenusPanel extends JPanel {
     private  class DeleteMenuListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            int iLigneSelect = listSelect.getMinSelectionIndex();
+            int iRowSelect = listSelect.getMinSelectionIndex();
 
-            if (iLigneSelect != -1) {
+            if (iRowSelect != -1) {
                 int answer = JOptionPane.showConfirmDialog(null, "Es-tu sûr de vouloir supprimer ce menu ?", "Suppression", JOptionPane.YES_NO_OPTION);
                 if (answer == 0) {
-                    String menuTitle = list.getValueAt(iLigneSelect, 0).toString();
+                    String menuTitle = list.getValueAt(iRowSelect, 0).toString();
 
                     try {
                         controller.deleteMenu(menuTitle);
@@ -99,12 +102,30 @@ public class AllMenusPanel extends JPanel {
                         mainContainer.add(new AllMenusPanel(mainContainer), BorderLayout.CENTER);
                     }
                     catch (ConnectionException | DeleteMenuException | DeleteMenuComponentException exception) {
-                        JOptionPane.showMessageDialog(null, exception.getMessage());
+                        JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                         exception.printStackTrace();
                     }
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Clique sur la ligne que tu souhaites supprimer");
+            }
+        }
+    }
+
+    private class CompositionListener implements  ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            int iRowSelect = listSelect.getMinSelectionIndex();
+
+            if (iRowSelect != -1) {
+                String menuTitle = list.getValueAt(iRowSelect, 0).toString();
+                try {
+                    MenuCompositionWindow menuCompositionWindow = new MenuCompositionWindow(menuTitle);
+                } catch (ConnectionException exception) {
+                    exception.printStackTrace();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Clique sur un menu");
             }
         }
     }

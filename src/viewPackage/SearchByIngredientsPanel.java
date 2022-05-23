@@ -149,6 +149,8 @@ public class SearchByIngredientsPanel extends JPanel {
                             selectedIngredients.add(ingred);
                             ingredientsSelectValues[nbSelectIngred] = ingred;
                             nbSelectIngred++;
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Cet ingrédient est déjà dans la liste !","Attention",JOptionPane.WARNING_MESSAGE);
                         }
                     }
                     selectIngredList.setListData(ingredientsSelectValues);

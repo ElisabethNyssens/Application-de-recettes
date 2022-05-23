@@ -102,7 +102,7 @@ public class Recipe {
     }
 
     public void setSeason(String season) {
-        if (season.equals("Toute saison") || season.equals("Ete") || season.equals("Automne")
+        if (season == null || season.equals("Toute saison") || season.equals("Ete") || season.equals("Automne")
                 || season.equals("Printemps") || season.equals("Hiver")) {
             this.season = season;
         }
@@ -120,7 +120,7 @@ public class Recipe {
     }
 
     public void setRegime(String regime) {
-        if (regime.equals("Pescetarien") || regime.equals("Vegetarien")
+        if (regime == null || regime.equals("Pescetarien") || regime.equals("Vegetarien")
                 || regime.equals("Vegan") || regime.equals("Sans gluten")) {
             this.regime = regime;
         }

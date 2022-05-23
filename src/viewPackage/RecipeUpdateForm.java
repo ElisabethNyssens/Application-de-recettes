@@ -299,11 +299,12 @@ public class RecipeUpdateForm extends JPanel {
                     }
                     catch (UpdateRecipeException | DeleteStepException | DeleteIngredQuantException exception) {
                         exception.printStackTrace();
+                        JOptionPane.showMessageDialog(null, exception.getMessage(),"Erreur",JOptionPane.ERROR_MESSAGE);
                     }
                 } else {
                     String missingInfo = (ingredientMissing? "les ingrédients\n":"") + (stepsMissing? "les étapes":"");
                     JOptionPane.showMessageDialog(null,
-                            "Il nous manque ces information pour créer ta recette :\n" + missingInfo);
+                            "Il nous manque ces information pour créer ta recette :\n" + missingInfo,"Attention",JOptionPane.WARNING_MESSAGE);
                 }
 
 

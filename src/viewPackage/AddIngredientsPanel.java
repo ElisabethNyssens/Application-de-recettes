@@ -103,39 +103,41 @@ public class AddIngredientsPanel extends JPanel {
 
     private class AddButtonListener implements ActionListener {
         public void actionPerformed( ActionEvent event) {
-            double convertedQuantity = Double.parseDouble(quantity.getValue().toString());
-            DecimalFormat df = new DecimalFormat("###.#");
-            String[] ingredAndUnit = ingredient.getSelectedItem().toString().split("[)(]", 3);
-
-            String selectedIngredient = ingredAndUnit[0];
-            if (Character.compare(selectedIngredient.charAt(selectedIngredient.length()-1), ' ') == 0) {
-                selectedIngredient = selectedIngredient.substring(0, selectedIngredient.length()-1);
-            }
-            String unit = ingredAndUnit.length > 1 ? (ingredAndUnit[1] + " ") : "";
-
-            String finalSelectedIngredient = selectedIngredient;
-            List<IngredientQuantity> duplicate = ingredientQuantities.stream().filter(x ->
-                    x.getIngredient().equals(finalSelectedIngredient)).collect(toList());
-
-            if (duplicate.isEmpty()) {
-                ingredientQuantities.add(new IngredientQuantity(selectedIngredient,parentPanel.getRecipeTitle(),convertedQuantity));
-                selectedIngredients[nbSelectedIngred] = df.format(convertedQuantity) + " " + unit + selectedIngredient;
-                nbSelectedIngred++;
-
-                selectedIngredList.setListData(selectedIngredients);
-                AddIngredientsPanel.this.repaint();
+            if (ingredient.getSelectedItem() == null) {
+                JOptionPane.showMessageDialog(null, "Sélectionne un ingrédient !");
             } else {
-                JOptionPane.showMessageDialog(null, "Cet ingrédient est déjà dans la liste !","Attention",JOptionPane.WARNING_MESSAGE);
+                double convertedQuantity = Double.parseDouble(quantity.getValue().toString());
+                DecimalFormat df = new DecimalFormat("###.#");
+                String[] ingredAndUnit = ingredient.getSelectedItem().toString().split("[)(]", 3);
+
+                String selectedIngredient = ingredAndUnit[0];
+                if (Character.compare(selectedIngredient.charAt(selectedIngredient.length()-1), ' ') == 0) {
+                    selectedIngredient = selectedIngredient.substring(0, selectedIngredient.length()-1);
+                }
+                String unit = ingredAndUnit.length > 1 ? (ingredAndUnit[1] + " ") : "";
+
+                String finalSelectedIngredient = selectedIngredient;
+                List<IngredientQuantity> duplicate = ingredientQuantities.stream().filter(x ->
+                        x.getIngredient().equals(finalSelectedIngredient)).collect(toList());
+
+                if (duplicate.isEmpty()) {
+                    ingredientQuantities.add(new IngredientQuantity(selectedIngredient,parentPanel.getRecipeTitle(),convertedQuantity));
+                    selectedIngredients[nbSelectedIngred] = df.format(convertedQuantity) + " " + unit + selectedIngredient;
+                    nbSelectedIngred++;
+
+                    selectedIngredList.setListData(selectedIngredients);
+                    AddIngredientsPanel.this.repaint();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Cet ingrédient est déjà dans la liste !","Attention",JOptionPane.WARNING_MESSAGE);
+                }
             }
-
-
         }
     }
 
     private class RemoveButtonListener implements ActionListener {
         public void actionPerformed( ActionEvent event) {
             if (selectedIngredList.getSelectedValue() == null) {
-                JOptionPane.showMessageDialog(null, "Sélectionne un ingrédient !","Message",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Sélectionne un ingrédient !");
             } else {
                 int iSelectIngred = selectedIngredList.getSelectedIndex();
                 ingredientQuantities.remove(iSelectIngred);
