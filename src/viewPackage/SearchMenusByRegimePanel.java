@@ -76,7 +76,7 @@ public class SearchMenusByRegimePanel extends JPanel {
 
         // Bouton recettes
         btnPanel = new JPanel();
-        recipesBtn = new JButton("Recettes");
+        recipesBtn = new JButton("Composition");
         btnPanel.add(recipesBtn);
     }
 

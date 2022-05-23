@@ -26,7 +26,7 @@ public class Menu {
     // setters
 
     public void setComment(String comment) {
-        if (comment.length() <= 200) this.comment = comment;
+        if (comment == null || comment.length() <= 200) this.comment = comment;
     }
 
     public void setTitle(String title) {

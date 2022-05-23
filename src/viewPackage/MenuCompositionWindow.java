@@ -8,6 +8,7 @@ import modelPackage.RecipeInMenu;
 import modelPackage.SearchRecipesByMenu;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -16,9 +17,9 @@ import java.util.ArrayList;
 public class MenuCompositionWindow extends JFrame {
     private ApplicationController controller;
     private Container mainContainer;
+    private JPanel panel;
     private JLabel title;
     private JTable list;
-    private JScrollPane scrollPane;
     private SearchRecipesByMenu model;
     private ArrayList<RecipeInMenu> recipes;
     private String menuTitle;
@@ -40,11 +41,15 @@ public class MenuCompositionWindow extends JFrame {
         // Conteneur principal
         mainContainer = this.getContentPane();
         mainContainer.setLayout(new BorderLayout());
+        panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        panel.setBorder(new EmptyBorder(0, 30, 30, 30));
+        mainContainer.add(panel);
 
         // Titre
         title = new JLabel("<html><h1 style='margin: 20px 0 20px 0; font-size: 22px; color:#97002d; font-weight: normal'>"+menuTitle+"</h1></html>");
         title.setHorizontalAlignment(SwingConstants.CENTER);
-        mainContainer.add(title, BorderLayout.NORTH);
+        panel.add(title, BorderLayout.NORTH);
 
         // Affichage des recettes
         try {
@@ -52,9 +57,9 @@ public class MenuCompositionWindow extends JFrame {
             model = new SearchRecipesByMenu(recipes);
 
             list = new JTable(model);
-            scrollPane = new JScrollPane(list);
+            list.setRowHeight(20);
 
-            mainContainer.add(scrollPane, BorderLayout.CENTER);
+            panel.add(new JScrollPane(list), BorderLayout.CENTER);
         } catch (SearchException exception) {
             exception.printStackTrace();
         }
