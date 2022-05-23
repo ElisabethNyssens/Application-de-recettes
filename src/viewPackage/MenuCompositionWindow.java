@@ -8,6 +8,7 @@ import modelPackage.RecipeInMenu;
 import modelPackage.SearchRecipesByMenu;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 public class MenuCompositionWindow extends JFrame {
     private ApplicationController controller;
     private Container mainContainer;
+    private JPanel panel;
     private JLabel title;
     private JTable list;
     private JScrollPane scrollPane;
@@ -46,6 +48,11 @@ public class MenuCompositionWindow extends JFrame {
         title.setHorizontalAlignment(SwingConstants.CENTER);
         mainContainer.add(title, BorderLayout.NORTH);
 
+        // Panel
+        panel = new JPanel();
+        panel.setBorder(new EmptyBorder(0, 100, 0, 100));
+        mainContainer.add(panel, BorderLayout.CENTER);
+
         // Affichage des recettes
         try {
             recipes = controller.searchRecipesInMenu(menuTitle);
@@ -54,7 +61,7 @@ public class MenuCompositionWindow extends JFrame {
             list = new JTable(model);
             scrollPane = new JScrollPane(list);
 
-            mainContainer.add(scrollPane, BorderLayout.CENTER);
+            panel.add(scrollPane);
         } catch (SearchException exception) {
             exception.printStackTrace();
         }
