@@ -94,6 +94,9 @@ public class RecipeManager {
     public ArrayList<SeasonRecipe> searchBySeason(String category, GregorianCalendar date) throws SearchException {
         return dao.searchBySeason(category, date);
     }
+    public ArrayList<RecipeInMenu> searchRecipesInMenu(String menuTitle) throws SearchException {
+        return dao.searchRecipesInMenu(menuTitle);
+    }
 
     // Tache metier
     public ArrayList<ShopListIngred> shoppingList(ArrayList<ShopListRecipe> shopListRecipes) throws AllIngredientsException, AllRecipesException, AllIngredQuantitiesException {
