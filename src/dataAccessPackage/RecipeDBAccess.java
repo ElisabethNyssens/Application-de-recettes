@@ -642,7 +642,7 @@ public class RecipeDBAccess implements RecipeDataAccess {
     public ArrayList<RecipeInMenu> searchRecipesInMenu(String menuTitle) throws SearchException {
         ArrayList<RecipeInMenu> recipes = new ArrayList<>();
         String sql = "select mc.order_number 'Ordre', r.title 'Titre', r.nb_persons 'Nombre de personnes', r.category 'Catégorie' " +
-                "from mc.menu_components, r.recipes " +
+                "from menu_components mc, recipes r " +
                 "where mc.recipe_id = r.title " +
                 "and mc.menu_id = ?;";
 
