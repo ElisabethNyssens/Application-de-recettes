@@ -3,7 +3,6 @@ package viewPackage;
 import controllerPackage.ApplicationController;
 import exceptionPackage.AllRegimesException;
 import exceptionPackage.ConnectionException;
-import exceptionPackage.CountException;
 import exceptionPackage.SearchException;
 import modelPackage.DieteryRegime;
 import modelPackage.Menu;
@@ -17,27 +16,20 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class SearchMenusByRegimePanel extends JPanel {
-    private int nbRegimes;
+    private final static int NB_REGIMES = 4;
     private ApplicationController controller;
     private JLabel title, regimeLabel;
-    private JPanel formPanel, headerPanel, displayPanel, btnPanel;
-    private JButton searchBtn, recipesBtn;
+    private JPanel formPanel, headerPanel, displayPanel;
+    private JButton searchBtn;
     private JComboBox regimesCB;
     private ListSelectionModel listSelect;
     private ArrayList<DieteryRegime> regimesList;
-    private String[] regimes = new String[nbRegimes];
+    private String[] regimes = new String[NB_REGIMES];
 
     public SearchMenusByRegimePanel() throws ConnectionException {
         controller = new ApplicationController();
         setLayout(new BorderLayout());
         setBorder(new EmptyBorder(0, 150, 50, 150));
-
-        // Récupération du nombre de régimes alimentaires
-        try {
-            nbRegimes = controller.getElementNumber("dietery_regimes");
-        } catch (CountException exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage());
-        }
 
         // Header panel
         headerPanel = new JPanel(new BorderLayout());
@@ -81,11 +73,6 @@ public class SearchMenusByRegimePanel extends JPanel {
         displayPanel = new JPanel();
         displayPanel.setLayout(new BorderLayout());
         add(displayPanel, BorderLayout.CENTER);
-
-        // Bouton recettes
-        btnPanel = new JPanel();
-        recipesBtn = new JButton("Composition");
-        btnPanel.add(recipesBtn);
     }
 
     private class SearchBtnListener implements ActionListener {
@@ -107,24 +94,8 @@ public class SearchMenusByRegimePanel extends JPanel {
 
                     displayPanel.removeAll();
                     displayPanel.add(new JScrollPane(list), BorderLayout.CENTER);
-                    displayPanel.add(btnPanel, BorderLayout.SOUTH);
                     revalidate();
                     repaint();
-
-                    recipesBtn.addActionListener(e -> {
-                        int iRowSelect = listSelect.getMinSelectionIndex();
-
-                        if (iRowSelect == -1) {
-                            JOptionPane.showMessageDialog(null, "Clique sur un menu");
-                        } else {
-                            String menuTitle = list.getValueAt(iRowSelect, 0).toString();
-                            try {
-                                MenuCompositionWindow menuCompositionWindow = new MenuCompositionWindow(menuTitle);
-                            } catch (ConnectionException exception) {
-                                exception.printStackTrace();
-                            }
-                        }
-                    });
                 } catch (SearchException exception) {
                     exception.printStackTrace();
                 }

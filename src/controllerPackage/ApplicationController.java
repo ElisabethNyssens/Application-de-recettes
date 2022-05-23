@@ -61,11 +61,6 @@ public class ApplicationController {
         return recipeManager.getAllMenus();
     }
 
-    // Count
-    public int getElementNumber(String table) throws CountException {
-        return recipeManager.getElementNumber(table);
-    }
-
     // Update
     public void updateRecipe(Recipe recipe) throws UpdateRecipeException {
         recipeManager.updateRecipe(recipe);

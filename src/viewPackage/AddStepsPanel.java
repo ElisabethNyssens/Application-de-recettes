@@ -2,7 +2,6 @@ package viewPackage;
 
 import controllerPackage.ApplicationController;
 import exceptionPackage.ConnectionException;
-import exceptionPackage.CountException;
 import modelPackage.Step;
 
 import javax.swing.*;
@@ -15,7 +14,7 @@ import java.util.ArrayList;
 
 public class AddStepsPanel extends JPanel {
     private ApplicationController controller;
-    private int nbMaxSteps;
+    private final static int NB_MAX_STEPS = 20;
     private Object[] stepsObj;
     private int nbSteps;
     private JLabel stepLabel, numberLabel;
@@ -29,16 +28,9 @@ public class AddStepsPanel extends JPanel {
 
     public AddStepsPanel(RecipeCreationForm parentPanel) throws ConnectionException {
         this.parentPanel = parentPanel;
-        stepsObj = new Object[nbMaxSteps];
+        stepsObj = new Object[NB_MAX_STEPS];
         steps = new ArrayList<>();
         nbSteps = 0;
-
-        controller = new ApplicationController();
-        try {
-            nbMaxSteps = controller.getElementNumber("steps");
-        } catch (CountException exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage());
-        }
 
         JPanel stepPanel = new JPanel();
         stepPanel.setLayout(new BorderLayout());
@@ -54,6 +46,7 @@ public class AddStepsPanel extends JPanel {
         stepContainer = new JPanel();
         stepLabel = new JLabel("Etape* :");
         step = new JTextArea(6,24);
+        step.setWrapStyleWord(true);
         step.setLineWrap(true);
         stepContainer.add(stepLabel);
         stepContainer.add(new JScrollPane(step));
@@ -88,21 +81,25 @@ public class AddStepsPanel extends JPanel {
     private class AddButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             if (!step.getText().isBlank()) {
-                int selectNumber = Integer.parseInt(stepNumber.getValue().toString());
+                if (nbSteps <= NB_MAX_STEPS) {
+                    int selectNumber = Integer.parseInt(stepNumber.getValue().toString());
 
-                if (selectNumber <= nbSteps) {
-                    steps.set(selectNumber-1,new Step(selectNumber, parentPanel.getRecipeTitle(), step.getText()));
-                    stepsObj[selectNumber-1] = (selectNumber) + ". " + step.getText();
+                    if (selectNumber <= nbSteps) {
+                        steps.set(selectNumber - 1, new Step(selectNumber, parentPanel.getRecipeTitle(), step.getText()));
+                        stepsObj[selectNumber - 1] = (selectNumber) + ". " + step.getText();
+                    } else {
+                        steps.add(new Step(nbSteps + 1, parentPanel.getRecipeTitle(), step.getText()));
+                        stepsObj[nbSteps] = (nbSteps + 1) + ". " + step.getText();
+                        nbSteps++;
+                        stepNumber.setValue(nbSteps + 1);
+                        step.setText(null);
+                    }
+                    stepsList.setListData(stepsObj);
+
+                    AddStepsPanel.this.repaint();
                 } else {
-                    steps.add(new Step(nbSteps+1, parentPanel.getRecipeTitle(), step.getText()));
-                    stepsObj[nbSteps] = (nbSteps+1) + ". " + step.getText();
-                    nbSteps++;
-                    stepNumber.setValue(nbSteps + 1);
-                    step.setText(null);
+                    JOptionPane.showMessageDialog(null, "Tu ne peux pas ajouter plus d'étapes, 20 c'est déjà assez !");
                 }
-                stepsList.setListData(stepsObj);
-
-                AddStepsPanel.this.repaint();
             }
         }
     }

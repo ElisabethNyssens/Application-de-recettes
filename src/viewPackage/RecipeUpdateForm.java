@@ -26,8 +26,8 @@ public class RecipeUpdateForm extends JPanel {
     private Date today;
 
     private int activeFormStep;
-    private int nbCategories;
-    public int nbRegimes;
+    private int NB_CATEG = 9;
+    public int NB_REGIMES = 4;
 
     private JButton prevStepBtn, nextStepBtn;
     private JPanel step1Panel, step2Panel, bottomPanel;
@@ -36,9 +36,8 @@ public class RecipeUpdateForm extends JPanel {
 
     private ArrayList<Category> categList = new ArrayList<>();
     private ArrayList<DieteryRegime> regimesList = new ArrayList<>();
-    ArrayList<Recipe> allRecipes = new ArrayList<>();
-    private String[] recipeCategories = new String[nbCategories];
-    private String[] regimes = new String[nbRegimes];
+    private String[] recipeCategories = new String[NB_CATEG];
+    private String[] regimes = new String[NB_REGIMES];
     private final String[] costs = {"Bon marche", "Cout moyen", "Assez cher"};
     private final String[] preparationTimes = {"< 30min", "30min >< 1h", "1h >< 2h", "2h >< 1j", "> 1j"};
     private final String[] seasons = {"Printemps", "Ete", "Automne", "Hiver", "Toute saison"};
@@ -53,14 +52,6 @@ public class RecipeUpdateForm extends JPanel {
         this.mainContainer = mainContainer;
         this.setLayout(new BorderLayout());
         activeFormStep = 1;
-
-        // Récupération du nombre de catégories et de régimes alimentaires
-        try {
-            nbCategories = controller.getElementNumber("categories");
-            nbRegimes = controller.getElementNumber("dietery_regimes");
-        } catch (CountException exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage());
-        }
 
         // --------------- Form step 1 ----------------
         step1Panel = new JPanel();
@@ -108,6 +99,7 @@ public class RecipeUpdateForm extends JPanel {
             JOptionPane.showMessageDialog(null, exception.getMessage(),"Erreur",JOptionPane.ERROR_MESSAGE);
         }
         recipeCategory = new JComboBox(recipeCategories);
+        System.out.println(initRecipe.getCategory());
         recipeCategory.setSelectedItem(initRecipe.getCategory());
         step1Panel.add(recipeCategoryLabel);
         step1Panel.add(recipeCategory);

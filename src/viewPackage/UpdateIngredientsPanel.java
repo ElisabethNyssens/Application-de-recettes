@@ -4,7 +4,6 @@ import controllerPackage.ApplicationController;
 import exceptionPackage.AllIngredQuantitiesException;
 import exceptionPackage.AllIngredientsException;
 import exceptionPackage.ConnectionException;
-import exceptionPackage.CountException;
 import modelPackage.Ingredient;
 import modelPackage.IngredientQuantity;
 
@@ -20,8 +19,7 @@ import static java.util.stream.Collectors.toList;
 
 public class UpdateIngredientsPanel extends JPanel {
     private ApplicationController controller;
-    private int nbIngredients;
-    private String[] ingredientsValues = new String[nbIngredients];
+    private String[] ingredientsValues;
     private Object[] selectedIngredients;
     private int nbSelectedIngred;
 
@@ -34,6 +32,7 @@ public class UpdateIngredientsPanel extends JPanel {
     private ArrayList<Ingredient> ingredList;
     private RecipeUpdateForm parentPanel;
     private String recipeName;
+    private int nbMaxIngreds;
 
     public UpdateIngredientsPanel(RecipeUpdateForm parentPanel, String recipeName) throws ConnectionException {
         this.parentPanel = parentPanel;
@@ -42,14 +41,15 @@ public class UpdateIngredientsPanel extends JPanel {
 
         try {
             ingredList = controller.getAllIngredients();
-            nbIngredients = controller.getElementNumber("ingredients");
+            nbMaxIngreds = ingredList.size();
+            ingredientsValues = new String[nbMaxIngreds];
 
             int iIngred = 0;
             for(Ingredient ingredient : ingredList) {
                 ingredientsValues[iIngred] = ingredient.getName() + (ingredient.getUnit().equals("unite")?"":(" (" + ingredient.getUnit() + ")"));
                 iIngred++;
             }
-        } catch (AllIngredientsException | CountException exception) {
+        } catch (AllIngredientsException exception) {
             exception.printStackTrace();
             JOptionPane.showMessageDialog(null, exception.getMessage(),"Erreur",JOptionPane.ERROR_MESSAGE);
         }
@@ -87,7 +87,7 @@ public class UpdateIngredientsPanel extends JPanel {
         selectedIngredList.setVisibleRowCount(8);
         selectedIngredList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
-        selectedIngredients = new Object[nbIngredients];
+        selectedIngredients = new Object[nbMaxIngreds];
         nbSelectedIngred = 0;
         try {
             ingredientQuantities = controller.getAllIngredientsOfRecipe(recipeName);

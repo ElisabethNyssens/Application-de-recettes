@@ -379,23 +379,6 @@ public class RecipeDBAccess implements RecipeDataAccess {
         }
     }
 
-    // Count
-    public int getElementNumber(String table) throws CountException {
-        int elementCount = 0;
-        String sql = "select COUNT(*) 'count' from ?";
-
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, table);
-            ResultSet data = preparedStatement.executeQuery();
-            elementCount = data.getInt("count");
-        } catch (SQLException exception) {
-            throw new CountException();
-        }
-
-        return elementCount;
-    }
-
     // Update
     @Override
     public void updateRecipe(Recipe recipe) throws UpdateRecipeException {

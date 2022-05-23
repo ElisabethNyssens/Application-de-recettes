@@ -62,11 +62,6 @@ public class RecipeManager {
         return dao.getAllMenus();
     }
 
-    // Count
-    public int getElementNumber(String table) throws CountException {
-        return dao.getElementNumber(table);
-    }
-
     // Update
     public void updateRecipe(Recipe recipe) throws UpdateRecipeException {
         dao.updateRecipe(recipe);

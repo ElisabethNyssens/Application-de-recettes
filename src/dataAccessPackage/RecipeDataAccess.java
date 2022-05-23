@@ -24,8 +24,6 @@ public interface RecipeDataAccess {
      ArrayList<DieteryRegime> getAllRegimes() throws AllRegimesException;
      ArrayList<Author> getAllAuthors() throws AllAuthorsException;
      ArrayList<Menu> getAllMenus() throws AllMenusException;
-     // Counts
-     int getElementNumber(String table) throws CountException;
      // Update
      void updateRecipe(Recipe recipe) throws UpdateRecipeException;
      // Delete

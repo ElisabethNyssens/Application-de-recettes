@@ -3,7 +3,6 @@ package viewPackage;
 import controllerPackage.ApplicationController;
 import exceptionPackage.AllStepsException;
 import exceptionPackage.ConnectionException;
-import exceptionPackage.CountException;
 import modelPackage.Step;
 
 import javax.swing.*;
@@ -16,7 +15,7 @@ import java.util.ArrayList;
 
 public class UpdateStepsPanel extends JPanel {
     private ApplicationController controller;
-    private int nbMaxSteps;
+    private final static int NB_MAX_STEPS = 20;
     private Object[] stepsObj;
     private int nbSteps;
 
@@ -34,7 +33,7 @@ public class UpdateStepsPanel extends JPanel {
         controller = new ApplicationController();
         this.recipeName = recipeName;
         this.parentPanel = parentPanel;
-        stepsObj = new Object[nbMaxSteps];
+        stepsObj = new Object[NB_MAX_STEPS];
         steps = new ArrayList<>();
 
         JPanel btnPanel = new JPanel();
@@ -54,7 +53,6 @@ public class UpdateStepsPanel extends JPanel {
 
         try {
             steps = controller.getAllStepsOfRecipe(recipeName);
-            nbMaxSteps = controller.getElementNumber("steps");
 
             for (Step step : steps) {
                 stepsObj[nbSteps] = (nbSteps+1) + ". " + step.getDescription();
@@ -62,7 +60,7 @@ public class UpdateStepsPanel extends JPanel {
             }
             stepsList.setListData(stepsObj);
 
-        } catch (AllStepsException | CountException e) {
+        } catch (AllStepsException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur",JOptionPane.ERROR_MESSAGE);
         }
@@ -81,6 +79,7 @@ public class UpdateStepsPanel extends JPanel {
         stepContainer = new JPanel();
         stepLabel = new JLabel("Etape* :");
         step = new JTextArea(6,24);
+        step.setWrapStyleWord(true);
         step.setLineWrap(true);
         step.setText(steps.get(0).getDescription());
         stepContainer.add(stepLabel);
@@ -101,21 +100,25 @@ public class UpdateStepsPanel extends JPanel {
     private class AddButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             if (!step.getText().isBlank()) {
-                int selectNumber = Integer.parseInt(stepNumber.getValue().toString());
+                if (nbSteps <= NB_MAX_STEPS) {
+                    int selectNumber = Integer.parseInt(stepNumber.getValue().toString());
 
-                if (selectNumber <= nbSteps) {
-                    steps.set(selectNumber-1,new Step(selectNumber, parentPanel.getRecipeTitle(), step.getText()));
-                    stepsObj[selectNumber-1] = (selectNumber) + ". " + step.getText();
+                    if (selectNumber <= nbSteps) {
+                        steps.set(selectNumber - 1, new Step(selectNumber, parentPanel.getRecipeTitle(), step.getText()));
+                        stepsObj[selectNumber - 1] = (selectNumber) + ". " + step.getText();
+                    } else {
+                        steps.add(new Step(nbSteps + 1, parentPanel.getRecipeTitle(), step.getText()));
+                        stepsObj[nbSteps] = (nbSteps + 1) + ". " + step.getText();
+                        nbSteps++;
+                        stepNumber.setValue(nbSteps + 1);
+                        step.setText(null);
+                    }
+                    stepsList.setListData(stepsObj);
+
+                    UpdateStepsPanel.this.repaint();
                 } else {
-                    steps.add(new Step(nbSteps+1, parentPanel.getRecipeTitle(), step.getText()));
-                    stepsObj[nbSteps] = (nbSteps+1) + ". " + step.getText();
-                    nbSteps++;
-                    stepNumber.setValue(nbSteps + 1);
-                    step.setText(null);
+                    JOptionPane.showMessageDialog(null, "Tu ne peux pas ajouter plus d'étapes, 20 c'est déjà assez !");
                 }
-                stepsList.setListData(stepsObj);
-
-                UpdateStepsPanel.this.repaint();
             }
         }
     }

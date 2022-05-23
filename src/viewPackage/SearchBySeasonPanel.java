@@ -3,7 +3,6 @@ package viewPackage;
 import controllerPackage.ApplicationController;
 import exceptionPackage.AllCategoriesException;
 import exceptionPackage.ConnectionException;
-import exceptionPackage.CountException;
 import exceptionPackage.SearchException;
 import modelPackage.Category;
 import modelPackage.SearchBySeasonModel;
@@ -21,14 +20,14 @@ import java.util.GregorianCalendar;
 
 public class SearchBySeasonPanel extends JPanel {
     ApplicationController controller;
-    private int nbCategories;
+    private final static int NB_CATEG = 9;
     private JLabel title, infos, categoryLabel, dateLabel;
     private JPanel headerPanel, titlePanel, formPanel, entriesPanel, displayPanel, btnPanel;
     private JComboBox recipeCategory;
     private JSpinner date;
     private JButton searchBtn, ingredientsBtn;
     private ArrayList<Category> categList;
-    private String[] categories = new String[nbCategories];
+    private String[] categories = new String[NB_CATEG];
     private Date today;
     private ListSelectionModel listSelect;
 
@@ -36,13 +35,6 @@ public class SearchBySeasonPanel extends JPanel {
         controller = new ApplicationController();
         setLayout(new BorderLayout());
         setBorder(new EmptyBorder(0, 150, 50, 150));
-
-        // Récupération du nombre de catégories
-        try {
-            nbCategories = controller.getElementNumber("categories");
-        } catch (CountException exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage());
-        }
 
         // Header Panel
         headerPanel = new JPanel(new BorderLayout());
@@ -109,11 +101,6 @@ public class SearchBySeasonPanel extends JPanel {
         displayPanel = new JPanel(new BorderLayout());
         displayPanel.setBorder(new EmptyBorder(50, 0, 0, 0));
         add(displayPanel, BorderLayout.CENTER);
-
-        // Bouton Ingrédients
-        btnPanel = new JPanel();
-        ingredientsBtn = new JButton("Préparation");
-        btnPanel.add(ingredientsBtn);
     }
 
     private class SearchBtnListener implements ActionListener {
@@ -137,24 +124,8 @@ public class SearchBySeasonPanel extends JPanel {
 
                     displayPanel.removeAll();
                     displayPanel.add(scrollPane, BorderLayout.CENTER);
-                    displayPanel.add(btnPanel, BorderLayout.SOUTH);
                     revalidate();
                     repaint();
-
-                    ingredientsBtn.addActionListener(e -> {
-                        int iRowSelect = listSelect.getMinSelectionIndex();
-
-                        if (iRowSelect == -1) {
-                            JOptionPane.showMessageDialog(null, "Clique sur une recette");
-                        } else {
-                            String recipeTitle = list.getValueAt(iRowSelect, 0).toString();
-                            try {
-                                RecipePreparationWindow preparationWindow = new RecipePreparationWindow(recipeTitle);
-                            } catch (ConnectionException exception) {
-                                exception.printStackTrace();
-                            }
-                        }
-                    });
 
                     revalidate();
                     repaint();

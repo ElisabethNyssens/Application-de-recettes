@@ -3,7 +3,6 @@ package viewPackage;
 import controllerPackage.ApplicationController;
 import exceptionPackage.AllIngredientsException;
 import exceptionPackage.ConnectionException;
-import exceptionPackage.CountException;
 import modelPackage.Ingredient;
 import modelPackage.IngredientQuantity;
 
@@ -19,8 +18,7 @@ import static java.util.stream.Collectors.toList;
 
 public class AddIngredientsPanel extends JPanel {
     private ApplicationController controller;
-    private int nbIngredients;
-    private String[] ingredientsValues = new String[nbIngredients];
+    private String[] ingredientsValues;
     private Object[] selectedIngredients;
     private int nbSelectedIngred;
 
@@ -37,18 +35,13 @@ public class AddIngredientsPanel extends JPanel {
         ingredientQuantities = new ArrayList<>();
         controller = new ApplicationController();
 
-        selectedIngredients = new Object[nbIngredients];
+
         nbSelectedIngred = 0;
 
         try {
-            nbIngredients = controller.getElementNumber("ingredients");
-        } catch (CountException exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage());
-        }
-
-        try {
             ArrayList<Ingredient> ingredList = controller.getAllIngredients();
-
+            ingredientsValues = new String[ingredList.size()];
+            selectedIngredients = new Object[ingredList.size()];
             int iIngred = 0;
             for(Ingredient ingredient : ingredList) {
                 ingredientsValues[iIngred] = ingredient.getName() + (ingredient.getUnit().equals("unite")?"":(" (" + ingredient.getUnit() + ")"));

@@ -1,16 +1,15 @@
 package testPackage;
 
 import businessPackage.RecipeManager;
-import modelPackage.ShopListIngred;
 
-import java.util.ArrayList;
-
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 public class ShoppingListTest {
+    private Assertions Assert;
+
     @Test
     public void ingredientMultiplier() throws Exception {
         Assert.assertEquals(1.5, RecipeManager.ingredientMultiplier(6, 4), 0.001);

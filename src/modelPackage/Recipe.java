@@ -27,9 +27,9 @@ public class Recipe {
         setBudget(budget);
         setPreparationTime(preparationTime);
         setNbPersons(nbPersons);
-        setSeason(season);
+        this.season = season;
         setAuthor(author);
-        setRegime(regime);
+        this.regime = regime;
         setCategory(category);
     }
 
@@ -96,14 +96,13 @@ public class Recipe {
     }
 
     public void setBudget(String budget) {
-        if (budget.equals("Bon marché") || budget.equals("Coût moyen") || budget.equals("Assez cher")) {
+        if (budget.length() <= 15) {
             this.budget = budget;
         }
     }
 
     public void setSeason(String season) {
-        if (season == null || season.equals("Toute saison") || season.equals("Ete") || season.equals("Automne")
-                || season.equals("Printemps") || season.equals("Hiver")) {
+        if (season.length() <= 15) {
             this.season = season;
         }
     }
@@ -113,23 +112,19 @@ public class Recipe {
     }
 
     public void setPreparationTime(String preparationTime) {
-        if (preparationTime.equals("< 30min") || preparationTime.equals("30min >< 1h") || preparationTime.equals("1h >< 2h")
-                || preparationTime.equals("2h >< 1j") || preparationTime.equals("> 1j")) {
+        if (preparationTime.length() <= 15) {
             this.preparationTime = preparationTime;
         }
     }
 
     public void setRegime(String regime) {
-        if (regime == null || regime.equals("Pescetarien") || regime.equals("Vegetarien")
-                || regime.equals("Vegan") || regime.equals("Sans gluten")) {
+        if (regime.length() <= 20) {
             this.regime = regime;
         }
     }
 
     public void setCategory(String category) {
-        if (category.equals("Accompagnement") || category.equals("Amuse-gueule") || category.equals("Boisson")
-                || category.equals("Dessert") || category.equals("Entree") || category.equals("Plat principal")
-                || category.equals("Sauce") || category.equals("Snack") || category.equals("Soupe")) {
+        if (category.length() <= 20) {
             this.category = category;
         }
     }

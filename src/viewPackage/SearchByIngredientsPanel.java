@@ -3,7 +3,6 @@ package viewPackage;
 import controllerPackage.ApplicationController;
 import exceptionPackage.AllIngredientsException;
 import exceptionPackage.ConnectionException;
-import exceptionPackage.CountException;
 import exceptionPackage.SearchException;
 import modelPackage.IngredientQuantity;
 import modelPackage.RecipeWithIngred;
@@ -21,18 +20,16 @@ import java.util.List;
 public class SearchByIngredientsPanel extends JPanel {
     private ApplicationController controller;
     private JLabel title, formLabel;
-    private JButton searchBtn, addBtn, removeBtn, preparationBtn;
+    private JButton searchBtn, addBtn, removeBtn;
     private JRadioButton with, without;
     private ButtonGroup btnGroup;
-    private JPanel btnSearchPanel, ingredListsPanel, ingredBtnPanel, btnPanel, radioPanel, formPanel,
-            preparationBtnPanel, gridPanel, resultPanel;
+    private JPanel btnSearchPanel, ingredListsPanel, ingredBtnPanel, btnPanel, formPanel, gridPanel, resultPanel;
     private JList<String> ingredList, selectIngredList;
     private ListSelectionModel listSelect;
     private ArrayList<String> selectedIngredients = new ArrayList<>();
     private ArrayList<IngredientQuantity> ingredients;
-    private int nbIngredients;
     private static int MAX_SELECT_INGRED = 5;
-    private String[] ingredientsValues = new String[nbIngredients];
+    private String[] ingredientsValues;
     private String[] ingredientsSelectValues = new String[MAX_SELECT_INGRED+1];
     private int nbSelectIngred;
 
@@ -41,13 +38,6 @@ public class SearchByIngredientsPanel extends JPanel {
         setLayout(new BorderLayout());
         setBorder(new EmptyBorder(0, 150, 50, 150));
         nbSelectIngred = 0;
-
-        // Récupération du nombre d'ingrédients
-        try {
-            nbIngredients = controller.getElementNumber("ingredient_quantities");
-        } catch (CountException exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage());
-        }
 
         gridPanel = new JPanel();
         gridPanel.setLayout(new GridLayout(2,1,0,50));
@@ -69,6 +59,7 @@ public class SearchByIngredientsPanel extends JPanel {
         ingredList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         try {
             ingredients = controller.getAllIngredQuantities();
+            ingredientsValues = new String[ingredients.size()];
             int iIngred = 0;
             for (IngredientQuantity ingred : ingredients) {
                 ingredientsValues[iIngred] = ingred.getIngredient();
@@ -118,10 +109,6 @@ public class SearchByIngredientsPanel extends JPanel {
         formPanel.add(ingredListsPanel, BorderLayout.CENTER);
         formPanel.add(btnPanel, BorderLayout.SOUTH);
         gridPanel.add(formPanel);
-
-        preparationBtnPanel = new JPanel();
-        preparationBtn = new JButton("Préparation");
-        preparationBtnPanel.add(preparationBtn);
 
         resultPanel = new JPanel();
         resultPanel.setLayout(new BorderLayout());
@@ -198,27 +185,9 @@ public class SearchByIngredientsPanel extends JPanel {
 
                     resultPanel.removeAll();
                     resultPanel.add(scrollPane, BorderLayout.CENTER);
-                    resultPanel.add(preparationBtnPanel, BorderLayout.SOUTH);
                     resultPanel.revalidate();
                     resultPanel.repaint();
 
-                    preparationBtn.addActionListener(e -> {
-                        int iRowSelect = listSelect.getMinSelectionIndex();
-
-                        if(iRowSelect != -1) {
-                            String recipeTitle = list.getValueAt(iRowSelect, 0).toString();
-                            try {
-                                RecipePreparationWindow preparationWindow = new RecipePreparationWindow(recipeTitle);
-                            } catch (ConnectionException exception) {
-                                exception.printStackTrace();
-                            }
-                        }  else {
-                            JOptionPane.showMessageDialog(null, "Clique sur une des recettes");
-                        }
-                    });
-
-                    SearchByIngredientsPanel.this.revalidate();
-                    SearchByIngredientsPanel.this.repaint();
                 } catch (SearchException exception) {
                     exception.printStackTrace();
                 }

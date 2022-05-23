@@ -12,7 +12,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -113,7 +112,6 @@ public class AllRecipesPanel extends JPanel {
                 list.getValueAt(iRowSelect, 10) != null ? list.getValueAt(iRowSelect, 10).toString() : null,
                 list.getValueAt(iRowSelect, 3).toString()
         );
-
         return recipe;
     }
 
@@ -127,6 +125,7 @@ public class AllRecipesPanel extends JPanel {
 
                 if(answer == 0) {
                     Recipe recipe = recipeRecovery(iRowSelect);
+                    System.out.println(recipe.getCategory());
 
                     try {
                         title = new JLabel("<html><h1 style='margin: 30px 0 15px 0; font-size: 24px;'>Modification d'une recette</h1></html>");
