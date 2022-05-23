@@ -85,7 +85,6 @@ public class SearchMenusByRegimePanel extends JPanel {
 
                 try {
                     ArrayList<Menu> menus = controller.searchMenuByDieteryRegime(dieteryRegime);
-                    System.out.println(menus.get(0).getTitle());
                     SearchOnMenuModel model = new SearchOnMenuModel(menus);
 
                     JTable list = new JTable(model);

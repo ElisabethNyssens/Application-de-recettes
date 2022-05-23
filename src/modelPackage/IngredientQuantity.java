@@ -11,9 +11,7 @@ public class IngredientQuantity {
         setQuantity(quantity);
     }
 
-    public String toString() {
-        return quantity + " " + ingredient;
-    }
+    // getters
 
     public String getIngredient() {
         return ingredient;
@@ -27,9 +25,17 @@ public class IngredientQuantity {
         return quantity;
     }
 
+    // setters
+
+    public void setRecipe(String recipe) {
+        if (recipe.length() <= 100) this.recipe = recipe;
+    }
+
+    public void setIngredient(String ingredient) {
+        if (ingredient.length() <= 30) this.ingredient = ingredient;
+    }
+
     public void setQuantity(double quantity) {
-        if (quantity > 0) {
-            this.quantity = quantity;
-        }
+        if (quantity > 0) this.quantity = quantity;
     }
 }

@@ -217,7 +217,7 @@ public class RecipeCreationForm extends JPanel {
                     JOptionPane.showMessageDialog(null, "Ta recette a besoin d'un nom !");
                 } else if (recipeTitle.getText().length() < 3) {
                     JOptionPane.showMessageDialog(null, "C'est un peu court comme nom, tu ne trouves pas ?");
-                } else if (recipeTitle.getText().length() > 99) {
+                } else if (recipeTitle.getText().length() > 100) {
                     JOptionPane.showMessageDialog(null, "Le nom de ta recette est trop long !");
                 } else if (duplicateTitle) {
                     JOptionPane.showMessageDialog(null, "Une recette portant ce nom existe déjà... Choisis-en un autre !");

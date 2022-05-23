@@ -5,17 +5,15 @@ public class Menu {
     private String comment;
 
     public Menu(String title, String comment) {
-        this.title = title;
-        this.comment = comment;
+        setTitle(title);
+        setComment(comment);
     }
 
     public Menu(String title) {
         this(title, null);
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
+    // getters
 
     public String getTitle() {
         return title;
@@ -23,5 +21,15 @@ public class Menu {
 
     public String getComment() {
         return comment;
+    }
+
+    // setters
+
+    public void setComment(String comment) {
+        if (comment.length() <= 200) this.comment = comment;
+    }
+
+    public void setTitle(String title) {
+        if (title.length() <= 100) this.title = title;
     }
 }

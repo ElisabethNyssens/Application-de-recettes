@@ -565,7 +565,7 @@ public class RecipeDBAccess implements RecipeDataAccess {
             sql = "select distinct title 'Titre' " +
                     "from menus " +
                     "where title not in " +
-                    "(select title" +
+                    "(select title " +
                     "from wrong_menus);";
 
             preparedStatement = connection.prepareStatement(sql);
@@ -574,7 +574,6 @@ public class RecipeDBAccess implements RecipeDataAccess {
             Menu menu;
 
             while (data.next()) {
-                System.out.println(data.getString("Titre"));
                 menu = new Menu(data.getString("Titre"));
                 menus.add(menu);
             }
