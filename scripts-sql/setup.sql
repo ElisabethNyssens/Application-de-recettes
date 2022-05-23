@@ -30,7 +30,7 @@ CREATE TABLE recipes
     is_salty bit not null,
     budget varchar(15) not null,
     preparation_time varchar(15) not null,
-    nb_persons int not null,
+    nb_persons int not null check(nb_persons > 0),
     season varchar(15) null,
     author varchar(15) not null,
     dietery_regime varchar(10) null,
@@ -50,7 +50,7 @@ CREATE TABLE ingredient_quantities
 (
     ingredient_id varchar(30) not null,
     recipe_id varchar(100) not null,
-    quantity numeric(5,1) not null,
+    quantity numeric(5,1) not null check(quantity > 0),
     FOREIGN KEY (ingredient_id) REFERENCES ingredients (ing_name),
     FOREIGN KEY (recipe_id) REFERENCES recipes (title),
     PRIMARY KEY (ingredient_id, recipe_id)
@@ -58,7 +58,7 @@ CREATE TABLE ingredient_quantities
 
 CREATE TABLE steps
 (
-    order_number int not null,
+    order_number int not null check(order_number > 0),
     recipe_id varchar(100) not null,
     description varchar(1000) not null,
     FOREIGN KEY (recipe_id) REFERENCES recipes (title),
@@ -73,7 +73,7 @@ CREATE TABLE menus
 
 CREATE TABLE menu_components
 (
-    order_number int not null,
+    order_number int not null check(order_number > 0),
     menu_id varchar(100) not null,
     recipe_id varchar(100) not null,
     FOREIGN KEY (menu_id) REFERENCES menus (title),
