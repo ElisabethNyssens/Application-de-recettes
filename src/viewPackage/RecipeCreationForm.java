@@ -288,12 +288,13 @@ public class RecipeCreationForm extends JPanel {
                         ProgressBarWindow progressBarWindow = new ProgressBarWindow(mainContainer, false);
                     }
                     catch (AddRecipeException exception) {
-                        JOptionPane.showMessageDialog(null, exception.getMessage());
+                        exception.printStackTrace();
+                        JOptionPane.showMessageDialog(null, exception.getMessage(),"Erreur",JOptionPane.ERROR_MESSAGE);
                     }
                 } else {
                     String missingInfo = (ingredientMissing? "les ingrédients\n":"") + (stepsMissing? "les étapes":"");
                     JOptionPane.showMessageDialog(null,
-                            "Il nous manque ces information pour créer ta recette :\n" + missingInfo);
+                            "Il nous manque ces information pour créer ta recette :\n" + missingInfo,"Attention",JOptionPane.WARNING_MESSAGE);
                 }
 
 

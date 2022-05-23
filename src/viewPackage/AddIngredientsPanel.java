@@ -128,7 +128,7 @@ public class AddIngredientsPanel extends JPanel {
     private class RemoveButtonListener implements ActionListener {
         public void actionPerformed( ActionEvent event) {
             if (selectedIngredList.getSelectedValue() == null) {
-                JOptionPane.showMessageDialog(null, "Sélectionne un ingrédient !","Message",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Sélectionne un ingrédient !");
             } else {
                 int iSelectIngred = selectedIngredList.getSelectedIndex();
                 ingredientQuantities.remove(iSelectIngred);

@@ -164,7 +164,7 @@ public class AllRecipesPanel extends JPanel {
                         mainContainer.repaint();
                         mainContainer.add(new AllRecipesPanel(mainContainer), BorderLayout.CENTER);
                     } catch (ConnectionException | DeleteIngredQuantException | DeleteStepException | DeleteRecipeException exception) {
-                        JOptionPane.showMessageDialog(null, exception.getMessage());
+                        JOptionPane.showMessageDialog(null, exception.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
                         exception.printStackTrace();
                     }
                 }

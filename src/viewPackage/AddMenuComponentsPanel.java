@@ -83,7 +83,7 @@ public class AddMenuComponentsPanel extends JPanel {
             List<MenuComponent> duplicate = recipes.stream().filter(x -> x.getRecipeId().equals(recipe.getSelectedItem().toString())).collect(toList());
 
             if (recipe.getSelectedItem() == null) {
-                JOptionPane.showMessageDialog(null, "Sélectionne une recette","Message",JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Sélectionne une recette");
             } else if (!duplicate.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Cette recette a déjà été choisie","Attention",JOptionPane.WARNING_MESSAGE);
             } else {
@@ -112,9 +112,6 @@ public class AddMenuComponentsPanel extends JPanel {
                         recipes.get(i).setOrderNumber(i+1);
                     }
                 }
-                /*for (int i = 0; i < recipes.size(); i++) {
-                    recipes.get(i).setOrderNumber(i+1);
-                }*/
                 nbRecipes--;
                 chosenRecipesList.setListData(selectedRecipes);
                 AddMenuComponentsPanel.this.repaint();

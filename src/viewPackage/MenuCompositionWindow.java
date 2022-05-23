@@ -63,7 +63,7 @@ public class MenuCompositionWindow extends JFrame {
 
             list = new JTable(model);
             list.setRowHeight(20);
-            
+
             panel.add(new JScrollPane(list), BorderLayout.CENTER);
 
         } catch (SearchException exception) {
