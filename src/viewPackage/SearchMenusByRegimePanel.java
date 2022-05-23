@@ -19,8 +19,8 @@ public class SearchMenusByRegimePanel extends JPanel {
     private static int NB_REGIMES = 4;
     private ApplicationController controller;
     private JLabel title, regimeLabel;
-    private JPanel formPanel, headerPanel, displayPanel;
-    private JButton searchBtn;
+    private JPanel formPanel, headerPanel, displayPanel, btnPanel;
+    private JButton searchBtn, recipesBtn;
     private JComboBox regimesCB;
     private ListSelectionModel listSelect;
     private ArrayList<DieteryRegime> regimesList;
@@ -73,11 +73,16 @@ public class SearchMenusByRegimePanel extends JPanel {
         displayPanel = new JPanel();
         displayPanel.setLayout(new BorderLayout());
         add(displayPanel, BorderLayout.CENTER);
+
+        // Bouton recettes
+        btnPanel = new JPanel();
+        recipesBtn = new JButton("Recettes");
+        btnPanel.add(recipesBtn);
     }
 
     private class SearchBtnListener implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent e) {
+        public void actionPerformed(ActionEvent event) {
             if (regimesCB.getSelectedItem() == null) {
                 JOptionPane.showMessageDialog(null, "Sélectionne un régime alimentaire");
             } else {
@@ -95,8 +100,24 @@ public class SearchMenusByRegimePanel extends JPanel {
 
                     displayPanel.removeAll();
                     displayPanel.add(new JScrollPane(list), BorderLayout.CENTER);
+                    displayPanel.add(btnPanel, BorderLayout.SOUTH);
                     revalidate();
                     repaint();
+
+                    recipesBtn.addActionListener(e -> {
+                        int iRowSelect = listSelect.getMinSelectionIndex();
+
+                        if (iRowSelect == -1) {
+                            JOptionPane.showMessageDialog(null, "Clique sur un menu");
+                        } else {
+                            String menuTitle = list.getValueAt(iRowSelect, 0).toString();
+                            try {
+                                MenuCompositionWindow menuCompositionWindow = new MenuCompositionWindow(menuTitle);
+                            } catch (ConnectionException exception) {
+                                exception.printStackTrace();
+                            }
+                        }
+                    });
                 } catch (SearchException exception) {
                     exception.printStackTrace();
                 }

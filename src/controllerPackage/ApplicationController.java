@@ -93,6 +93,9 @@ public class ApplicationController {
     public ArrayList<SeasonRecipe> searchBySeason(String category, GregorianCalendar date) throws SearchException {
         return recipeManager.searchBySeason(category, date);
     }
+    public ArrayList<RecipeInMenu> searchRecipesInMenu(String menuTitle) throws SearchException {
+        return recipeManager.searchRecipesInMenu(menuTitle);
+    }
 
     // Shopping list
     public ArrayList<ShopListIngred> shoppingList(ArrayList<ShopListRecipe> shopListRecipes) throws AllIngredientsException, AllRecipesException, AllIngredQuantitiesException {

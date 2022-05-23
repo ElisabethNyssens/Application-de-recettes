@@ -639,4 +639,35 @@ public class RecipeDBAccess implements RecipeDataAccess {
 
         return seasonRecipes;
     }
+
+    public ArrayList<RecipeInMenu> searchRecipesInMenu(String menuTitle) throws SearchException {
+        ArrayList<RecipeInMenu> recipes = new ArrayList<>();
+        String sql = "select mc.order_number 'Ordre', r.title 'Titre', r.nb_persons 'Nombre de personnes', r.category 'Catégorie' " +
+                "from mc.menu_components, r.recipes " +
+                "where mc.recipe_id = r.title " +
+                "and mc.menu_id = ?;";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, menuTitle);
+            ResultSet data = preparedStatement.executeQuery();
+
+            RecipeInMenu recipe;
+
+            while (data.next()) {
+                recipe = new RecipeInMenu(
+                        data.getInt("Ordre"),
+                        data.getString("Titre"),
+                        data.getInt("Nombre de personnes"),
+                        data.getString("Catégorie")
+                );
+                recipes.add(recipe);
+            }
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            throw new SearchException();
+        }
+
+        return recipes;
+    }
 }
